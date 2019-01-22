@@ -31,7 +31,7 @@ public class RistorantiBean implements java.io.Serializable{
 	private ArrayList<PiattiBean> Piatti;
 	private ArrayList<OfferteBean> Offerte;
 	private ArrayList<PrenotazioniBean> Prenotazioni;
-	private ArrayList<RecensioniRistoBean> Recensioni_ristoranti;
+	private ArrayList<RecensioniRistoBean> RecensioniRistoranti;
 	
 	public int getIDRistorante() {
 		return IDRistorante;
@@ -154,10 +154,10 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setPrenotazioni(ArrayList<PrenotazioniBean> prenotazioni) {
 		Prenotazioni = prenotazioni;
 	}
-	public ArrayList<RecensioniRistoBean> getRecensioni_ristoranti() {
-		return Recensioni_ristoranti;
+	public ArrayList<RecensioniRistoBean> getRecensioniRistoranti() {
+		return RecensioniRistoranti;
 	}
-	public void setRecensioniRisto(ArrayList<RecensioniRistoBean> recensioni_ristoranti) {
-		Recensioni_ristoranti = recensioni_ristoranti;
+	public void setRecensioniRisto(ArrayList<RecensioniRistoBean> recensioniRistoranti) {
+		RecensioniRistoranti = recensioniRistoranti;
 	}
 }
