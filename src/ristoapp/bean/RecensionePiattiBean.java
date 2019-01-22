@@ -19,8 +19,9 @@ public class RecensionePiattiBean implements java.io.Serializable {
 	private Time OraRecensione;
 	
 	//per collegarlo alle altre tabelle
-	private ArrayList<PiattiBean> Piatti;
+	private ArrayList<PrenotazioniBean> Prenotazioni;
 	private ArrayList<RistorantiBean> Ristoranti;
+	private ArrayList<PiattiBean> Piatti;
 	
 	public int getIDPiatto() {
 		return IDPiatto;
