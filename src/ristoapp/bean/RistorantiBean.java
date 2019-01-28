@@ -23,12 +23,15 @@ public class RistorantiBean implements java.io.Serializable{
 	private Boolean SerScegliTavolo;
 	private Boolean SerClimatizzazione;
 	private Boolean SerAnimali;
-	private Boolean Serwifi;
-	private Boolean Serdisabili;
-	private Boolean Serparcheggio;
+	private Boolean SerWifi;
+	private Boolean SerDisabili;
+	private Boolean SerParcheggio;
 	
 	//per collegarlo alle altre tabelle
-	private ArrayList<PiattiBean> ristorantePiatti;
+	private ArrayList<PiattiBean> Piatti;
+	private ArrayList<OfferteBean> Offerte;
+	private ArrayList<PrenotazioniBean> Prenotazioni;
+	private ArrayList<RecensioniRistoBean> RecensioniRistoranti;
 	
 	public int getIDRistorante() {
 		return IDRistorante;
@@ -114,28 +117,47 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setSerAnimali(Boolean serAnimali) {
 		SerAnimali = serAnimali;
 	}
-	public Boolean getSerwifi() {
-		return Serwifi;
+	public Boolean getSerWifi() {
+		return SerWifi;
 	}
-	public void setSerwifi(Boolean serwifi) {
-		Serwifi = serwifi;
+	public void setSerWifi(Boolean serWifi) {
+		SerWifi = serWifi;
 	}
-	public Boolean getSerdisabili() {
-		return Serdisabili;
+	public Boolean getSerDisabili() {
+		return SerDisabili;
 	}
-	public void setSerdisabili(Boolean serdisabili) {
-		Serdisabili = serdisabili;
+	public void setSerDisabili(Boolean serDisabili) {
+		SerDisabili = serDisabili;
 	}
-	public Boolean getSerparcheggio() {
-		return Serparcheggio;
+	public Boolean getSerParcheggio() {
+		return SerParcheggio;
 	}
-	public void setSerparcheggio(Boolean serparcheggio) {
-		Serparcheggio = serparcheggio;
+	public void setSerParcheggio(Boolean serParcheggio) {
+		SerParcheggio = serParcheggio;
 	}
-	public ArrayList<PiattiBean> getRistorantePiatti() {
-		return ristorantePiatti;
+	
+	public ArrayList<PiattiBean> getPiatti() {
+		return Piatti;
 	}
-	public void setRistorantePiatti(ArrayList<PiattiBean> ristorantePiatti) {
-		this.ristorantePiatti = ristorantePiatti;
+	public void setRistorantePiatti(ArrayList<PiattiBean> Piatti) {
+		this.Piatti = Piatti;
+	}
+	public ArrayList<OfferteBean> getOfferte() {
+		return Offerte;
+	}
+	public void setOfferte(ArrayList<OfferteBean> offerte) {
+		Offerte = offerte;
+	}
+	public ArrayList<PrenotazioniBean> getPrenotazioni() {
+		return Prenotazioni;
+	}
+	public void setPrenotazioni(ArrayList<PrenotazioniBean> prenotazioni) {
+		Prenotazioni = prenotazioni;
+	}
+	public ArrayList<RecensioniRistoBean> getRecensioniRistoranti() {
+		return RecensioniRistoranti;
+	}
+	public void setRecensioniRisto(ArrayList<RecensioniRistoBean> recensioniRistoranti) {
+		RecensioniRistoranti = recensioniRistoranti;
 	}
 }
