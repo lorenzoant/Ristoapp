@@ -22,7 +22,7 @@ public class PiattiBean implements java.io.Serializable{
 	//per collegarlo alle altre tabelle
 	private ArrayList<OfferteBean> Offerte;
 	private ArrayList<PrenotazioniDettagliBean> PrenotazioniDettagli;
-	private ArrayList<RecensioniPiattiBean> RecensioniPiatti;
+	private ArrayList<RecensionePiattiBean> RecensioniPiatti;
 	
 	public int getIDPiatto() {
 		return IDPiatto;
@@ -78,10 +78,10 @@ public class PiattiBean implements java.io.Serializable{
 	public void setAllergeni(String allergeni) {
 		Allergeni = allergeni;
 	}
-	public ArrayList<OfferteBean> getOfferte() {
+	public ArrayList<PrenotazioniDettagliBean> getOfferte() {
 		return Offerte;
 	}
-	public void setOfferte(ArrayList<OfferteBean> offerte) {
+	public void setOfferte(ArrayList<PrenotazioniDettagliBean> offerte) {
 		Offerte = offerte;
 	}
 	public ArrayList<PrenotazioniDettagliBean> getPrenotazioniDettagli() {
@@ -90,10 +90,10 @@ public class PiattiBean implements java.io.Serializable{
 	public void setPrenotazioni_dettagli(ArrayList<PrenotazioniDettagliBean> prenotazioniDettagli) {
 		PrenotazioniDettagli = prenotazioniDettagli;
 	}
-	public ArrayList<RecensioniPiattiBean> getRecensioniPiatti() {
+	public ArrayList<RecensionePiattiBean> getRecensioniPiatti() {
 		return RecensioniPiatti;
 	}
-	public void setRecensioni_piatti(ArrayList<RecensioniPiattiBean> recensioniPiatti) {
+	public void setRecensioni_piatti(ArrayList<RecensionePiattiBean> recensioniPiatti) {
 		RecensioniPiatti = recensioniPiatti;
 	}
 }

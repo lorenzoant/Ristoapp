@@ -1,5 +1,7 @@
 package ristoapp.bean;
 
+import java.util.ArrayList;
+
 public class CategoriaCarteBean implements java.io.Serializable{
 
 	/**
@@ -10,6 +12,9 @@ public class CategoriaCarteBean implements java.io.Serializable{
 	
 	private int IDCatCarta;
 	private String Nome;
+	
+	private ArrayList<CarteBean> Carte;
+	
 	
 	//Getter e Setter
 	public int getIDCatCarta() {
@@ -23,5 +28,11 @@ public class CategoriaCarteBean implements java.io.Serializable{
 	}
 	public void setNome(String nome) {
 		Nome = nome;
+	}
+	public ArrayList<CarteBean> getCarte() {
+		return Carte;
+	}
+	public void setCarte(ArrayList<CarteBean> carte) {
+		Carte = carte;
 	}
 }

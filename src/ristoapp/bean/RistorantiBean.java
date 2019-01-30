@@ -29,9 +29,9 @@ public class RistorantiBean implements java.io.Serializable{
 	
 	//per collegarlo alle altre tabelle
 	private ArrayList<PiattiBean> Piatti;
-	private ArrayList<OfferteBean> Offerte;
+	private ArrayList<PrenotazioniDettagliBean> Offerte;
 	private ArrayList<PrenotazioniBean> Prenotazioni;
-	private ArrayList<RecensioniRistoBean> RecensioniRistoranti;
+	private ArrayList<RecensioniRistorantiBean> RecensioniRistoranti;
 	
 	public int getIDRistorante() {
 		return IDRistorante;
@@ -142,10 +142,10 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setRistorantePiatti(ArrayList<PiattiBean> Piatti) {
 		this.Piatti = Piatti;
 	}
-	public ArrayList<OfferteBean> getOfferte() {
+	public ArrayList<PrenotazioniDettagliBean> getOfferte() {
 		return Offerte;
 	}
-	public void setOfferte(ArrayList<OfferteBean> offerte) {
+	public void setOfferte(ArrayList<PrenotazioniDettagliBean> offerte) {
 		Offerte = offerte;
 	}
 	public ArrayList<PrenotazioniBean> getPrenotazioni() {
@@ -154,10 +154,10 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setPrenotazioni(ArrayList<PrenotazioniBean> prenotazioni) {
 		Prenotazioni = prenotazioni;
 	}
-	public ArrayList<RecensioniRistoBean> getRecensioniRistoranti() {
+	public ArrayList<RecensioniRistorantiBean> getRecensioniRistoranti() {
 		return RecensioniRistoranti;
 	}
-	public void setRecensioniRisto(ArrayList<RecensioniRistoBean> recensioniRistoranti) {
+	public void setRecensioniRisto(ArrayList<RecensioniRistorantiBean> recensioniRistoranti) {
 		RecensioniRistoranti = recensioniRistoranti;
 	}
 }

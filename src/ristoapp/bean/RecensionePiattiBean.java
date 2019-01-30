@@ -1,9 +1,8 @@
 package ristoapp.bean;
 
 import java.sql.Time;
-import java.util.ArrayList;
+import javax.xml.crypto.Data;
 
-import javafx.scene.chart.PieChart.Data;
 
 public class RecensionePiattiBean implements java.io.Serializable {
 
@@ -18,10 +17,6 @@ public class RecensionePiattiBean implements java.io.Serializable {
 	private Data DataRecensione;
 	private Time OraRecensione;
 	
-	//per collegarlo alle altre tabelle
-	private ArrayList<PrenotazioniBean> Prenotazioni;
-	private ArrayList<RistorantiBean> Ristoranti;
-	private ArrayList<PiattiBean> Piatti;
 	
 	public int getIDPiatto() {
 		return IDPiatto;
@@ -70,17 +65,5 @@ public class RecensionePiattiBean implements java.io.Serializable {
 	}
 	public void setOraRecensione(Time oraRecensione) {
 		OraRecensione = oraRecensione;
-	}
-	public ArrayList<PiattiBean> getPiatti() {
-		return Piatti;
-	}
-	public void setPiatti(ArrayList<PiattiBean> piatti) {
-		Piatti = piatti;
-	}
-	public ArrayList<RistorantiBean> getRistoranti() {
-		return Ristoranti;
-	}
-	public void setRistoranti(ArrayList<RistorantiBean> ristoranti) {
-		Ristoranti = ristoranti;
 	}
 }

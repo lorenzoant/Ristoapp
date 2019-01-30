@@ -1,4 +1,4 @@
-package ProgettoRisto.bean;
+package ristoapp.bean;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,11 @@ public class ClientiBean implements java.io.Serializable{
 	private Boolean Geolocalizzazione;
 	private int PuntiFedeltà;
 	
+	private ArrayList<AbbonamentoRistBean> Abbonamenti;
 	private ArrayList<RecensionePiattiBean> Recensione;
 	private ArrayList<CarteBean> Carte;
 	private ArrayList<RecensioniRistorantiBean> Recensioni_Ristoranti;
-	private ArrayList<prenotazioniBean> Prenotazioni;
+	private ArrayList<PrenotazioniBean> Prenotazioni;
 	
 	public String getEmail() {
 		return Email;
@@ -95,6 +96,36 @@ public class ClientiBean implements java.io.Serializable{
 	}
 	public void setPuntiFedeltà(int puntiFedeltà) {
 		PuntiFedeltà = puntiFedeltà;
+	}
+	public ArrayList<RecensionePiattiBean> getRecensione() {
+		return Recensione;
+	}
+	public void setRecensione(ArrayList<RecensionePiattiBean> recensione) {
+		Recensione = recensione;
+	}
+	public ArrayList<CarteBean> getCarte() {
+		return Carte;
+	}
+	public void setCarte(ArrayList<CarteBean> carte) {
+		Carte = carte;
+	}
+	public ArrayList<RecensioniRistorantiBean> getRecensioni_Ristoranti() {
+		return Recensioni_Ristoranti;
+	}
+	public void setRecensioni_Ristoranti(ArrayList<RecensioniRistorantiBean> recensioni_Ristoranti) {
+		Recensioni_Ristoranti = recensioni_Ristoranti;
+	}
+	public ArrayList<PrenotazioniBean> getPrenotazioni() {
+		return Prenotazioni;
+	}
+	public void setPrenotazioni(ArrayList<PrenotazioniBean> prenotazioni) {
+		Prenotazioni = prenotazioni;
+	}
+	public ArrayList<AbbonamentoRistBean> getAbbonamenti() {
+		return Abbonamenti;
+	}
+	public void setAbbonamenti(ArrayList<AbbonamentoRistBean> abbonamenti) {
+		Abbonamenti = abbonamenti;
 	}
 	
 

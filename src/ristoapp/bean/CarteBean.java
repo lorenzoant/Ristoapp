@@ -1,7 +1,6 @@
 package ristoapp.bean;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 
 public class CarteBean implements java.io.Serializable{
@@ -20,10 +19,6 @@ public class CarteBean implements java.io.Serializable{
 	private Date DataScadenza;
 	
 	//per collegarlo alle altre tabelle
-	
-	
-	private ArrayList<ClientiBean> Clienti;
-	private ArrayList<CategoriaCarteBean> Categoria_carte;
 	
 	
 	public int getIDCarta() {

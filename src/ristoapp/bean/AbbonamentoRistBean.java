@@ -1,7 +1,5 @@
 package ristoapp.bean;
 import java.sql.Date;
-import java.io.Serializable;
-import java.util.ArrayList;
 public class AbbonamentoRistBean implements java.io.Serializable {
 
 	/**
@@ -16,13 +14,8 @@ public class AbbonamentoRistBean implements java.io.Serializable {
 	private Date Durata;
 	private int Importo;
 	
-	//Collegamenti
-	
-	
-	private ArrayList<ClientiBean> Clienti;
-
-	
 	//Getter e Setter
+	
 	public int getIDAbbonamento() {
 		return IDAbbonamento;
 	}
@@ -62,15 +55,5 @@ public class AbbonamentoRistBean implements java.io.Serializable {
 	public void setImporto(int importo) {
 		Importo = importo;
 	}
-
-	public ArrayList<ClientiBean> getClienti() {
-		return Clienti;
-	}
-
-	public void setClienti(ArrayList<ClientiBean> clienti) {
-		Clienti = clienti;
-	}
-
-
 
 }
