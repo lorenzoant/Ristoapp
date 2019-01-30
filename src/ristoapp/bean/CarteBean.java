@@ -23,7 +23,7 @@ public class CarteBean implements java.io.Serializable{
 	
 	
 	private ArrayList<ClientiBean> Clienti;
-	private ArrayList<Categoria_carte> Categoria_carte;
+	private ArrayList<CategoriaCarteBean> Categoria_carte;
 	
 	
 	public int getIDCarta() {
