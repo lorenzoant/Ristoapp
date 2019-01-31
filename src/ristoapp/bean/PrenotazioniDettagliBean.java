@@ -2,9 +2,6 @@ package ristoapp.bean;
 
 public class PrenotazioniDettagliBean implements java.io.Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8905967347413230537L;
 
 	private int IDPrenotazioneDett;
@@ -12,7 +9,7 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	private int IDFPiatto;
 	private double Prezzo;
 	private int Sconto;
-	private int Quantità;
+	private int Quantitï¿½;
 	
 	
 	//Getter e Setter
@@ -46,12 +43,10 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	public void setSconto(int sconto) {
 		Sconto = sconto;
 	}
-	public int getQuantità() {
-		return Quantità;
+	public int getQuantitï¿½() {
+		return Quantitï¿½;
 	}
-	public void setQuantità(int quantità) {
-		Quantità = quantità;
+	public void setQuantitï¿½(int quantitï¿½) {
+		Quantitï¿½ = quantitï¿½;
 	}
-	
-	
 }

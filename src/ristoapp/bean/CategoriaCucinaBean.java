@@ -2,9 +2,6 @@ package ristoapp.bean;
 
 public class CategoriaCucinaBean implements java.io.Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3121903374193650311L;
 
 	private int IDCatPiatto;
