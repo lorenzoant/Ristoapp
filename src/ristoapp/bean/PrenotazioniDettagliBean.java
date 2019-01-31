@@ -12,7 +12,9 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	private int IDFPiatto;
 	private double Prezzo;
 	private int Sconto;
-	private int Quantità;
+	private int Quantita;
+
+	private int quantita;
 	
 	
 	//Getter e Setter
@@ -46,11 +48,11 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	public void setSconto(int sconto) {
 		Sconto = sconto;
 	}
-	public int getQuantità() {
-		return Quantità;
+	public int getQuantita() {
+		return Quantita;
 	}
-	public void setQuantità(int quantità) {
-		Quantità = quantità;
+	public void setQuantita(int quantità) {
+		Quantita = quantita;
 	}
 	
 	
