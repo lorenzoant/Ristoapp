@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class PiattiBean implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -8288694045192882180L;
 	
 	private int IDPiatto;

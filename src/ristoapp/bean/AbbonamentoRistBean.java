@@ -2,6 +2,9 @@ package ristoapp.bean;
 import java.sql.Date;
 public class AbbonamentoRistBean implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 3338316497127062328L;
 
 	//Variabili
@@ -52,4 +55,5 @@ public class AbbonamentoRistBean implements java.io.Serializable {
 	public void setImporto(int importo) {
 		Importo = importo;
 	}
+
 }

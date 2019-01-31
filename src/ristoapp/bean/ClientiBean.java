@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ClientiBean implements java.io.Serializable{
 
 	private static final long serialVersionUID = -8693558659224935735L;
-
+	
 	private int IDCliente;
 	private String Email;
 	private String PassHash;
@@ -18,13 +18,13 @@ public class ClientiBean implements java.io.Serializable{
 	private Boolean NotificaEmail;
 	private Boolean Geolocalizzazione;
 	private int PuntiFedelta;
-
+	
 	private ArrayList<AbbonamentoRistBean> Abbonamenti;
 	private ArrayList<RecensionePiattiBean> Recensione;
 	private ArrayList<CarteBean> Carte;
 	private ArrayList<RecensioniRistorantiBean> Recensioni_Ristoranti;
 	private ArrayList<PrenotazioniBean> Prenotazioni;
-
+	
 	public String getEmail() {
 		return Email;
 	}
@@ -127,4 +127,6 @@ public class ClientiBean implements java.io.Serializable{
 	public void setAbbonamenti(ArrayList<AbbonamentoRistBean> abbonamenti) {
 		Abbonamenti = abbonamenti;
 	}
+	
+
 }

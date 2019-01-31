@@ -5,6 +5,9 @@ import java.util.Date;
 
 public class PrenotazioniBean implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 8909903652040882756L;
 	
 	private int IDPrenotazione;
@@ -82,4 +85,6 @@ public class PrenotazioniBean implements java.io.Serializable {
 	public void setDettagliPrenotazioni(ArrayList<PrenotazioniDettagliBean> dettagliPrenotazioni) {
 		DettagliPrenotazioni = dettagliPrenotazioni;
 	}
+	
+
 }

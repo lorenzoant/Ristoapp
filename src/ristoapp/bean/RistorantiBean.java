@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class RistorantiBean implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 6070275137017810180L;
 	
 	private int IDRistorante;

@@ -80,4 +80,5 @@ public class RecensioniRistorantiBean implements java.io.Serializable{
 	public void setRistoranti(ArrayList<RistorantiBean> ristoranti) {
 		Ristoranti = ristoranti;
 	}
+	
 }
