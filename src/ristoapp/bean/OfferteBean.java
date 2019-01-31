@@ -4,9 +4,6 @@ import java.util.Date;
 
 public class OfferteBean implements java.io.Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8905967347413230537L;
 
 	private int IDOfferta;
