@@ -78,12 +78,6 @@ public class PiattiBean implements java.io.Serializable{
 	public void setAllergeni(String allergeni) {
 		Allergeni = allergeni;
 	}
-	public ArrayList<PrenotazioniDettagliBean> getOfferte() {
-		return Offerte;
-	}
-	public void setOfferte(ArrayList<PrenotazioniDettagliBean> offerte) {
-		Offerte = offerte;
-	}
 	public ArrayList<PrenotazioniDettagliBean> getPrenotazioniDettagli() {
 		return PrenotazioniDettagli;
 	}
@@ -95,5 +89,11 @@ public class PiattiBean implements java.io.Serializable{
 	}
 	public void setRecensioni_piatti(ArrayList<RecensionePiattiBean> recensioniPiatti) {
 		RecensioniPiatti = recensioniPiatti;
+	}
+	public ArrayList<OfferteBean> getOfferte() {
+		return Offerte;
+	}
+	public void setOfferte(ArrayList<OfferteBean> offerte) {
+		Offerte = offerte;
 	}
 }
