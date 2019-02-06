@@ -127,6 +127,4 @@ public class ClientiBean implements java.io.Serializable{
 	public void setAbbonamenti(ArrayList<AbbonamentoRistBean> abbonamenti) {
 		Abbonamenti = abbonamenti;
 	}
-	
-
 }

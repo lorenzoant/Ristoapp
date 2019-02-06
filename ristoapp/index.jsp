@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>RistoApp</title>
+	<meta charset="ISO-8859-1">
+	<title>Ristoapp</title>
 </head>
 <body>
-	RistoApp
+	RISTO HOME PAGE CHE FARANNO QUELLI DI 3AITI
 </body>
 </html>

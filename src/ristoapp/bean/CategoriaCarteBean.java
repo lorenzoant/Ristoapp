@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class CategoriaCarteBean implements java.io.Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8690268046971667748L;
 
 	
