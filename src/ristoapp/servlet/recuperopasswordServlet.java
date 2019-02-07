@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class RecuperoPasswordServlet
  */
 @WebServlet("/RecuperoPasswordServlet")
-public class RecuperoPasswordServlet extends HttpServlet {
+public class recuperopasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecuperoPasswordServlet() {
+    public recuperopasswordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
