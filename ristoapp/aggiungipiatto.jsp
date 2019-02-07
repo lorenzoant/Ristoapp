@@ -7,7 +7,7 @@
 <title>Aggiungi piatto</title>
 </head>
 <body>
-	<form action="/ristoapp.servlet/RistoAppServlet" name="aggiungipiatto" method="post">
+	<form action="/ristoapp.servlet/aggiungipiatto" name="aggiungipiatto" method="post">
 		Nome piatto <input name="nome" value="" type="text"/><br>
 		Prezzo <input name="prezzo" value="" type="text"/><br>
 		Breve desrizione <input name="descrizione" value="" type="text"/><br>

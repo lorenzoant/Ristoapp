@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action = "/ristoapp.servlet/RistoAppServlet" name = "login" method ="POST">
+<form action = "/ristoapp.servlet/loginServlet" name = "login" method ="POST">
 	E-mail<input type = "text" name = "email"/><br>
 	Password<input type = "text" name = "password"/><br>
 	<input type = "submit"/>
