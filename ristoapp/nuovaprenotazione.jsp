@@ -14,6 +14,5 @@
 		<div>Posti da prenotare:   <input name="posti" value="" type="number"/></div><br>
 		<input value="Crea la prenotazione" type="submit">
 	</form>
-
 </body>
 </html>
