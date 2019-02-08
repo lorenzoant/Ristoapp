@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/ristoapp/nuovaprenotazioneServlet" name="nuovaprenotazione" method="post">
+<form action="/ristoapp/nuovaprenotazione" name="nuovaprenotazione" method="post">
 		<div>Tipo di prenotazione: <input name="tipoprenotazione" value="" type="text"/></div><br>
 		<div>Data Prenotazione:    <input name="data" value="" type="date"/></div><br>
 		<div>Ora  Prenotazione:    <input name="ora" value="" type="date"/></div><br>

@@ -7,7 +7,7 @@
 <title>Recupero password</title>
 </head>
 <body>
-	<form action="/ristoapp/RecuperoPasswordServlet" name="login" method="post">
+	<form action="/ristoapp/RecuperoPassword" name="login" method="post">
 		E-Mail <input name="email" value="" type="text"/><br><br>
 		<input value="Recupero" type="submit">
 	</form>
