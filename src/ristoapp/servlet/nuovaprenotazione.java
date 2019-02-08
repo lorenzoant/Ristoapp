@@ -26,13 +26,29 @@ public class nuovaprenotazione extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+		String p1 = request.getParameter("tipoprenotazione");
+		String p2 = request.getParameter("data");
+		String p3 = request.getParameter("ora");
+		String p4 = request.getParameter("posti");
+		System.out.println (
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" +" +
+                    "http://www.w3.org/TR/html4/loose.dtd\">\n" +
+                "<html> \n" +
+                  "<head> \n" +
+                    "<meta http-equiv=\"Content-Type\" content=\"text/html; " +
+                      "charset=ISO-8859-1\"> \n" +
+                    "<title> Crunchify.com JSP Servlet Example  </title> \n" +
+                  "</head> \n" +
+                  "<body> <div align='center'> \n" +
+                    "<style= \"font-size=\"12px\" color='black'\"" + "\">" +
+                      "tipo: " + p1 + " <br> " + 
+                      "data: " + p2 +
+                  "</font></body> \n" +
+                "</html>" );
+			
+		}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
