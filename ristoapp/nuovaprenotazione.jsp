@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="ISO-8859-1">
+	<title>Nuova prenotazione</title>
 </head>
 <body>
-<form action="/ristoapp/nuovaprenotazione" name="nuovaprenotazione" method="post">
+<form action="nuovaprenotazioneservlet" name="nuovaprenotazione" method="post">
 		<div>Tipo di prenotazione: <input name="tipoprenotazione" value="" type="text"/></div><br>
 		<div>Data Prenotazione:    <input name="data" value="" type="date"/></div><br>
 		<div>Ora  Prenotazione:    <input name="ora" value="" type="date"/></div><br>

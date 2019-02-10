@@ -1,5 +1,4 @@
 package ristoapp.bean;
-import java.util.ArrayList;
 
 public class TavoliBean implements java.io.Serializable{
 	
@@ -10,6 +9,7 @@ public class TavoliBean implements java.io.Serializable{
 	private int IDFOrdine;
 	private int Riga;
 	private int Colonna;
+	
 	public int getIDTavolo() {
 		return IDTavolo;
 	}
@@ -40,5 +40,4 @@ public class TavoliBean implements java.io.Serializable{
 	public void setColonna(int colonna) {
 		Colonna = colonna;
 	}
-	
 }

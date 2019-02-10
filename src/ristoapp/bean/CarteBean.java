@@ -2,7 +2,6 @@ package ristoapp.bean;
 
 import java.sql.Date;
 
-
 public class CarteBean implements java.io.Serializable{
 
 	private static final long serialVersionUID = -4142538666651054231L;

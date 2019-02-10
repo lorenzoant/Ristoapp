@@ -1,4 +1,4 @@
-package ProgettoRisto.src;
+package ristoapp.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ProgettoRistoServlet
  */
-@WebServlet("/ProgettoRistoServlet")
-public class AccountServlet extends HttpServlet {
+@WebServlet("/registratiservlet")
+public class RegistratiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public AccountServlet() {
+    public RegistratiServlet() {
     	super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class AccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Registrazione eseguita");
 	}
 
 	/**

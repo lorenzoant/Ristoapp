@@ -8,5 +8,6 @@
 </head>
 <body>
 	RISTO HOME PAGE CHE FARANNO QUELLI DI 3AITI
+	<br><a href="login.jsp">Login</a>
 </body>
 </html>
