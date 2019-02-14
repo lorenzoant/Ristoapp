@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.sql.*"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,7 @@
                 }
                 try {
                     PreparedStatement pst = con
-                            .prepareStatement("select projectname from project where branchid=1");
+                            .prepareStatement("select name from Comuni");
                     //pst.setString(1,uid);
                     rs = pst.executeQuery();
                     while (rs.next()) {
