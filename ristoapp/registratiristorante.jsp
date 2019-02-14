@@ -10,12 +10,12 @@
 <body>
 	
 	<form action = "registratiristoranteservlet" name = "account" method ="post">
-		NomeRistorante<input type = "text" name = "nome_ristorante"/><br>
-		Indirizzo<input type = "text" name = "indirizzo"/><br>
-		Telefono<input type = "text" name = "telefono"/><br>
-		Email<input type = "text" name = "email"/><br>
+		NomeRistorante: <input type = "text" name = "nome_ristorante"/><br><br>
+		Indirizzo: <input type = "text" name = "indirizzo"/><br><br>
+		Telefono: <input type = "text" name = "telefono"/><br><br>
+		Email: <input type = "text" name = "email"/><br><br>
 		
-		Comuni<select class="comuni">
+		Comuni: <select class="comuni">
             <option value="null">-Select-</option>
 
             <%
@@ -45,14 +45,14 @@
                 }
             %>
 
-        </select>
+        </select><br><br>
         
-		Descrizione<input type = "text" name = "descrizione"/><br>
-		Ser-Climatizzazione<input type = "checkbox" name = "Ser-climatizzazione"/><br>
-		Ser-Animali<input type = "checkbox" name = "Ser-climatizzazione"/><br>
-		Ser-Wifi<input type = "checkbox" name = "Ser-climatizzazione"/><br>
-		Ser-Disabili<input type = "checkbox" name = "Ser-climatizzazione"/><br>
-		Ser-Parcheggio<input type = "checkbox" name = "Ser-climatizzazione"/><br>
+		Descrizione: <input type = "text" name = "descrizione"/><br><br>
+		Ser-Climatizzazione: <input type = "checkbox" name = "Ser-climatizzazione"/><br><br>
+		Ser-Animali: <input type = "checkbox" name = "Ser-climatizzazione"/><br><br>
+		Ser-Wifi: <input type = "checkbox" name = "Ser-climatizzazione"/><br><br>
+		Ser-Disabili: <input type = "checkbox" name = "Ser-climatizzazione"/><br><br>
+		Ser-Parcheggio: <input type = "checkbox" name = "Ser-climatizzazione"/><br><br>
 		<input type = "submit" value = "Registrati"/>
 	</form>
 
