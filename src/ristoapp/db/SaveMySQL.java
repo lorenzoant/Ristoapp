@@ -11,7 +11,7 @@ public class SaveMySQL {
 
 	// Parametri di accesso al database
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ristoappDB";
+	private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ristoapp_db";
 	private static final String DB_USER = "root";
 	private static final String DB_PASSWORD = "toor";
 	
@@ -72,10 +72,33 @@ public class SaveMySQL {
 					piatto.getAllergeni() + "');";
 			
 			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			// Nel caso volessi lavorare anche sugli array:
+			/*ArrayList<RecensionePiattiBean> recensioniPiatti = PiattiBean.getRecensioniPiatti();
+			
+			for(RecensionePiattiBean recensione:recensioniPiatti) {
+				sql = "INSERT INTO faccio la insert ma in questo caso non serve";
+			}
+			
+			stmt.executeUpdate(sql);*/
 		}
 		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
 			System.out.println("MySQL connection inserisciPiatto() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
 			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
 		}
 	}// End inserisciPiatto()
 	
