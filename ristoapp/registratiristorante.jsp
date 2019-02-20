@@ -39,17 +39,17 @@
 	                try {
 	                    Class.forName("com.mysql.jdbc.Driver");
 	                    con = DriverManager.getConnection(
-	                            "jdbc:mysql://localhost:3306/ristoappDB", "root", "12345");
+	                            "jdbc:mysql://lorenzoantoniazzi.ddns.net:3306/theristoapp", "ristoapp", "$@x9Wq7XTjN#-J^v");
 	                } catch (Exception ex) {
 	                    out.println("exxx " + ex);
 	                }
 	                try {
 	                    PreparedStatement pst = con
-	                            .prepareStatement("select name from Comuni");
+	                            .prepareStatement("select Nome from Clienti");
 	                    //pst.setString(1,uid);
 	                    rs = pst.executeQuery();
 	                    while (rs.next()) {
-	                        String name = rs.getString("name");
+	                        String name = rs.getString("Nome");
 	            %>
 	            <option value="<%=name%>"><%=name%></option>
 	            <%
