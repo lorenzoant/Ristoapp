@@ -7,7 +7,7 @@
 	<title>Nuova prenotazione</title>
 </head>
 <body>
-<form action="nuovaprenotazioneservlet" name="nuovaprenotazione" method="post">
+<form action="/nuovaprenotazioneservlet" name="nuovaprenotazione" method="POST">
 		<div>Tipo di prenotazione: <input name="tipoprenotazione" value="" type="text"/></div><br>
 		<div>Data Prenotazione:    <input name="data" value="" type="date"/></div><br>
 		<div>Ora  Prenotazione:    <input name="ora" value="" type="date"/></div><br>
