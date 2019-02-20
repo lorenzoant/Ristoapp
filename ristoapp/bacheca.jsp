@@ -10,7 +10,7 @@
 
 <form action = "Bachecaservlet" name = "bacheca" method ="POST">
 	
-	barra di ricerca <input type="text" name="riceerca"><br>
+	barra di ricerca <input type="text" name="ricerca"><br>
 	
 	<!-- filtri per la ricerca: localizzazione, comune, serClimatizzato, serAnimali, wifi, disabili, parcheggio  -->
 	<input type="radio" name="vicinanze">
