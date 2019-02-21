@@ -68,7 +68,7 @@ public class SaveMySQL {
 					piatto.getPrezzo() + "','" + 
 					piatto.getDisponibile() + "','" + 
 					piatto.getDescrizione() + "','" + 
-					piatto.getFoto() + "','" + 
+					piatto.getUrl() + "','" + 
 					piatto.getAllergeni() + "');";
 			
 			// Committo sul server

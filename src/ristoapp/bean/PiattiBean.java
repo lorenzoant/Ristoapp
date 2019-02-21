@@ -13,7 +13,7 @@ public class PiattiBean implements java.io.Serializable{
 	private double Prezzo;
 	private Boolean Disponibile;
 	private String Descrizione;
-	private String Foto;
+	private String Url;
 	private String Allergeni;
 	
 	//per collegarlo alle altre tabelle
@@ -63,11 +63,11 @@ public class PiattiBean implements java.io.Serializable{
 	public void setDescrizione(String descrizione) {
 		Descrizione = descrizione;
 	}
-	public String getFoto() {
-		return Foto;
+	public String getUrl() {
+		return Url;
 	}
-	public void setFoto(String foto) {
-		Foto = foto;
+	public void setUrl(String url) {
+		Url = url;
 	}
 	public String getAllergeni() {
 		return Allergeni;
