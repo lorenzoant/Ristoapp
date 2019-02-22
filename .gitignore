@@ -7,7 +7,7 @@ target/
 .DS_Store
  
 *.class
-/.classpath
+.classpath
  
  
 ######################
