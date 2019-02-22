@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action = "/ristoapp.servlet/Prog" name = "Account" method ="POST">
+<form action = "accountservlet" name = "Account" method ="POST">
 	Username<input type = "text" name = "username"/><br>
 	Password<input type = "text" name = "password"/><br>
 	Re_Password<input type = "text" name = "re_password"/><br>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class BachecaServlet
  */
-@WebServlet("/BachecaServlet")
+@WebServlet("/bachecaservlet")
 public class BachecaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

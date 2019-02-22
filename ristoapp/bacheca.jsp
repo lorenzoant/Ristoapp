@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action = "Bachecaservlet" name = "bacheca" method ="POST">
+<form action = "bachecaservlet" name = "bacheca" method ="POST">
 	
 	barra di ricerca <input type="text" name="ricerca"><br>
 	
