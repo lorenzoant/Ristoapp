@@ -6,4 +6,5 @@
 <h1 style="text-align: center; font-size: 40px; font-weight: bolder;">Please let me stay here and bless this project</h1>
 <center>
 <img style="border-radius: 500px;"src="https://www.papaboys.org/wp-content/uploads/2017/08/c138686f8186f72e9678ded73572fc18.jpg">
+</center>
 </body>

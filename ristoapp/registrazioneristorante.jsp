@@ -29,37 +29,34 @@
 		</tr>
 		<tr>
 			<td>Comuni: </td>
-			<td><select class="comuni">
-	            <option value="null">-Select-</option>
-	
-	            <%
-	                Connection con = null;
-	                ResultSet rs = null;
-	
-	                try {
-	                    Class.forName("com.mysql.jdbc.Driver");
-	                    con = DriverManager.getConnection(
-	                            "jdbc:mysql://lorenzoantoniazzi.ddns.net:3306/theristoapp", "ristoapp", "$@x9Wq7XTjN#-J^v");
-	                } catch (Exception ex) {
-	                    out.println("exxx " + ex);
-	                }
-	                try {
-	                    PreparedStatement pst = con
-	                            .prepareStatement("select Nome from Clienti");
-	                    //pst.setString(1,uid);
-	                    rs = pst.executeQuery();
-	                    while (rs.next()) {
-	                        String name = rs.getString("Nome");
-	            %>
-	            <option value="<%=name%>"><%=name%></option>
-	            <%
-	                }
-	                } catch (Exception e) {
-	                    out.print("error: " + e);
-	                }
-	            %>
-	
-	        </select></td>
+			<td><select>
+				<option value="null">-Select-</option>
+					<% 
+					Connection con=null;
+					ResultSet rs=null;
+					
+					try
+					{
+					     Class.forName("com.mysql.jdbc.Driver");
+					     con=DriverManager.getConnection("jdbc:mysql://lorenzoantoniazzi.ddns.net/theristoapp", "ristoapp", "$@x9Wq7XTjN#-J^v");
+					     HttpSession ss=request.getSession();
+					     String uid=(String)ss.getAttribute("id");
+					     PreparedStatement pst=con.prepareStatement("SELECT * FROM Comuni WHERE ID = ID;");
+					     //pst.setString(1,uid);
+					     rs=pst.executeQuery();
+					     while(rs.next())
+					     {
+					          String name = rs.getString("Nome");
+					%>
+					          <option value="x"><%=name%></option>
+					<%
+					     }
+					}catch(Exception e)
+					{    
+						System.out.println(e.getMessage());
+					}
+					%>
+					</select></td>
         </tr>
 		<tr>
 			<td>Descrizione: </td>
