@@ -12,7 +12,7 @@
 	<form action = "registratiristoranteservlet" name = "account" method ="post">
 		<table>
 		<tr>
-			<td>NomeRistorante:</td> 
+			<td>Nome Ristorante:</td> 
 			<td><input type = "text" name = "nome_ristorante"/></td>
 		</tr>
 		<tr>
@@ -48,7 +48,7 @@
 					     {
 					          String name = rs.getString("Nome");
 					%>
-					          <option value="x"><%=name%></option>
+					          <option value="<%=name%>"><%=name%></option>
 					<%
 					     }
 					}catch(Exception e)
@@ -84,6 +84,10 @@
 		</tr>	
 		</table>
 		<input type = "submit" value = "Registrati"/>
+	</form>
+	<form name = "saveOnDB" action = "/" method = "post">
+			<input name = "whatsend" value = "saveInDB" type = "hidden">
+			<input value = "save to DB" type = "submit">
 	</form>
 
 </body>
