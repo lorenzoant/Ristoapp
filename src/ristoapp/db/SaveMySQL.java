@@ -15,9 +15,9 @@ public class SaveMySQL {
 
 	// Parametri di accesso al database
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ristoapp_db";
-	private static final String DB_USER = "root";
-	private static final String DB_PASSWORD = "toor";
+	private static final String DB_CONNECTION = "jdbc:mysql://lorenzoantoniazzi.ddns.net/theristoapp";
+	private static final String DB_USER = "ristoapp";
+	private static final String DB_PASSWORD = "$@x9Wq7XTjN#-J^v";
 	
 	
 	private static Connection getDBConnection() throws Exception {

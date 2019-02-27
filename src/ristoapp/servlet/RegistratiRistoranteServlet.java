@@ -2,6 +2,7 @@ package ristoapp.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import ristoapp.bean.CategoriaCucinaBean;
 import ristoapp.bean.ClientiBean;
+import ristoapp.bean.PiattiBean;
 import ristoapp.bean.RistorantiBean;
+import ristoapp.db.SaveMySQL;
 
 /**
  * Servlet implementation class RegistratiRistoranteServlet
@@ -41,6 +44,7 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("ciao");
 		String whatsend = request.getParameter("whatseend");
 		
 		if (whatsend.equalsIgnoreCase("company")) {
@@ -61,8 +65,7 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			//salvataggio valori nel bean
 			RistorantiBean ristorante = new RistorantiBean();
 			CategoriaCucinaBean catcucina = new CategoriaCucinaBean();
-			ClientiBean cliente = new ClientiBean();
-			ArrayList<>
+			company.setCompanyEmployess(companyEmployess);
 			
 			ristorante.setNome(nome_ristorante);
 			ristorante.setIndirizzo(indirizzo);
@@ -77,21 +80,44 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			ristorante.setSerParcheggio(parcheggio);
 			
 			//il bean deve essere salvato in sessione
-			if (request.getSession() != null && request.getSession().getAttribute("REGRISTO") != null) {
-				ristorante = (RistorantiBean)request.getSession().getAttribute("");
-				ArrayList<RistorantiBean> = 
+			if(request.getSession() != null && request.getAttribute("RISTORANTE") != null) {
+				piatto = (PiattiBean)request.getSession().getAttribute("bo");
+				ArrayList<RistorantiBean> = company.getCompanyEmploeyess();
+				RistorantiBean employeetoremove = new RistorantiBean();
+				for(Employeebean cl:companyEmploeyess) {
+					if(cl.getIdEmployee().equalsIgnoreCase(idemployee)) {
+						employeetoremove = cl;
+					}
+				}
 			}
 			
-
+			// Il bean deve essere salvato in sessione
+			companyemplotess.remove(employeetoremove);
+			companyEmployees.add(employee);
+			company.setCompanyEmployees(companyEmployess)
+			
+			request.getSession().removeAttribute("employee");
+			request.getSession().setAttribute("employee", employee);
 			
 			request.getSession().removeAttribute("REGRISTO");
 			request.getSession().setAttribute("REGRISTO", ristorante);
 			
 			//apro la pagina
 			ServletContext sc = request.getSession().getServletContext();
-			RequestDispacher rd = sc.getRequestDispatcher("/registratiristorante.jsp");
-			rd.forwa
+			RequestDispacher rd = sc.getRequestDispatcher("/registratiristorante.jsp");		
+			re.forward(request, response);
 			
+		}else if (whatsend.equalsIgnoreCase("saveInDB")) {
+			Companybean company = new companybean();
+			company = (companybean)request.getSession().getAttribute("COMPANY");
+			SaveMySQL savecompany = new SaveMySql();
+			
+			savecompany.inserisciPiatto(comapny);
+			request.getSession().removeAttribute("COMPANY");
+			
+			ServletContext sc = request.getSession().getServletContext();
+			RequestDispacher rd = sc.getRequestDispatcher("/opera");
+			rd.forward(request, response)
 		}
 		
 		doGet(request, response);
