@@ -329,4 +329,76 @@ public class SaveMySQL {
 		}
 	}// End eliminaCliente()
 	
+	//Controllo Credenziali Login
+	public ClientiBean ControlloLogin(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
+			
+			// Committo sul server e prendo il valore dell'ID se esiste
+			ResultSet ricerca = stmt.executeQuery(sql);
+			ClientiBean id = new ClientiBean();
+			
+			while(ricerca.next()) {
+				id.setIDCliente(ricerca.getInt("IDCliente"));
+			}
+			return id;
+		}
+		catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End ControlloLogin()
+	
+	//Controllo Esistenza Email per recupero password
+	public ClientiBean RecuperoPassword(ClientiBean cliente) throws Exception{
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT PassHash FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
+			
+			// Committo sul server e prendo il valore della password se esiste
+			ResultSet ricerca = stmt.executeQuery(sql);
+			ClientiBean password = new ClientiBean();
+			
+			while(ricerca.next()){
+				password.setPassHash(ricerca.getString("PassHasd"));
+			}
+			return password;
+		}
+		catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End RecuperoPassword()
 }

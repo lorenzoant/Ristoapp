@@ -17,7 +17,12 @@ pageEncoding="ISO-8859-1"%>
 		<div>CVV: <input name="cvv" value="" type="text"/></div><br>
 		<div>Data di scadenza: <input name="scadenza" value="" type="date"/></div><br>
 		<input value="Procedi al pagamento" type="submit">
-	</form>
+</form>
+	
+<form name="SaveOnDB" action="pagamentoservlet" method="post">
+	<input name="whatsend" value="SaveInDB" type="hidden"><br>
+	<input type="submit" value="SaveInDB">
+</form>
 	
 </body>
 
