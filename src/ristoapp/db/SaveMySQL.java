@@ -174,7 +174,7 @@ public class SaveMySQL {
 				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
 			}
 			
-			return (PiattiBean)piattiList;
+			return (ArrayList<PiattiBean>)piattiList;
 			
 		}
 		catch (SQLException e) {
