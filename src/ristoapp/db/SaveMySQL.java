@@ -353,11 +353,7 @@ public class SaveMySQL {
 			return id;
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection ControlloLogin() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
+			throw new Exception(e.getMessage());
 		}
 		finally {
 			// Chiudo la connessione
