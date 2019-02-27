@@ -7,13 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import ristoapp.bean.ClientiBean;
-=======
-import company_management.bean.CompanyBean;
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 import ristoapp.bean.PiattiBean;
-import ristoapp.bean.ClientiBean;
 
 public class SaveMySQL {
 
@@ -63,7 +58,7 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al database: decido da codice quando committare
+			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
@@ -110,8 +105,6 @@ public class SaveMySQL {
 		}
 	}// End inserisciPiatto()
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
 	
 	//prelevaInfoPiattoDaId
 	public PiattiBean prelevaInfoPiattoDaId(int idpiatto) throws Exception{
@@ -158,27 +151,10 @@ public class SaveMySQL {
 		
 		Statement stmt = null;
 		Connection conn = null;
-=======
-	//Controllo Credenziali Login
-	public void ControlloLogin(ClientiBean cliente) throws Exception{
-		
-		Statement stmt = null;
-		Connection conn = null;
-		int id = -1;
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
-=======
-	//Controllo Credenziali Login
-	public ClientiBean ControlloLogin(ClientiBean cliente) throws Exception{
-		
-		Statement stmt = null;
-		Connection conn = null;
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 		
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-<<<<<<< HEAD
-<<<<<<< HEAD
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
@@ -204,44 +180,10 @@ public class SaveMySQL {
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
 			System.out.println("MySQL connection prelevaInfoPiatti() failed");
-=======
-			// Disattivo auto commit al database: decido da codice quando committare
-			conn.setAutoCommit(false);
-=======
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
-			stmt = conn.createStatement();
-			
-			// Creo stringa sql
-			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
-			
-			// Committo sul server e prendo il valore dell'ID se esiste
-<<<<<<< HEAD
-			id = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			System.out.println(id);//stampo l'ID, operazione inutile DA CANCELLARE, messo per evitare il warning
-=======
-			ResultSet ricerca = stmt.executeQuery(sql);
-			
-			while(ricerca.next()) {
-				ClientiBean id = new ClientiBean();
-				id.setIDCliente(IDCliente);
-			}
-			return id;
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection ControlloLogin() failed");
-<<<<<<< HEAD
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
 			if(conn != null) {
 				conn.rollback();
 			}
 			throw new Exception(e.getMessage());
-=======
-			if(conn != null) {
-				conn.rollback();
-			}
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 		}
 		finally {
 			// Chiudo la connessione
@@ -252,8 +194,6 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
 	}// End prelevaInfoPiatti()
 		
 	
@@ -310,40 +250,15 @@ public class SaveMySQL {
 			
 		Statement stmt = null;
 		Connection conn = null;
-=======
-=======
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
-	}// End ControlloLogin()
-	
-	//Controllo Esistenza Email per recupero password
-	public void RecuperoPassword(ClientiBean cliente) throws Exception{
-		
-		Statement stmt = null;
-		Connection conn = null;
-		String password = null;
-<<<<<<< HEAD
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
-=======
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 		
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-<<<<<<< HEAD
-<<<<<<< HEAD
 			// Disattivo auto commit al databse: decido da codice quando committare
-=======
-			// Disattivo auto commit al database: decido da codice quando committare
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
-=======
-			// Disattivo auto commit al database: decido da codice quando committare
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-<<<<<<< HEAD
-<<<<<<< HEAD
 			String sql = "UPDATE Clienti SET" +
 					"Email = '" + cliente.getEmail()+ "'," +  
 					"PassHash = '" + cliente.getPassHash()+ "'," + 
@@ -398,25 +313,6 @@ public class SaveMySQL {
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL connection eliminaCliente() failed");
-=======
-=======
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
-			String sql = "SELECT PassHash FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
-			
-			// Committo sul server e prendo il valore della password se esiste
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				password = rs.getString("PassHash");
-			}
-			System.out.println(password);//stampo la password, operazione inutile DA CANCELLARE, messo per evitare il warning
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection RecuperoPassword() failed");
-<<<<<<< HEAD
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
-=======
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -431,14 +327,6 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
 	}// End eliminaCliente()
 	
-=======
-	}// End RecuperoPassword()
->>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
-=======
-	}// End RecuperoPassword()
->>>>>>> ca534302ea861edc1df137f1063422ecd6718dfd
 }
