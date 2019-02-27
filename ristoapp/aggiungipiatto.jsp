@@ -18,5 +18,9 @@
 		<input name="whatsend" value="aggiunginuovopiatto" type="hidden"/>
 		<input value="Aggiungi piatto al tuo ristorante" type="submit">
 	</form>
+	<form action="aggiungipiattoservlet" name="salvaneldb" method="post">
+		<input name="whatsend" value="salvaneldb" type="hidden"/>
+		<input value="Salva nel DB" type="submit">
+	</form>
 </body>
 </html>

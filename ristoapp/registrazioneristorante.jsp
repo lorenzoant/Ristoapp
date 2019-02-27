@@ -1,3 +1,4 @@
+<%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.sql.*"%>
     
@@ -12,7 +13,7 @@
 	<form action = "registratiristoranteservlet" name = "account" method ="post">
 		<table>
 		<tr>
-			<td>NomeRistorante:</td> 
+			<td>Nome Ristorante:</td> 
 			<td><input type = "text" name = "nome_ristorante"/></td>
 		</tr>
 		<tr>
@@ -32,6 +33,7 @@
 			<td><select>
 				<option value="null">-Select-</option>
 					<% 
+
 					Connection con=null;
 					ResultSet rs=null;
 					
@@ -48,7 +50,7 @@
 					     {
 					          String name = rs.getString("Nome");
 					%>
-					          <option value="x"><%=name%></option>
+					          <option value="<%=name%>"><%=name%></option>
 					<%
 					     }
 					}catch(Exception e)
@@ -84,6 +86,10 @@
 		</tr>	
 		</table>
 		<input type = "submit" value = "Registrati"/>
+	</form>
+	<form name = "saveOnDB" action = "/" method = "post">
+			<input name = "whatsend" value = "saveInDB" type = "hidden">
+			<input value = "save to DB" type = "submit">
 	</form>
 
 </body>

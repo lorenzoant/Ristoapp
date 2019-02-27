@@ -2,18 +2,22 @@ package ristoapp.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
+import ristoapp.bean.ClientiBean;
 
 public class SaveMySQL {
 
 	// Parametri di accesso al database
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ristoapp_db";
-	private static final String DB_USER = "root";
-	private static final String DB_PASSWORD = "toor";
+	private static final String DB_CONNECTION = "jdbc:mysql://lorenzoantoniazzi.ddns.net/theristoapp";
+	private static final String DB_USER = "ristoapp";
+	private static final String DB_PASSWORD = "$@x9Wq7XTjN#-J^v";
 	
 	
 	private static Connection getDBConnection() throws Exception {
@@ -55,7 +59,7 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
@@ -102,4 +106,288 @@ public class SaveMySQL {
 		}
 	}// End inserisciPiatto()
 	
+<<<<<<< HEAD
+	
+	//prelevaInfoPiattoDaId
+	public PiattiBean prelevaInfoPiattoDaId(int idpiatto) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = ""; 
+					
+			// Eseguo query
+			ResultSet result = stmt.executeQuery(sql);
+			
+			return (PiattiBean)result;
+			
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection prelevaInfoPiattoDaId() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End prelevaInfoPiattoDaId()
+	
+	
+	//prelevaInfoPiatti
+	public ArrayList<PiattiBean> prelevaInfoPiatti() throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+=======
+	//Controllo Credenziali Login
+	public void ControlloLogin(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		int id = -1;
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+<<<<<<< HEAD
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT * FROM Piatti;"; 
+					
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+			
+			// Estraggo dati
+			ArrayList<PiattiBean> piattiList = new ArrayList<PiattiBean>();
+			while(resultList.next()){
+				PiattiBean piatto = new PiattiBean();
+				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
+				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDFRistorante")));
+				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
+				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
+				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
+			}
+			
+			return (PiattiBean)piattiList;
+			
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection prelevaInfoPiatti() failed");
+=======
+			// Disattivo auto commit al database: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
+			
+			// Committo sul server e prendo il valore dell'ID se esiste
+			id = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			System.out.println(id);//stampo l'ID, operazione inutile DA CANCELLARE, messo per evitare il warning
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection ControlloLogin() failed");
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+<<<<<<< HEAD
+	}// End prelevaInfoPiatti()
+		
+	
+	public void inserisciCliente(ClientiBean cliente) throws Exception{
+			
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, PuntiFedeltà) VALUES('" +
+					cliente.getIDCliente() + "','" + 
+					cliente.getEmail() + "','" + 
+					cliente.getPassHash() + "','" + 
+					cliente.getNome() + "','" + 
+					cliente.getCognome() + "','" + 
+					cliente.getLivAutorizzazioni() + "','" + 
+					cliente.getIndirizzo() + "','" + 
+					cliente.getComune() + "','" + 
+					cliente.getLingua() + "','" + 
+					cliente.getNotificaEmail() + "','" + 
+					cliente.getGeolocalizzazione() + "','" + 
+					cliente.getPuntiFedelta() + "');";
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL connection inserisciCliente() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End inserisciCliente()
+		
+	
+	public void modificaCliente(ClientiBean cliente) throws Exception{
+			
+		Statement stmt = null;
+		Connection conn = null;
+=======
+	}// End ControlloLogin()
+	
+	//Controllo Esistenza Email per recupero password
+	public void RecuperoPassword(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		String password = null;
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+<<<<<<< HEAD
+			// Disattivo auto commit al databse: decido da codice quando committare
+=======
+			// Disattivo auto commit al database: decido da codice quando committare
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+<<<<<<< HEAD
+			String sql = "UPDATE Clienti SET" +
+					"Email = '" + cliente.getEmail()+ "'," +  
+					"PassHash = '" + cliente.getPassHash()+ "'," + 
+					"Nome = '" + cliente.getNome()+ "'," +  
+					"Cognome = '" + cliente.getCognome()+ "'," +  
+					"Indirizzo = '" + cliente.getIndirizzo()+ "'," + 
+					"Comune = '" + cliente.getComune()+ "'," + 
+					"NotificaEmail = '" + cliente.getNotificaEmail()+ "'," +
+					"Geolocalizzazione = '" + cliente.getGeolocalizzazione()+ "'," +
+					"WHERE IDCliente = '" + cliente.getIDCliente() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL connection modificaCliente() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End modificaCliente()
+	
+	
+	public void eliminaCliente(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "DELETE FROM Clienti" +
+					"WHERE IDCliente = '" + cliente.getIDCliente() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL connection eliminaCliente() failed");
+=======
+			String sql = "SELECT PassHash FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
+			
+			// Committo sul server e prendo il valore della password se esiste
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				password = rs.getString("PassHash");
+			}
+			System.out.println(password);//stampo la password, operazione inutile DA CANCELLARE, messo per evitare il warning
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection RecuperoPassword() failed");
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+<<<<<<< HEAD
+	}// End eliminaCliente()
+	
+=======
+	}// End RecuperoPassword()
+>>>>>>> b5b4ceaa2daa038f5470a08ac72ee9af2fedb93a
 }

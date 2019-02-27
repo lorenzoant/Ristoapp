@@ -7,6 +7,17 @@
 <title>Dashboard</title>
 </head>
 <body>
+
+	<!-- Stacco super mitico dopo la tabella per introdurre l'utente ai grafici pewpew, tipo un qualcosa a comparsa ma devo vedere cosa riesco a fare -->
+	<!-- dropdown per decidere il periodo, categoria, regione -->
+	<!-- Magari qualcosa per inviare un messaggio o immagine da mettere in home page -->
+	<form>
+		<select>
+			<!-- coso di albertini -->
+		</select>
+	</form>
+	<h1 style="text-align: center; font-size: 40px; font-weight: bolder; padding-top: 100px; padding-bottom: 100px;">Sono un grafico, pota</h1>
+	
 	<table style="padding-top: 50px; margin:0px auto;">
 		<tr>
 			<td>
@@ -36,12 +47,7 @@
 			</td>
 		</tr>
 	</table>
-	<!-- Creo que tengo che ponèr otras statistica ma necesito primero testar -->
-	
-	<!-- Stacco super mitico dopo la tabella per introdurre l'utente ai grafici pewpew, tipo un qualcosa a comparsa ma devo vedere cosa riesco a fare -->
-	<!-- dropdown per decidere il periodo, categoria, regione -->
-	<!-- Magari qualcosa per inviare un messaggio o immagine da mettere in home page -->
-	<h1 style="text-align: center; font-size: 40px; font-weight: bolder; padding-top: 100px; padding-bottom: 100px;">Sono un grafico, pota</h1>
+		<!-- Creo que tengo che ponèr otras statistica ma necesito primero testar -->
 	
 </body>
 </html>

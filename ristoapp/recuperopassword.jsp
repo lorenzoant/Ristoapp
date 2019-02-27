@@ -10,7 +10,8 @@
 	<form action="recuperopasswordservlet" name="recuperopassword" method="post">
 		E-Mail <input name="email" value="" type="text"/><br><br>
 		Ti verrà inviata una mail con il link per ripristinare la password.<br>
-		<input value="Recupero" type="submit">
+		<input name = "whatsend" value = "recupera" type = "hidden"/>
+		<input type = "submit" value = "recupera"/>
 	</form>
 </body>
 </html>
