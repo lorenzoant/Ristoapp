@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import company_management.bean.CompanyBean;
 import ristoapp.bean.PiattiBean;
 import ristoapp.bean.ClientiBean;
 
@@ -105,25 +107,27 @@ public class SaveMySQL {
 	}// End inserisciPiatto()
 	
 	//Controllo Credenziali Login
-	public void ControlloLogin(ClientiBean cliente) throws Exception{
+	public ClientiBean ControlloLogin(ClientiBean cliente) throws Exception{
 		
 		Statement stmt = null;
 		Connection conn = null;
-		int id = -1;
 		
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al database: decido da codice quando committare
-			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
 			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
 			
 			// Committo sul server e prendo il valore dell'ID se esiste
-			id = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			System.out.println(id);//stampo l'ID, operazione inutile DA CANCELLARE, messo per evitare il warning
+			ResultSet ricerca = stmt.executeQuery(sql);
+			
+			while(ricerca.next()) {
+				ClientiBean id = new ClientiBean();
+				id.setIDCliente(IDCliente);
+			}
+			return id;
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
@@ -131,7 +135,6 @@ public class SaveMySQL {
 			if(conn != null) {
 				conn.rollback();
 			}
-			throw new Exception(e.getMessage());
 		}
 		finally {
 			// Chiudo la connessione
