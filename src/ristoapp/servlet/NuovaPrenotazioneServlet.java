@@ -16,14 +16,15 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().append("You got caught by the POST police, you are not allowed to use a GET");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String p1 = request.getParameter("tipoprenotazione");
 		//String p2 = request.getParameter("data");
 		//String p3 = request.getParameter("ora");
 		//String p4 = request.getParameter("posti");
 		response.getWriter().append("Prenotazione inviata al ristorante...");
-	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }
