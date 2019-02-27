@@ -2,10 +2,12 @@ package ristoapp.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import ristoapp.bean.PiattiBean;
+import ristoapp.bean.ClientiBean;
 
 public class SaveMySQL {
 
@@ -55,7 +57,7 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
@@ -102,4 +104,86 @@ public class SaveMySQL {
 		}
 	}// End inserisciPiatto()
 	
+	//Controllo Credenziali Login
+	public void ControlloLogin(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		int id = -1;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al database: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
+			
+			// Committo sul server e prendo il valore dell'ID se esiste
+			id = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			System.out.println(id);//stampo l'ID, operazione inutile DA CANCELLARE, messo per evitare il warning
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection ControlloLogin() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End ControlloLogin()
+	
+	//Controllo Esistenza Email per recupero password
+	public void RecuperoPassword(ClientiBean cliente) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		String password = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al database: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT PassHash FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
+			
+			// Committo sul server e prendo il valore della password se esiste
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				password = rs.getString("PassHash");
+			}
+			System.out.println(password);//stampo la password, operazione inutile DA CANCELLARE, messo per evitare il warning
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL connection RecuperoPassword() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End RecuperoPassword()
 }

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ristoapp.bean.ClientiBean;
+
 @WebServlet("/recuperopasswordservlet")
 public class RecuperoPasswordServlet extends HttpServlet {
 	
@@ -21,6 +23,19 @@ public class RecuperoPasswordServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		//doGet(request, response);
+		String whatsend = request.getParameter("whatsend");
+		
+		if(whatsend.equalsIgnoreCase("recupera")) {
+			//cliccando il bottone invia del form recupera password
+			
+			//lettura campi da request
+			String email = request.getParameter("email");
+			
+			//salvataggio dei valori nel Bean
+			ClientiBean cliente = new ClientiBean();
+			
+			cliente.setEmail(email);
+		}
 	}
 }
