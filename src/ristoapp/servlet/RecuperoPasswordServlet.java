@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.db.SaveMySQL;
+import ristoapp.InvioEmail;
 
 @WebServlet("/recuperopasswordservlet")
 public class RecuperoPasswordServlet extends HttpServlet {
@@ -56,13 +57,18 @@ public class RecuperoPasswordServlet extends HttpServlet {
 				//apro la pagina che mi interessa
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd;
-				System.out.println("Password: " + password.getPassHash() + " (prova, da nascondere)");
-				if(password.getPassHash() == "-1") {//utente non trovato
+	
+				if(password.getPassHash() == "") {//utente non trovato
 					System.out.println("Utente non trovato");
 					rd = sc.getRequestDispatcher("/recuperopassword.jsp");
+					rd.forward(request, response);
 				}
-				else {
+				else {//password presa
+					//System.out.println("Password: " + password.getPassHash() + " (prova, da nascondere)");
 					System.out.println("Invio email");
+					//invio email
+					InvioEmail email1 = new InvioEmail();
+					email1.invia(cliente.getEmail(), password.getPassHash());
 					rd = sc.getRequestDispatcher("/login.jsp");
 					rd.forward(request, response);
 				}

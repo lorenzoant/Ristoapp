@@ -37,7 +37,7 @@ public class SaveMySQL {
 		// Apro la connessione
 		try {
 			dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-			System.out.println("MySQL connection success");
+			//System.out.println("MySQL connection success");
 		}
 		catch (SQLException e){
 			System.out.println("MySQL connection failed");
