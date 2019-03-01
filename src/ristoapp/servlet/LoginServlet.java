@@ -1,12 +1,16 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ristoapp.db.SaveMySQL;
 import ristoapp.bean.ClientiBean;
 
 @WebServlet("/loginservlet")
@@ -23,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doGet(request, response);
 		String whatsend = request.getParameter("whatsend");
 		
 		if(whatsend.equalsIgnoreCase("invia")) {
@@ -38,6 +41,51 @@ public class LoginServlet extends HttpServlet {
 			
 			cliente.setEmail(email);
 			cliente.setPassHash(password);
+			
+			//il Bean deve essere salvato in sessione
+			request.getSession().removeAttribute("CREDENZIALI");
+			request.getSession().setAttribute("CREDENZIALI", cliente);
+			
+			cliente = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			SaveMySQL verifica = new SaveMySQL();
+			
+			try {
+				ClientiBean id = new ClientiBean();
+				id = verifica.ControlloLogin(cliente);
+				//System.out.println(id.getEmail() + " " + id.getPassHash() + " " + id.getIDCliente() + " " + id.getLivAutorizzazioni());
+				request.getSession().removeAttribute("CREDENZIALI");
+				
+				//apro la pagina che mi interessa
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd;
+				System.out.println("ID: " + id.getIDCliente());
+				if(id.getLivAutorizzazioni() == -1) {
+					System.out.println("Credenziali sbagliate");
+					rd = sc.getRequestDispatcher("/login.jsp");
+				}
+				else if(id.getLivAutorizzazioni() == 0){
+					System.out.println("Interfaccia cliente");
+					rd = sc.getRequestDispatcher("/bacheca.jsp");
+					rd.forward(request, response);
+				}
+				else if(id.getLivAutorizzazioni() == 1){
+					System.out.println("Interfaccia ristoratore");
+					rd = sc.getRequestDispatcher("/bacheca.jsp");
+					rd.forward(request, response);
+				}
+				else if(id.getLivAutorizzazioni() == 2){
+					System.out.println("Interfaccia amministratore");
+					rd = sc.getRequestDispatcher("/dashboard.jsp");
+					rd.forward(request, response);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				//apro la pagina che mi interessa
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+			}
 		}
 	}
 }

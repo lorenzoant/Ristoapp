@@ -330,6 +330,7 @@ public class SaveMySQL {
 	}// End eliminaCliente()
 	
 	//Controllo Credenziali Login
+	//public ArrayList<ClientiBean> ControlloLogin(ClientiBean cliente) throws Exception{
 	public ClientiBean ControlloLogin(ClientiBean cliente) throws Exception{
 		
 		Statement stmt = null;
@@ -341,15 +342,24 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "SELECT IDCliente FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "';";
+			String sql = "SELECT IDCliente, LivAutorizzazioni FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "'";
+			//System.out.println(sql);
 			
 			// Committo sul server e prendo il valore dell'ID se esiste
 			ResultSet ricerca = stmt.executeQuery(sql);
+			//ArrayList<ClientiBean> DbList = new ArrayList<ClientiBean>();
 			ClientiBean id = new ClientiBean();
 			
-			while(ricerca.next()) {
+			if(ricerca.next()) {//credenziali corrette
 				id.setIDCliente(ricerca.getInt("IDCliente"));
+				id.setLivAutorizzazioni(ricerca.getInt("LivAutorizzazioni"));
+				//DbList.add(id);
+				//System.out.println(id.getIDCliente() + " " + id.getLivAutorizzazioni());
 			}
+			else {//credenziali sbagliate
+				id.setIDCliente(-1);
+			}
+			//return DbList;
 			return id;
 		}
 		catch (SQLException e) {
