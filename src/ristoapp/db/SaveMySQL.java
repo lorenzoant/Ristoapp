@@ -393,8 +393,12 @@ public class SaveMySQL {
 			ResultSet ricerca = stmt.executeQuery(sql);
 			ClientiBean password = new ClientiBean();
 			
-			while(ricerca.next()){
-				password.setPassHash(ricerca.getString("PassHasd"));
+			if(ricerca.next()) {//credenziali corrette
+				password.setPassHash(ricerca.getString("PassHash"));
+				//System.out.println(password.getPassHash());
+			}
+			else {//credenziali sbagliate
+				password.setPassHash("");
 			}
 			return password;
 		}

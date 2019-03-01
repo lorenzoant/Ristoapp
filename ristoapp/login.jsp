@@ -11,7 +11,8 @@
 	E-mail <input type = "text" name = "email"/><br><br>
 	Password <input type = "password" name = "password" id="password"/><input type="checkbox" onclick="myFunction()"><br>
 	<input name = "whatsend" value = "invia" type = "hidden"/>
-	<input type = "submit" value = "accedi"/>
+	<input type = "submit" value = "accedi"/><br>
+	<a href="recuperopassword.jsp">Password dimenticata?</a>
 </form>
 </body>
 <script>

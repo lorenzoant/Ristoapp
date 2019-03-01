@@ -13,5 +13,8 @@
 		<input name = "whatsend" value = "recupera" type = "hidden"/>
 		<input type = "submit" value = "recupera"/>
 	</form>
+	<form action="login.jsp">
+	    <input type="submit" value="Indietro" />
+	</form>
 </body>
 </html>
