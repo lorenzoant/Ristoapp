@@ -14,7 +14,7 @@ public class InvioEmail {
             String user = "ristoappstaff@gmail.com";
             String pass = "RistoApp2019";
             String to = mail;
-            String from = "provaristoapp@gmail.com";
+            String from = "ristoappstaff@gmail.com";
             String subject = "recupero password.";
             String messageText = "Password di recupero: " + password;
             boolean sessionDebug = false;
