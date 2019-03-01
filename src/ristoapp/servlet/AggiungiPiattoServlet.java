@@ -34,15 +34,14 @@ public class AggiungiPiattoServlet extends HttpServlet {
 		if(whatsend.equalsIgnoreCase("aggiunginuovopiatto")) {
 			
 			// Lettura campi da request
-			//int IDPiatto = 1; // si incrementa automaticamente sul server
 			int IDFRistorante = 0; // = da prendere dalla sessione
 			int IDFCatPiatto = 0; // = categoriaNome
 			String Nome = request.getParameter("nome");
-			double Prezzo = 0;
+			double Prezzo = 10;
 			try {
-				Double.parseDouble(request.getParameter("prezzo"));
+				Prezzo = Double.parseDouble(request.getParameter("prezzo"));
 			}catch (Exception e){
-				Prezzo = 0;
+				Prezzo = 10;
 			}
 			Boolean Disponibile = true; 
 			if(request.getParameter("disponibile") == null) Disponibile = false;
@@ -51,7 +50,7 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			String Allergeni = request.getParameter("allergeni");
 			
 			//TODO: bisogna inserire l'id categoria
-			Disponibile = true;
+			//TODO: bisogna associare l'id del ristorante
 			
 			
 			// Salvataggio dei valori nel Bean
@@ -67,36 +66,35 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			piatto.setAllergeni(Allergeni);
 			
 			// Il bean deve essere salvato in sessione
-			request.getSession().removeAttribute("PIATTO");
-			request.getSession().setAttribute("PIATTO", piatto);
-		}
-		
-		else if(whatsend.equalsIgnoreCase("salvaneldb")) {
+			//request.getSession().removeAttribute("PIATTO");
+			//request.getSession().setAttribute("PIATTO", piatto);
 			// Leggo i dati della sessione
-			PiattiBean piatto = new PiattiBean();
-			piatto = (PiattiBean)request.getSession().getAttribute("PIATTO");
+			//PiattiBean piatto = new PiattiBean();
+			//piatto = (PiattiBean)request.getSession().getAttribute("PIATTO");
 			
+			// Salvo nel database il piatto creato
 			SaveMySQL saveOnDb = new SaveMySQL();
 			
 			try {
-				// Provo ad aggiungere il piatto nel database, reindirizzo alla lista di tutti i piatti
+				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
-				request.getSession().removeAttribute("PIATTO");
+				//request.getSession().removeAttribute("PIATTO");
 				
+				//TODO: reindirizzare alla lista di tutti i piatti
 				ServletContext sc = request.getSession().getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("aggiungipiatto.jsp.jsp");
+				RequestDispatcher rd = sc.getRequestDispatcher("/aggiungipiatto.jsp");
 				rd.forward(request, response);
 			} 
 			catch (Exception e) {
-				// Problema nel database, reindirizzo alla pagine di errore
+				// Problema nel database, reindirizzo alla pagine di errore generico
 				e.printStackTrace();
 				
 				ServletContext sc = request.getSession().getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("login.jsp");
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 				rd.forward(request, response);
 			}
-			
-			
 		}
+		
+		
 	}
 }

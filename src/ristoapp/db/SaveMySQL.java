@@ -37,7 +37,7 @@ public class SaveMySQL {
 		// Apro la connessione
 		try {
 			dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-			//System.out.println("MySQL connection success");
+			System.out.println("MySQL connection success");
 		}
 		catch (SQLException e){
 			System.out.println("MySQL connection failed");
@@ -49,7 +49,6 @@ public class SaveMySQL {
 	}// End getDBConnection()
 	
 	
-	//inserisciPiatto
 	public void inserisciPiatto(PiattiBean piatto) throws Exception{
 		
 		Statement stmt = null;
@@ -63,28 +62,21 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "INSERT INTO Piatti(IDPiatto, IDFRistorante, IDFCatPiatto, Nome, Prezzo, Disponibile, Descrizione, Foto, Allergeni) VALUES('" +
-					piatto.getIDPiatto() + "','" + 
+			String sql = "INSERT INTO Piatti (IDFRistorante, IDFCatPiatto, Nome, Prezzo, Disponibile, Descrizione, Foto, Allergeni) VALUES ('" + 
 					piatto.getIDFRistorante() + "','" + 
 					piatto.getIDFCatPiatto() + "','" + 
 					piatto.getNome() + "','" + 
-					piatto.getPrezzo() + "','" + 
-					piatto.getDisponibile() + "','" + 
-					piatto.getDescrizione() + "','" + 
+					piatto.getPrezzo() + "','"; 
+					if(piatto.getDisponibile()) sql += "1','";
+					else sql += "0','";
+			sql +=	piatto.getDescrizione() + "','" + 
 					piatto.getUrl() + "','" + 
 					piatto.getAllergeni() + "');";
 			
 			// Committo sul server
 			stmt.executeUpdate(sql);
 			
-			// Nel caso volessi lavorare anche sugli array:
-			/*ArrayList<RecensionePiattiBean> recensioniPiatti = PiattiBean.getRecensioniPiatti();
-			
-			for(RecensionePiattiBean recensione:recensioniPiatti) {
-				sql = "INSERT INTO faccio la insert ma in questo caso non serve";
-			}
-			
-			stmt.executeUpdate(sql);*/
+			System.out.println("MySQL inserisciPiatto() confirmed");
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
@@ -106,9 +98,8 @@ public class SaveMySQL {
 	}// End inserisciPiatto()
 	
 	
-	//prelevaInfoPiattoDaId
 	public PiattiBean prelevaInfoPiattoDaId(int idpiatto) throws Exception{
-		
+		//TODO: sistemare sta roba
 		Statement stmt = null;
 		Connection conn = null;
 		
@@ -146,9 +137,8 @@ public class SaveMySQL {
 	}// End prelevaInfoPiattoDaId()
 	
 	
-	//prelevaInfoPiatti
 	public ArrayList<PiattiBean> prelevaInfoPiatti() throws Exception{
-		
+		//TODO: sistemare sta roba
 		Statement stmt = null;
 		Connection conn = null;
 		
