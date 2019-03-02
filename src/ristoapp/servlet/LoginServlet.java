@@ -59,12 +59,16 @@ public class LoginServlet extends HttpServlet {
 				//apro la pagina che mi interessa
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd;
-				System.out.println("-------- UTENTE LOGGATO --------");
-				System.out.println("ID: " + id.getIDCliente());
-				System.out.println("Liv Autorizzazioni: " + id.getLivAutorizzazioni());
+				if(id.getIDCliente() != -1) {
+					System.out.println("-------- UTENTE LOGGATO --------");
+					System.out.println("ID: " + id.getIDCliente());
+					System.out.println("Liv Autorizzazioni: " + id.getLivAutorizzazioni());
+				}
 				if(id.getLivAutorizzazioni() == -1) {
 					System.out.println("Credenziali sbagliate");
-					rd = sc.getRequestDispatcher("/login.jsp");
+					request.setAttribute("errorMessage", "errore");
+			        rd = request.getRequestDispatcher("/login.jsp");
+					//rd = sc.getRequestDispatcher("/login.jsp");
 					rd.forward(request, response);
 				}
 				else if(id.getLivAutorizzazioni() == 0){
