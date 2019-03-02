@@ -14,7 +14,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/xampp/tomcat/lib/activation.jar"/>
-	<classpathentry kind="lib" path="D:/xampp/tomcat/lib/javax.mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/javax.mail-1.4.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
