@@ -37,7 +37,7 @@
 			}
 			%>
 		</select><br>
-		Prezzo <input name="prezzo" type="number" step="0.1" required/><br>
+		Prezzo <input name="prezzo" type="number" min="0" step="0.1" required/><br>
 		Disponibile <input name="disponibile" type="checkbox" checked/><br>
 		URL http foto <input name="url" type="text"required/><br>
 		Allergeni <input name="allergeni" type="text"/><br>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
@@ -33,8 +34,29 @@ public class AggiungiPiattoServlet extends HttpServlet {
 		
 		if(whatsend.equalsIgnoreCase("aggiunginuovopiatto")) {
 			
-			// Lettura campi da request
+			// Lettura campi da request e manipolazione prima di inserirli nel database
 			int IDFRistorante = 0; // = da prendere dalla sessione
+			ClientiBean utenteLoggato = null;
+			try {
+				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+				if(utenteLoggato.getLivAutorizzazioni() == 1) {
+					// Utente autorizzato ad aggiungere il piatto, ora devo prelevare l'id del ristorante
+					System.out.println("Utente autorizzato ad aggiungere il piatto");
+					//TODO: bisogna associare l'id del ristorante
+				}else {
+					// Utente non autorizzato o non loggato
+					throw new Exception("User not logged");
+				}
+			}
+			catch (Exception e) {
+				// Nessun ristoratore loggato
+				System.out.println("AggiungiPiattoServlet: user not logged");
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+				return;
+			}
+			
 			
 			int IDFCatPiatto = 0;
 			try {
@@ -53,32 +75,19 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			Boolean Disponibile = true; 
 			if(request.getParameter("disponibile") == null) Disponibile = false;
 			
-			String Nome = request.getParameter("nome");
-			String Descrizione = request.getParameter("descrizione");
-			String Url = request.getParameter("url");
-			String Allergeni = request.getParameter("allergeni");
-			
-			//TODO: bisogna associare l'id del ristorante
-			
 			
 			// Salvataggio dei valori nel Bean
 			PiattiBean piatto = new PiattiBean();
 			
 			piatto.setIDFRistorante(IDFRistorante);
 			piatto.setIDFCatPiatto(IDFCatPiatto);
-			piatto.setNome(Nome);
+			piatto.setNome(request.getParameter("nome"));
 			piatto.setPrezzo(Prezzo);
 			piatto.setDisponibile(Disponibile);
-			piatto.setDescrizione(Descrizione);
-			piatto.setUrl(Url);
-			piatto.setAllergeni(Allergeni);
+			piatto.setDescrizione(request.getParameter("descrizione"));
+			piatto.setUrl(request.getParameter("url"));
+			piatto.setAllergeni(request.getParameter("allergeni"));
 			
-			// Il bean deve essere salvato in sessione
-			//request.getSession().removeAttribute("PIATTO");
-			//request.getSession().setAttribute("PIATTO", piatto);
-			// Leggo i dati della sessione
-			//PiattiBean piatto = new PiattiBean();
-			//piatto = (PiattiBean)request.getSession().getAttribute("PIATTO");
 			
 			// Salvo nel database il piatto creato
 			SaveMySQL saveOnDb = new SaveMySQL();
@@ -86,11 +95,9 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			try {
 				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
-				//request.getSession().removeAttribute("PIATTO");
 				
-				//TODO: reindirizzare alla lista di tutti i piatti
 				ServletContext sc = request.getSession().getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("/aggiungipiatto.jsp");
+				RequestDispatcher rd = sc.getRequestDispatcher("/ilmioristorante.jsp");
 				rd.forward(request, response);
 			} 
 			catch (Exception e) {
