@@ -35,21 +35,29 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			
 			// Lettura campi da request
 			int IDFRistorante = 0; // = da prendere dalla sessione
-			int IDFCatPiatto = 0; // = categoriaNome
-			String Nome = request.getParameter("nome");
+			
+			int IDFCatPiatto = 0;
+			try {
+				IDFCatPiatto = Integer.parseInt(request.getParameter("categoria"));
+			}catch (Exception e){
+				IDFCatPiatto = 0;
+			}
+			
 			double Prezzo = 10;
 			try {
 				Prezzo = Double.parseDouble(request.getParameter("prezzo"));
 			}catch (Exception e){
 				Prezzo = 10;
 			}
+			
 			Boolean Disponibile = true; 
 			if(request.getParameter("disponibile") == null) Disponibile = false;
+			
+			String Nome = request.getParameter("nome");
 			String Descrizione = request.getParameter("descrizione");
 			String Url = request.getParameter("url");
 			String Allergeni = request.getParameter("allergeni");
 			
-			//TODO: bisogna inserire l'id categoria
 			//TODO: bisogna associare l'id del ristorante
 			
 			

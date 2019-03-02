@@ -1,6 +1,6 @@
-<%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.sql.*"%>
+<%@page import="ristoapp.db.SaveMySQL"%>
     
 <!DOCTYPE html>
 <html>
@@ -34,27 +34,24 @@
 				<option value="null">-Select-</option>
 					<% 
 
-					Connection con=null;
-					ResultSet rs=null;
+					Connection conn = null;
+					ResultSet rs = null;
 					
-					try
-					{
-					     Class.forName("com.mysql.jdbc.Driver");
-					     con=DriverManager.getConnection("jdbc:mysql://lorenzoantoniazzi.ddns.net/theristoapp", "ristoapp", "$@x9Wq7XTjN#-J^v");
-					     HttpSession ss=request.getSession();
-					     String uid=(String)ss.getAttribute("id");
-					     PreparedStatement pst=con.prepareStatement("SELECT * FROM Comuni WHERE ID = ID;");
-					     //pst.setString(1,uid);
-					     rs=pst.executeQuery();
-					     while(rs.next())
-					     {
+					try{
+						// Stabilisco la connessione con il database
+						conn = SaveMySQL.getDBConnection();
+						
+					    PreparedStatement pst = conn.prepareStatement("SELECT * FROM Comuni;");
+					    rs=pst.executeQuery();
+					    
+					     while(rs.next()){ // Scorro le righe
 					          String name = rs.getString("Nome");
 					%>
-					          <option value="<%=name%>"><%=name%></option>
+					<option value="<%=name%>"><%=name%></option>
 					<%
 					     }
-					}catch(Exception e)
-					{    
+					}
+					catch(Exception e){    
 						System.out.println(e.getMessage());
 					}
 					%>

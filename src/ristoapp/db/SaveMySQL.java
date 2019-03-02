@@ -19,7 +19,7 @@ public class SaveMySQL {
 	private static final String DB_PASSWORD = "$@x9Wq7XTjN#-J^v";
 	
 	
-	private static Connection getDBConnection() throws Exception {
+	public static Connection getDBConnection() throws Exception {
 		
 		// Funzione per creare la connessione
 		System.out.println("------------- MySQL JDBC Connection -------------");
