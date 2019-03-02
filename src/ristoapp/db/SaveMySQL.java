@@ -80,7 +80,7 @@ public class SaveMySQL {
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection inserisciPiatto() failed");
+			System.out.println("MySQL inserisciPiatto() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -169,7 +169,7 @@ public class SaveMySQL {
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection prelevaInfoPiatti() failed");
+			System.out.println("MySQL prelevaInfoPiatti() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -216,9 +216,11 @@ public class SaveMySQL {
 			
 			// Committo sul server
 			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL inserisciCliente() confirmed");
 		}
 		catch (SQLException e) {
-			System.out.println("MySQL connection inserisciCliente() failed");
+			System.out.println("MySQL inserisciCliente() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -262,6 +264,8 @@ public class SaveMySQL {
 			
 			// Committo sul server
 			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL modificaCliente() confirmed");
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL connection modificaCliente() failed");
@@ -300,6 +304,8 @@ public class SaveMySQL {
 			
 			// Committo sul server
 			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL eliminaCliente() confirmed");
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL connection eliminaCliente() failed");
@@ -319,6 +325,7 @@ public class SaveMySQL {
 		}
 	}// End eliminaCliente()
 	
+	
 	//Controllo Credenziali Login
 	//public ArrayList<ClientiBean> ControlloLogin(ClientiBean cliente) throws Exception{
 	public ClientiBean ControlloLogin(ClientiBean cliente) throws Exception{
@@ -332,7 +339,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "SELECT IDCliente, LivAutorizzazioni FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "'";
+			String sql = "SELECT * FROM Clienti WHERE Email = '" + cliente.getEmail() + "' AND PassHash = '" + cliente.getPassHash() + "'";
 			//System.out.println(sql);
 			
 			// Committo sul server e prendo il valore dell'ID se esiste
@@ -342,12 +349,22 @@ public class SaveMySQL {
 			
 			if(ricerca.next()) {//credenziali corrette
 				id.setIDCliente(ricerca.getInt("IDCliente"));
+				id.setEmail(ricerca.getString("Email"));
+				id.setNome(ricerca.getString("Nome"));
+				id.setCognome(ricerca.getString("Cognome"));
 				id.setLivAutorizzazioni(ricerca.getInt("LivAutorizzazioni"));
+				id.setIndirizzo(ricerca.getString("Indirizzo"));
+				id.setComune(ricerca.getString("Comune"));
+				id.setLingua(ricerca.getString("Lingua"));
+				id.setNotificaEmail(ricerca.getBoolean("NotificaEmail"));
+				id.setGeolocalizzazione(ricerca.getBoolean("Geolocalizzazione"));
+				id.setPuntiFedelta(ricerca.getInt("PuntiFedelta"));
 				//DbList.add(id);
 				//System.out.println(id.getIDCliente() + " " + id.getLivAutorizzazioni());
 			}
 			else {//credenziali sbagliate
 				id.setIDCliente(-1);
+				id.setLivAutorizzazioni(-1);
 			}
 			//return DbList;
 			return id;
