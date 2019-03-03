@@ -43,7 +43,6 @@
 		Allergeni <input name="allergeni" type="text"/><br>
 		<input name="whatsend" value="aggiunginuovopiatto" type="hidden"/>
 		<input value="Aggiungi piatto al tuo ristorante" type="submit">
-		<br>DEBUG: In questo momento il piatto viene inserito nel database senza associare il ristorante al piatto.
 	</form>
 </body>
 </html>

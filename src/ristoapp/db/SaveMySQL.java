@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
+import ristoapp.bean.RistorantiBean;
 
 public class SaveMySQL {
 
@@ -98,8 +99,8 @@ public class SaveMySQL {
 	}// End inserisciPiatto()
 	
 	
-	public PiattiBean prelevaInfoPiattoDaId(int idpiatto) throws Exception{
-		//TODO: sistemare sta roba
+	public RistorantiBean getInfoRistoranteDalProprietario(ClientiBean ristoratore) throws Exception{
+		
 		Statement stmt = null;
 		Connection conn = null;
 		
@@ -109,20 +110,39 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = ""; 
-					
-			// Eseguo query
+			String sql = "SELECT * FROM Ristoranti WHERE IDFCliente = " + ristoratore.getIDCliente() + ";";
 			ResultSet result = stmt.executeQuery(sql);
+			RistorantiBean risto = new RistorantiBean();
 			
-			return (PiattiBean)result;
-			
+			if(result.next()) { // Prelevo i dati dalla prima riga del risultato
+				risto.setIDRistorante(result.getInt("IDRistorante"));
+				risto.setIDFCatCucina(result.getInt("IDFCatCucina"));
+				risto.setIDFCliente(result.getInt("IDFCliente"));
+				risto.setNome(result.getString("Nome"));
+				risto.setCoordinataLat(result.getInt("CoordinataLat"));
+				risto.setCoordinataLon(result.getDouble("CoordinataLon"));
+				risto.setIndirizzo(result.getString("Indirizzo"));
+				risto.setTelefono(result.getString("Telefono"));
+				risto.setEmail(result.getString("Email"));
+				risto.setComune(result.getString("Comune"));
+				risto.setDescrizione(result.getString("Descrizione"));
+				risto.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
+				risto.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
+				risto.setSerAnimali(result.getBoolean("SerAnimali"));
+				risto.setSerWifi(result.getBoolean("SerWifi"));
+				risto.setSerDisabili(result.getBoolean("SerDisabili"));
+				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
+				
+				return risto;
+			}
+			else {
+				// Restituisco oggetto vuoto
+				return risto;
+			}
+						
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL connection prelevaInfoPiattoDaId() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
+			System.out.println("MySQL getInfoRistoranteDalProprietario() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -134,11 +154,11 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End prelevaInfoPiattoDaId()
+	}// End getInfoRistoranteDalProprietario()
 	
 	
-	public ArrayList<PiattiBean> prelevaInfoPiatti() throws Exception{
-		//TODO: sistemare sta roba
+	public ArrayList<PiattiBean> prelevaPiattRistorante(RistorantiBean risto) throws Exception{
+		
 		Statement stmt = null;
 		Connection conn = null;
 		
@@ -148,7 +168,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "SELECT * FROM Piatti;"; 
+			String sql = "SELECT * FROM Piatti WHERE IDFRistorante = " + risto.getIDRistorante() + ";"; 
 					
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
@@ -156,23 +176,24 @@ public class SaveMySQL {
 			// Estraggo dati
 			ArrayList<PiattiBean> piattiList = new ArrayList<PiattiBean>();
 			while(resultList.next()){
+				// Scorro tutte le righe del risultato
 				PiattiBean piatto = new PiattiBean();
-				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
-				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDFRistorante")));
-				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
-				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
-				piatto.setIDPiatto(Integer.parseInt(resultList.getString("IDPiatto")));
+				piatto.setIDPiatto(resultList.getInt("IDPiatto"));
+				piatto.setIDFRistorante(resultList.getInt("IDFRistorante"));
+				piatto.setIDFCatPiatto(resultList.getInt("IDFCatPiatto"));
+				piatto.setNome(resultList.getString("Nome"));
+				piatto.setPrezzo(resultList.getDouble("Prezzo"));
+				piatto.setDisponibile(resultList.getBoolean("Disponibile"));
+				piatto.setDescrizione(resultList.getString("Descrizione"));
+				piatto.setUrl(resultList.getString("Foto"));
+				piatto.setAllergeni(resultList.getString("Allergeni"));
+				piattiList.add(piatto);// Aggiungo al vettore
 			}
 			
 			return (ArrayList<PiattiBean>)piattiList;
-			
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL prelevaInfoPiatti() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
+			System.out.println("MySQL prelevaPiattRistorante() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -184,7 +205,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End prelevaInfoPiatti()
+	}// End prelevaPiattRistorante()
 		
 	
 	public void inserisciCliente(ClientiBean cliente) throws Exception{
@@ -382,6 +403,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End ControlloLogin()
+	
 	
 	//Controllo Esistenza Email per recupero password
 	public ClientiBean RecuperoPassword(ClientiBean cliente) throws Exception{

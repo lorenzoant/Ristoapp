@@ -10,8 +10,8 @@ public class RistorantiBean implements java.io.Serializable{
 	private int IDFCatCucina;
 	private int IDFCliente;
 	private String Nome;
-	private int CoordinataLat;
-	private int CoordinataLon;
+	private double CoordinataLat;
+	private double CoordinataLon;
 	private String Indirizzo;
 	private String Telefono;
 	private String Email;
@@ -54,16 +54,16 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setNome(String nome) {
 		Nome = nome;
 	}
-	public int getCoordinataLat() {
+	public double getCoordinataLat() {
 		return CoordinataLat;
 	}
-	public void setCoordinataLat(int coordinataLat) {
+	public void setCoordinataLat(double coordinataLat) {
 		CoordinataLat = coordinataLat;
 	}
-	public int getCoordinataLon() {
+	public double getCoordinataLon() {
 		return CoordinataLon;
 	}
-	public void setCoordinataLon(int coordinataLon) {
+	public void setCoordinataLon(double coordinataLon) {
 		CoordinataLon = coordinataLon;
 	}
 	public String getIndirizzo() {

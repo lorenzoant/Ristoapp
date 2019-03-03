@@ -35,14 +35,13 @@ public class AggiungiPiattoServlet extends HttpServlet {
 		if(whatsend.equalsIgnoreCase("aggiunginuovopiatto")) {
 			
 			// Lettura campi da request e manipolazione prima di inserirli nel database
-			int IDFRistorante = 0; // = da prendere dalla sessione
+			int IDFRistorante = 0;
 			ClientiBean utenteLoggato = null;
 			try {
 				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-				if(utenteLoggato.getLivAutorizzazioni() == 1) {
-					// Utente autorizzato ad aggiungere il piatto, ora devo prelevare l'id del ristorante
-					System.out.println("Utente autorizzato ad aggiungere il piatto");
-					//TODO: bisogna associare l'id del ristorante
+				RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
+				if(utenteLoggato.getLivAutorizzazioni() == 1 && utenteLoggato.getIDCliente() == risto.getIDFCliente()) {
+					IDFRistorante = risto.getIDRistorante();
 				}else {
 					// Utente non autorizzato o non loggato
 					throw new Exception("User not logged");
@@ -95,10 +94,7 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			try {
 				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
-				
-				ServletContext sc = request.getSession().getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("/ilmioristorante.jsp");
-				rd.forward(request, response);
+				response.sendRedirect("ilmioristorante.jsp");
 			} 
 			catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico
