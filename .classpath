@@ -16,5 +16,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/activation.jar"/>
 	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/javax.mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/json-20140107.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
