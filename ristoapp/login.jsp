@@ -13,19 +13,18 @@
 		<input name = "whatsend" value = "invia" type = "hidden"/>
 		<input type = "submit" value = "accedi"/><br>
 	</form>
-	<div id="scritta" style="display: none; color:red;">E-mail e/o password errate</div>
-	<a href="recuperopassword.jsp">Password dimenticata?</a>
-	</body>
-	<script>
-		<%
+	<%
 		//System.out.println(request.getAttribute("errorMessage"));
 		String avviso = (String)request.getAttribute("errorMessage");
 		if(avviso == "errore"){
 			%>
-			    errorelogin(1);
+			   	<div id="scritta" style="color:red;">E-mail e/o password errate</div>
 			<%
 		}
-		%>
+	%>
+	<a href="recuperopassword.jsp">Password dimenticata?</a>
+	</body>
+	<script>
 		function mostra() {
 		  var x = document.getElementById("password");
 		  if (x.type === "password") {
@@ -33,11 +32,6 @@
 		  } else {
 		    x.type = "password";
 		  }
-		}
-		function errorelogin(flag) {
-			if(flag == 1){
-				var x = document.getElementById("scritta").style.display = "block";
-			}
 		}
 	</script>
 </html>
