@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ristoapp.db.SaveMySQL;
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.RistorantiBean;
+import ristoapp.Sha;
 
 @WebServlet("/loginservlet")
 public class LoginServlet extends HttpServlet {
@@ -34,8 +35,10 @@ public class LoginServlet extends HttpServlet {
 			//cliccando il bottone invia del form login
 			
 			//lettura campi da request
+			Sha encrypt = new Sha();
+			
 			String email = request.getParameter("email");
-			String password = request.getParameter("password");
+			String password = encrypt.sha1(request.getParameter("password"));
 			
 			//salvataggio dei valori nel Bean
 			ClientiBean cliente = new ClientiBean();
@@ -58,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("CREDENZIALI", loggedUser);
 				
 				//apro la pagina che mi interessa
-				ServletContext sc = request.getSession().getServletContext();
+				//ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd;
 				if(loggedUser.getIDCliente() != -1) {
 					System.out.println("-------- UTENTE LOGGATO --------");
