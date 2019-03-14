@@ -20,11 +20,17 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String p1 = request.getParameter("tipoprenotazione");
-		//String p2 = request.getParameter("data");
-		//String p3 = request.getParameter("ora");
-		//String p4 = request.getParameter("posti");
-		response.getWriter().append("Prenotazione inviata al ristorante...");
-
+		String whatsend = request.getParameter("whatsend");
+		
+		if(whatsend.equalsIgnoreCase("creaprenotazione")) {
+			
+			
+			
+			String p1 = request.getParameter("tipoprenotazione");
+			String p2 = request.getParameter("data");
+			String p3 = request.getParameter("ora");
+			String p4 = request.getParameter("posti");
+			response.getWriter().append("Prenotazione inviata al ristorante...");
+		}
 	}
 }
