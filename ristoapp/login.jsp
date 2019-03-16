@@ -8,8 +8,8 @@
 	</head>
 	<body>
 	<form action = "loginservlet" name = "login" method ="post">
-		E-mail <input type = "text" name = "email"/><br><br>
-		Password <input type = "password" name = "password" id="password"/><input type="checkbox" onclick="mostra()"><br>
+		E-mail <input type = "text" name = "email" required="required"/><br><br>
+		Password <input type = "password" name = "password" id="password" required="required"/><input type="checkbox" onclick="mostra()"><br>
 		<input name = "whatsend" value = "invia" type = "hidden"/>
 		<input type = "submit" value = "accedi"/><br>
 	</form>
@@ -18,7 +18,7 @@
 		String avviso = (String)request.getAttribute("errorMessage");
 		if(avviso == "errore"){
 			%>
-			   	<div id="scritta" style="color:red;">E-mail e/o password errate</div>
+			   	<div style="color:red;">E-mail e/o password errate</div>
 			<%
 		}
 	%>

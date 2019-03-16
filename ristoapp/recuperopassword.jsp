@@ -9,15 +9,18 @@
 </head>
 <body>
 	<form action="recuperopasswordservlet" name="recuperopassword" method="post">
-		E-mail <input name="email" value="" type="text"/><br><br>
+		E-mail <input name="email" value="" type="text" required="required"/><br><br>
 		Ti verrà inviata una mail con il link per ripristinare la password.<br>
 		<div class="g-recaptcha" data-sitekey="6LccHZUUAAAAACfyKqv91exddQdqzJfeoAxOY9IB"></div><br>
 		<%
 		//System.out.println(request.getAttribute("errorMessage"));
 		String avviso = (String)request.getAttribute("errorMessage");
-		if(avviso == "errore"){%>
-			<div id="scritta" style="display: none; color:red;">Completa il captcha!</div>
-		<%}%>
+		if(avviso == "errore2"){%>
+			<div style="color:red;">Completa il reCaptcha!</div>
+		<%}
+		else if(avviso == "errore1"){%>
+			<div style="color:red;">Utente non registrato!</div>
+		<%} %>
 		<input name = "whatsend" value = "recupera" type = "hidden"/>
 		<input type = "submit" value = "recupera"/><br>
 	</form>
