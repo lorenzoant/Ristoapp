@@ -75,8 +75,9 @@ public class ModificaPasswordServlet extends HttpServlet {
 						System.out.println(cliente.getPassHash() + " " + cliente.getCodicePass());
 						
 						if(verifica.ModificaPassword(cliente) == 1) {//successo
+							//apro la pagina che mi interessa, login
 							System.out.println("Modifica password avvenuta con successo");
-							response.sendRedirect("/login.jsp");
+							response.sendRedirect("login.jsp");
 						}
 						else {
 							System.out.println("Modifica password fallita");
