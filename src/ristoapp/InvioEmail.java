@@ -6,7 +6,7 @@ import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage;
 public class InvioEmail {
 
-    public void invia(String mail, String password){
+    public void invia(String mail, int codice){
     	
     	//System.out.println("mail = " + mail + ", password = " + password);
         try{
@@ -15,8 +15,8 @@ public class InvioEmail {
             String pass = "RistoApp2019";
             String to = mail;
             String from = "ristoappstaff@gmail.com";
-            String subject = "recupero password.";
-            String messageText = "Password di recupero: " + password;
+            String subject = "modifica password.";
+            String messageText = "Codice di recupero password: " + codice;
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();

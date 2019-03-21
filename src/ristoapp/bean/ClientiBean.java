@@ -18,6 +18,7 @@ public class ClientiBean implements java.io.Serializable{
 	private Boolean NotificaEmail;
 	private Boolean Geolocalizzazione;
 	private int PuntiFedelta;
+	private int CodicePass;
 	
 	private ArrayList<AbbonamentoRistBean> Abbonamenti;
 	private ArrayList<RecensionePiattiBean> Recensione;
@@ -96,6 +97,12 @@ public class ClientiBean implements java.io.Serializable{
 	}
 	public void setPuntiFedelta(int puntiFedelta) {
 		PuntiFedelta = puntiFedelta;
+	}
+	public int getCodicePass() {
+		return CodicePass;
+	}
+	public void setCodicePass(int codicePass) {
+		CodicePass = codicePass;
 	}
 	public ArrayList<RecensionePiattiBean> getRecensione() {
 		return Recensione;

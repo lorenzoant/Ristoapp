@@ -9,10 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ristoapp.bean.CategoriaCucinaBean;
 import ristoapp.bean.ClientiBean;
-import ristoapp.bean.PiattiBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
 
@@ -43,29 +40,52 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("ciao");
+		
 		String whatsend = request.getParameter("whatseend");
 		
-		if (whatsend.equalsIgnoreCase("company")) {
+		if (whatsend.equalsIgnoreCase("aggiunginuovoristorante")) {
+			
+			// Lettura campi da request e manipolazione prima di inserirli nel database
+			ClientiBean utenteLoggato = null;
+			try {
+				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+
+			}
+			catch (Exception e) {
+				// Nessun ristoratore loggato
+				System.out.println("AggiungiRistoranteServlet: user not logged");
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+				return;
+			}
+						
 			//cliccando il bottone Invia nel form
-			String account = request.getParameter("account");
 			String nome_ristorante = request.getParameter("nome_ristorante");
 			String indirizzo = request.getParameter("indirizzo");
 			String telefono = request.getParameter("telefono");
 			String email = request.getParameter("email");
 			String comuni = request.getParameter("comuni");
+			int categoria = Integer.parseInt(request.getParameter("categoria"));
 			String descrizione = request.getParameter("descrizione");
-			String climatizzazione = request.getParameter("ser-climatizzazione");
-			String animali = request.getParameter("ser-animali");
-			String wifi = request.getParameter("ser-wifi");
-			String disabili = request.getParameter("ser-disabili");
-			String parcheggio = request.getParameter("ser-parcheggio");
+			
+			boolean climatizzazione = true;
+			if(request.getParameter("ser-climatizzazione") == null) climatizzazione = false;
+			
+			boolean animali = true;
+			if(request.getParameter("ser-animali") == null) animali = false;
+			
+			boolean wifi = true;
+			if(request.getParameter("ser-wifi") == null) wifi = false;
+		
+			boolean disabili = true;
+			if(request.getParameter("ser-disabili") == null) disabili = false;
+			
+			boolean parcheggio = true;
+			if(request.getParameter("ser-parcheggio") == null) parcheggio = false;
 			
 			//salvataggio valori nel bean
 			RistorantiBean ristorante = new RistorantiBean();
-			CategoriaCucinaBean catcucina = new CategoriaCucinaBean();
-			company.setCompanyEmployess(companyEmployess);
 			
 			ristorante.setNome(nome_ristorante);
 			ristorante.setIndirizzo(indirizzo);
@@ -78,49 +98,27 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			ristorante.setSerWifi(wifi);
 			ristorante.setSerDisabili(disabili);
 			ristorante.setSerParcheggio(parcheggio);
+			ristorante.setIDFCatCucina(categoria);
+			ristorante.setIDFCliente(utenteLoggato.getIDCliente());
 			
-			//il bean deve essere salvato in sessione
-			if(request.getSession() != null && request.getAttribute("RISTORANTE") != null) {
-				piatto = (PiattiBean)request.getSession().getAttribute("bo");
-				ArrayList<RistorantiBean> = company.getCompanyEmploeyess();
-				RistorantiBean employeetoremove = new RistorantiBean();
-				for(Employeebean cl:companyEmploeyess) {
-					if(cl.getIdEmployee().equalsIgnoreCase(idemployee)) {
-						employeetoremove = cl;
-					}
-				}
+			// Salvo nel database il piatto creato
+			SaveMySQL saveOnDb = new SaveMySQL();
+			
+			try {
+				// Provo ad aggiungere il ristorante nel database
+				saveOnDb.inserisciRistorante(ristorante);
+				response.sendRedirect("ilmioristorante.jsp");
+			} 
+			catch (Exception e) {
+				// Problema nel database, reindirizzo alla pagine di errore generico
+				e.printStackTrace();
+				
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
 			}
 			
-			// Il bean deve essere salvato in sessione
-			companyemplotess.remove(employeetoremove);
-			companyEmployees.add(employee);
-			company.setCompanyEmployees(companyEmployess)
-			
-			request.getSession().removeAttribute("employee");
-			request.getSession().setAttribute("employee", employee);
-			
-			request.getSession().removeAttribute("REGRISTO");
-			request.getSession().setAttribute("REGRISTO", ristorante);
-			
-			//apro la pagina
-			ServletContext sc = request.getSession().getServletContext();
-			RequestDispacher rd = sc.getRequestDispatcher("/registratiristorante.jsp");		
-			re.forward(request, response);
-			
-		}else if (whatsend.equalsIgnoreCase("saveInDB")) {
-			Companybean company = new companybean();
-			company = (companybean)request.getSession().getAttribute("COMPANY");
-			SaveMySQL savecompany = new SaveMySql();
-			
-			savecompany.inserisciPiatto(comapny);
-			request.getSession().removeAttribute("COMPANY");
-			
-			ServletContext sc = request.getSession().getServletContext();
-			RequestDispacher rd = sc.getRequestDispatcher("/opera");
-			rd.forward(request, response)
 		}
-		
-		doGet(request, response);
 	}
 
 }

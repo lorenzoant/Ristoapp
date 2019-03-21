@@ -415,21 +415,23 @@ public class SaveMySQL {
 			conn = getDBConnection();
 			stmt = conn.createStatement();
 			
-			// Creo stringa sql
-			String sql = "SELECT PassHash FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
+			// Creo stringa sql per verificare l'esistenza della email
+			String sql = "SELECT IDCliente, CodicePass FROM Clienti WHERE Email = '" + cliente.getEmail() + "';";
 			
-			// Committo sul server e prendo il valore della password se esiste
+			// Committo sul server e prendo il valore dell'id se esiste
 			ResultSet ricerca = stmt.executeQuery(sql);
-			ClientiBean password = new ClientiBean();
+			ClientiBean id = new ClientiBean();
 			
 			if(ricerca.next()) {//credenziali corrette
-				password.setPassHash(ricerca.getString("PassHash"));
+				id.setIDCliente(ricerca.getInt("IDCliente"));
+				id.setCodicePass(ricerca.getInt("CodicePass"));
+				id.setEmail(cliente.getEmail());
 				//System.out.println(password.getPassHash());
 			}
 			else {//credenziali sbagliate
-				password.setPassHash("");
+				id.setIDCliente(-1);
 			}
-			return password;
+			return id;
 		}
 		catch (SQLException e) {
 			throw new Exception(e.getMessage());
@@ -444,4 +446,93 @@ public class SaveMySQL {
 			}
 		}
 	}// End RecuperoPassword()
+	
+	//modifica della password con controllo codice
+	public int ModificaPassword(ClientiBean cliente) throws Exception{
+		//controllare se codice corretto e modificare la password con quella nuova da passare ad sha
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "UPDATE Clienti SET PassHash = '" + cliente.getPassHash() + "', CodicePass = " + cliente.getCodicePass() + " WHERE Email = '" + cliente.getEmail() + "';";
+			
+			// Committo sul server e prendo il valore della password se esiste
+			int ricerca = stmt.executeUpdate(sql);
+			
+			if(ricerca > 0) {//modifica password avvenuta con successo
+				return 1;
+			}
+			else {//modifica non riuscita
+				return 0;
+			}
+		}
+		catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End modificapassword()
+	
+public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "INSERT INTO Ristoranti (IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" + 
+					ristorante.getIDFCatCucina() + "','" + 
+					ristorante.getIDFCliente() + "','" + 
+					ristorante.getNome() + "', 0 , 0 ,'" + 
+					ristorante.getIndirizzo() + "','" + 
+					ristorante.getEmail() + "','" +
+					ristorante.getComune() + "','" +
+					ristorante.getSerScegliTavolo() + "','" +
+					ristorante.getSerClimatizzazione() + "','" +
+					ristorante.getSerAnimali() + "','" +
+					ristorante.getSerWifi() + "','" +
+					ristorante.getSerDisabili() + "','" +
+					ristorante.getSerParcheggio() + "');";
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL inserisciPiatto() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL inserisciPiatto() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End inserisciPiatto()
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ristoapp.db.SaveMySQL;
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.RistorantiBean;
+import ristoapp.Sha;
 
 @WebServlet("/loginservlet")
 public class LoginServlet extends HttpServlet {
@@ -34,8 +35,11 @@ public class LoginServlet extends HttpServlet {
 			//cliccando il bottone invia del form login
 			
 			//lettura campi da request
+			Sha encrypt = new Sha();
+			
 			String email = request.getParameter("email");
-			String password = request.getParameter("password");
+			String password = encrypt.sha1(request.getParameter("password"));//cripto la password con sha1
+			//System.out.println(password);
 			
 			//salvataggio dei valori nel Bean
 			ClientiBean cliente = new ClientiBean();
@@ -58,25 +62,26 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("CREDENZIALI", loggedUser);
 				
 				//apro la pagina che mi interessa
-				ServletContext sc = request.getSession().getServletContext();
+				//ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd;
-				if(loggedUser.getIDCliente() != -1) {
+				if(loggedUser.getIDCliente() != -1) {//login avvenuto con successo
 					System.out.println("-------- UTENTE LOGGATO --------");
 					System.out.println("ID: " + loggedUser.getIDCliente());
 					System.out.println("Liv Autorizzazioni: " + loggedUser.getLivAutorizzazioni());
 				}
-				if(loggedUser.getLivAutorizzazioni() == -1) {
+				
+				if(loggedUser.getLivAutorizzazioni() == -1) {//errore nelle credenziali
 					System.out.println("Credenziali sbagliate");
 					request.setAttribute("errorMessage", "errore");
 			        rd = request.getRequestDispatcher("/login.jsp");
 					//rd = sc.getRequestDispatcher("/login.jsp");
 					rd.forward(request, response);
 				}
-				else if(loggedUser.getLivAutorizzazioni() == 0){
+				else if(loggedUser.getLivAutorizzazioni() == 0){//utente loggato cliente
 					System.out.println("Interfaccia cliente");
 					response.sendRedirect("bacheca.jsp");
 				}
-				else if(loggedUser.getLivAutorizzazioni() == 1){
+				else if(loggedUser.getLivAutorizzazioni() == 1){//utente loggato ristorante
 					RistorantiBean risto = verifica.getInfoRistoranteDalProprietario(loggedUser); // Prelevo info del suo ristorante
 					System.out.println("IDRistorante: " + risto.getIDRistorante());
 					if(risto.getIDRistorante() == 0) {
@@ -93,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 						response.sendRedirect("ilmioristorante.jsp");
 					}	
 				}
-				else if(loggedUser.getLivAutorizzazioni() == 2){
+				else if(loggedUser.getLivAutorizzazioni() == 2){//utente loggato admin
 					System.out.println("Interfaccia amministratore");
 					response.sendRedirect("dashboard.jsp");
 				}

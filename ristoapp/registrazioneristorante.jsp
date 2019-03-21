@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<td>Comuni: </td>
-			<td><select>
+			<td><select name = "comuni">
 				<option value="null">-Select-</option>
 					<% 
 
@@ -48,6 +48,36 @@
 					          String name = rs.getString("Nome");
 					%>
 					<option value="<%=name%>"><%=name%></option>
+					<%
+					     }
+					}
+					catch(Exception e){    
+						System.out.println(e.getMessage());
+					}
+					%>
+					</select></td>
+        </tr>
+        <tr>
+			<td>Categoria: </td>
+			<td><select name = "categoria">
+				<option value="null">-Select-</option>
+					<% 
+
+					Connection con = null;
+					ResultSet query = null;
+					
+					try{
+						// Stabilisco la connessione con il database
+						conn = SaveMySQL.getDBConnection();
+						
+					    PreparedStatement pst = conn.prepareStatement("SELECT * FROM CategoriaCucina;");
+					    rs=pst.executeQuery();
+					    
+					     while(rs.next()){ // Scorro le righe
+					          String id = rs.getString("IDCatCucina");
+					          String name = rs.getString("Nome");
+					%>
+					<option value="<%=id%>"><%=name%></option>
 					<%
 					     }
 					}

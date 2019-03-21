@@ -35,8 +35,7 @@ public class RecuperoPasswordServlet extends HttpServlet {
 		if(whatsend.equalsIgnoreCase("recupera")) {
 			//risposta captcha valida
 			ControlloCaptcha controllo = new ControlloCaptcha();
-			if(controllo.isCaptchaValid("6LccHZUUAAAAALytemiMW8qlVTC4x66lwc40bCHk", request.getParameter("g-recaptcha-response"))){
-				//cliccando il bottone invia del form login
+			if(controllo.isCaptchaValid("6LccHZUUAAAAALytemiMW8qlVTC4x66lwc40bCHk", request.getParameter("g-recaptcha-response"))){//se captcha corretto
 				
 				//lettura campi da request
 				String email = request.getParameter("email");
@@ -46,7 +45,7 @@ public class RecuperoPasswordServlet extends HttpServlet {
 				
 				cliente.setEmail(email);
 				
-				//il Bean deve essere salvato in sessione
+				//il Bean deve essere salvato in sessione in modo da passare l'email nel modificapassword
 				request.getSession().removeAttribute("CREDENZIALI");
 				request.getSession().setAttribute("CREDENZIALI", cliente);
 				
@@ -54,40 +53,42 @@ public class RecuperoPasswordServlet extends HttpServlet {
 				SaveMySQL verifica = new SaveMySQL();
 				
 				try {
-					ClientiBean password = new ClientiBean();
-					password = verifica.RecuperoPassword(cliente);
-					request.getSession().removeAttribute("CREDENZIALI");
+					ClientiBean id = new ClientiBean();
+					id = verifica.RecuperoPassword(cliente);//verifico l'esistenza della email
+					//request.getSession().removeAttribute("CREDENZIALI");
 					
 					//apro la pagina che mi interessa
 					ServletContext sc = request.getSession().getServletContext();
 					RequestDispatcher rd;
 		
-					if(password.getPassHash() == "") {//utente non trovato
-						System.out.println("Utente non trovato");
-						rd = sc.getRequestDispatcher("/recuperopassword.jsp");
+					if(id.getIDCliente() == -1) {//utente non trovato
+						request.setAttribute("errorMessage", "errore1");
+						rd = request.getRequestDispatcher("/recuperopassword.jsp");
 						rd.forward(request, response);
+						System.out.println("Utente non trovato!");
 					}
-					else {//password presa
-						//System.out.println("Password: " + password.getPassHash() + " (prova, da nascondere)");
+					else {//utente trovato
+						//System.out.println("ID: " + password.getIDCliente() + " (prova, da nascondere)");
 						System.out.println("Invio email");
 						//invio email
 						InvioEmail email1 = new InvioEmail();
-						email1.invia(cliente.getEmail(), password.getPassHash());
-						rd = sc.getRequestDispatcher("/login.jsp");
-						rd.forward(request, response);
+						email1.invia(cliente.getEmail(), id.getCodicePass());//invio l'email all'utente con il codice
+						request.getSession().removeAttribute("CREDENZIALI");
+						request.getSession().setAttribute("CREDENZIALI", id);//salvo in sessione id, email e codice
+						response.sendRedirect("modificapassword.jsp");//apro la pagina di modifica password
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					//apro la pagina che mi interessa
 					ServletContext sc = request.getSession().getServletContext();
-					RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+					RequestDispatcher rd = sc.getRequestDispatcher("/recuperopassword.jsp");
 					rd.forward(request, response);
 				}
 			}
 			else {
 				//risposta captcha non valida
-				request.setAttribute("errorMessage", "errore");
+				request.setAttribute("errorMessage", "errore2");
 				RequestDispatcher rd = request.getRequestDispatcher("/recuperopassword.jsp");
 				rd.forward(request, response);
 				System.out.println("Sei un robot!");

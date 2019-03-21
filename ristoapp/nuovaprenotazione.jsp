@@ -8,11 +8,11 @@
 </head>
 <body>
 <form action="nuovaprenotazioneservlet" name="nuovaprenotazione" method="POST">
-		<input name="tipoprenotazione" value="" type="text"/><br>
 		<input name="data" value="" type="date"/><br>
 		<input name="ora" value="" type="date"/><br>
 		<input name="posti" value="" type="number"/><br>
-		<input value="Crea la prenotazione" type="submit">
+		<input name="whatsend" value="creaprenotazione" type="hidden">
+		<input value="Crea la prenotazione" type="submit">	
 	</form>
 </body>
 </html>
