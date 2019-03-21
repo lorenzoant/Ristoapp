@@ -8,7 +8,6 @@
 </head>
 <body>
 <form action="nuovaprenotazioneservlet" name="nuovaprenotazione" method="POST">
-		<input name="tipoprenotazione" value="" type="text"/><br>
 		<input name="data" value="" type="date"/><br>
 		<input name="ora" value="" type="date"/><br>
 		<input name="posti" value="" type="number"/><br>
