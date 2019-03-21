@@ -28,7 +28,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			String data = request.getParameter("data");
 			String ora = request.getParameter("ora");
 			String posti = request.getParameter("posti");
-			int idristorante= request.getParameter("ristorante"); //creare campo hidden per raccogliere l'id del ristorante
+			String idristorante= request.getParameter("ristorante"); //creare campo hidden per raccogliere l'id del ristorante
 			
 			ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
 			
