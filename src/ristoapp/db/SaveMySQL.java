@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
+import ristoapp.bean.PrenotazioniBean;
 import ristoapp.bean.RistorantiBean;
 
 public class SaveMySQL {
@@ -49,7 +50,33 @@ public class SaveMySQL {
 		return dbConnection;
 	}// End getDBConnection()
 	
-	
+	public void nuovaPrenotazione(PrenotazioniBean prenotazione) {
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			String sql = "INSERT INTO Piatti (IDPrenotazione, IDFRistorante, IDFCatPrenotazione, IDFCliente, Data, Ora, StatoPagamento, NumeroPersone) VALUES ('" +
+						prenotazione.getIDPrenotazione() + "','" +
+						prenotazione.getIDFRistorante() + "','" + 
+						prenotazione.getIDFCatPrenotazione() + "','" + 
+						prenotazione.getIDFCliente() + "','" + 
+						prenotazione.getData() + "','" + 
+						prenotazione.getOra() + "','" + 
+						prenotazione.getStatoPagamento() + "','" + 
+						prenotazione.getNumeroPersone() + "');";
+			//Continua da qui
+					
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public void inserisciPiatto(PiattiBean piatto) throws Exception{
 		
 		Statement stmt = null;

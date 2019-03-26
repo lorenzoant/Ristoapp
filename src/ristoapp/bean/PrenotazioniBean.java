@@ -12,6 +12,7 @@ public class PrenotazioniBean implements java.io.Serializable {
 	private int IDFCatPrenotazione;
 	private int IDFCliente;
 	private Date Data;
+	private String Ora;
 	private String StatoPagamento;
 	private int NumeroPersone;
 	
@@ -81,5 +82,13 @@ public class PrenotazioniBean implements java.io.Serializable {
 
 	public void setDettagliPrenotazioni(ArrayList<PrenotazioniDettagliBean> dettagliPrenotazioni) {
 		DettagliPrenotazioni = dettagliPrenotazioni;
+	}
+
+	public String getOra() {
+		return Ora;
+	}
+
+	public void setOra(String ora) {
+		Ora = ora;
 	}
 }
