@@ -7,7 +7,7 @@ public class GeneraCodice {
 		int [] array = new int[4];
 		String codice = "";
 		for(int i = 0; i < 4; i++) {
-			array[i] = (int)(Math.random() * 9);//creo numero casuale
+			array[i] = (int)(Math.random() * 8 + 1);//creo numero casuale da 1 a 9
 			codice = codice + (char)(array[i]+'0');//concateno il numero con i precedenti
 			//System.out.println(codice);
 		}
