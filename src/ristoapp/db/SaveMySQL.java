@@ -583,4 +583,53 @@ public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 			}
 		}
 	}// End inserisciPiatto()
+	
+	public PrenotazioniBean getInfoPagamenti(CarteBean carta) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT * FROM Prenotazioni INNER JOIN Clienti INNER JOIN Carte ON Prenotazioni.IDFCliente = Clienti.IDCliente ON Carte.IDFCliente = Clienti.IDCliente WHERE Carte.IDCarta = " + carta.getIDCarta() + ";";
+			ResultSet result = stmt.executeQuery(sql);
+			PrenotazioniBean prenota = new PrenotazioniBean();
+			
+			if(result.next()) { // Prelevo i dati dalla prima riga del risultato
+				prenota.setIDPrenotazione(result.getInt("IDPrenotazione"));
+				prenota.setIDFRistorante(result.getInt("IDFRistorante"));
+				prenota.setIDFCatPrenotazione(result.getInt("IDFCatPrenotazione"));
+				prenota.setIDFCliente(result.getInt("IDFCliente"));
+				prenota.setData(result.getDate("Data"));
+				prenota.setOra(result.getDate("Ora"));
+				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				prenota.setNumeroPersone(result.getInt("NumeroPersone"));
+
+				
+				return prenota;
+			}
+			else {
+				// Restituisco oggetto vuoto
+				return prenota;
+			}
+						
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL getInfoPagamenti() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End getInfoPagamenti()	
 }
