@@ -11,6 +11,7 @@ import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
 import ristoapp.bean.PrenotazioniBean;
 import ristoapp.bean.RistorantiBean;
+import ristoapp.bean.CarteBean;
 
 public class SaveMySQL {
 
