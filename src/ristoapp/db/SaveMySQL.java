@@ -50,7 +50,9 @@ public class SaveMySQL {
 		return dbConnection;
 	}// End getDBConnection()
 	
-	public void nuovaPrenotazione(PrenotazioniBean prenotazione) {
+	
+	
+	public void nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
 		Statement stmt = null;
 		Connection conn = null;
 		
@@ -61,7 +63,7 @@ public class SaveMySQL {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
-			String sql = "INSERT INTO Piatti (IDPrenotazione, IDFRistorante, IDFCatPrenotazione, IDFCliente, Data, Ora, StatoPagamento, NumeroPersone) VALUES ('" +
+			String sql = "INSERT INTO Prenotazioni (IDPrenotazione, IDFRistorante, IDFCatPrenotazione, IDFCliente, Data, Ora, StatoPagamento, NumeroPersone) VALUES ('" +
 						prenotazione.getIDPrenotazione() + "','" +
 						prenotazione.getIDFRistorante() + "','" + 
 						prenotazione.getIDFCatPrenotazione() + "','" + 
@@ -70,13 +72,31 @@ public class SaveMySQL {
 						prenotazione.getOra() + "','" + 
 						prenotazione.getStatoPagamento() + "','" + 
 						prenotazione.getNumeroPersone() + "');";
-			//Continua da qui
-					
 			
-		} catch (Exception e) {
-			// TODO: handle exception
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
-	}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL nuovaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}//End nuovaPrenotazione()
+	
 	public void inserisciPiatto(PiattiBean piatto) throws Exception{
 		
 		Statement stmt = null;
