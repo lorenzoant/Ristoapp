@@ -495,6 +495,7 @@ public class SaveMySQL {
 		}
 	}// End RecuperoPassword()
 	
+	
 	//modifica della password con controllo codice
 	public int ModificaPassword(ClientiBean cliente) throws Exception{
 		//controllare se codice corretto e modificare la password con quella nuova da passare ad sha
@@ -533,56 +534,6 @@ public class SaveMySQL {
 		}
 	}// End modificapassword()
 	
-public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
-		
-		Statement stmt = null;
-		Connection conn = null;
-		
-		try {
-			// Creo la connessione al database
-			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement();
-			
-			// Creo stringa sql
-			String sql = "INSERT INTO Ristoranti (IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" + 
-					ristorante.getIDFCatCucina() + "','" + 
-					ristorante.getIDFCliente() + "','" + 
-					ristorante.getNome() + "', 0 , 0 ,'" + 
-					ristorante.getIndirizzo() + "','" + 
-					ristorante.getEmail() + "','" +
-					ristorante.getComune() + "','" +
-					ristorante.getSerScegliTavolo() + "','" +
-					ristorante.getSerClimatizzazione() + "','" +
-					ristorante.getSerAnimali() + "','" +
-					ristorante.getSerWifi() + "','" +
-					ristorante.getSerDisabili() + "','" +
-					ristorante.getSerParcheggio() + "');";
-			
-			// Committo sul server
-			stmt.executeUpdate(sql);
-			
-			System.out.println("MySQL inserisciPiatto() confirmed");
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL inserisciPiatto() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
-			throw new Exception(e.getMessage());
-		}
-		finally {
-			// Chiudo la connessione
-			if(stmt != null) {
-				stmt.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-		}
-	}// End inserisciPiatto()
 	
 	public PrenotazioniBean getInfoPagamenti(CarteBean carta) throws Exception{
 		
@@ -632,4 +583,70 @@ public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 			}
 		}
 	}// End getInfoPagamenti()	
+	
+	
+	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" + 
+					ristorante.getIDFCatCucina() + "','" + 
+					ristorante.getIDFCliente() + "','" + 
+					ristorante.getNome() +  "','" + 
+					ristorante.getCoordinataLat() +  "','" + 
+					ristorante.getCoordinataLon() +  "','" + 
+					ristorante.getIndirizzo() + "','" + 
+					ristorante.getTelefono() + "','" + 
+					ristorante.getEmail() + "','" +
+					ristorante.getComune() + "','" +
+					ristorante.getDescrizione() + "','"; 
+					if(ristorante.getSerScegliTavolo()) sql += "1','";
+					else sql += "0','";
+					if(ristorante.getSerClimatizzazione()) sql += "1','";
+					else sql += "0','";
+					if(ristorante.getSerAnimali()) sql += "1','";
+					else sql += "0','";
+					if(ristorante.getSerWifi()) sql += "1','";
+					else sql += "0','";
+					if(ristorante.getSerDisabili()) sql += "1','";
+					else sql += "0','";
+					if(ristorante.getSerParcheggio()) sql += "1');";
+					else sql += "0');";
+					
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL inserisciRistorante() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL inserisciRistorante() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End inserisciRistorante()
+	
+	
 }
+
+
