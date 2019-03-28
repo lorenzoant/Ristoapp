@@ -4,9 +4,7 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-red.min.css" /> 
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <style>
-	h1{
-		font-family = 'Bahnschrift SemiBold SemiConden';
-	}
+	body,h1,h2,h3,h4,h5 {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
 </style>
 
 <!--
