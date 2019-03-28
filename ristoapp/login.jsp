@@ -21,7 +21,8 @@
 			    <input class="mdl-textfield__input" type="password" id="password" name="password" required>
 			    <label class="mdl-textfield__label" for="password">Password</label>
 	  		</div><br>
-	  		<input type="checkbox" onclick="mostra()"><br>
+	  		
+			<img src="MEDIA/occhio.png" onmouseover="mostra();" onmouseout="nascondi();"/>
 	  		
 			<input name = "whatsend" value = "invia" type = "hidden"/>
 			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "accedi"/><br>
@@ -39,12 +40,12 @@
 	</body>
 	<script>
 		function mostra() {
-		  var x = document.getElementById("password");
-		  if (x.type === "password") {
-		    x.type = "text";
-		  } else {
-		    x.type = "password";
-		  }
+		  	var x = document.getElementById("password");
+		 	x.type = "text";
+		}
+		function nascondi(){
+			 var x = document.getElementById("password");
+			x.type = "password";
 		}
 	</script>
 </html>
