@@ -9,10 +9,10 @@
 	</head>
 	<body style="text-align: center;">
 		<div class="mdl-layout__header">
-			<h3>RistoApp</h3>
+			<h2>RistoApp</h2>
 		</div>
 		<form action = "loginservlet" name = "login" method ="post">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<br><div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    <input class="mdl-textfield__input" type="email" id="email" name="email" required>
 			    <label class="mdl-textfield__label" for="email">Email</label>
 	  		</div><br>

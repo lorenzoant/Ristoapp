@@ -10,7 +10,7 @@
 </head>
 <body style="text-align: center;">
 	<div class="mdl-layout__header">
-		<h3>Recupero Password</h3>
+		<h2>Recupero Password</h2>
 	</div>
 	<h5>Ti verrà inviata una mail con il link per ripristinare la password.</h5>
 	<form action="recuperopasswordservlet" name="recuperopassword" method="post">
