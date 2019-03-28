@@ -8,7 +8,10 @@
 	<title>Aggiungi piatto</title>
 	<%@include file="graphicspuntoacca.jsp"%>
 </head>
-<body>
+<body style="text-align: center;">
+	<div class="mdl-layout__header">
+		<h3>Aggiungi piatto</h3>
+	</div>
 	<form action="aggiungipiattoservlet" name="aggiungipiatto" method="post">
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		    <input class="mdl-textfield__input" type="text" id="nome" name="nome" required>
@@ -54,10 +57,7 @@
 		    <label class="mdl-textfield__label" for="prezzo">Prezzo</label>
   		</div><br>
 		
-  		<label class="mdl-checkbox mdl-js-checkbox" for="disponibile">
-        	<input type="checkbox" id="disponibile" class="mdl-checkbox__input" name="disponibile" checked>
-            <span class="mdl-checkbox__label">Disponibile</span>
-        </label><br>
+		<input type="checkbox" name="disponibile" checked>Disponibile<br>
   		
   		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		    <input class="mdl-textfield__input" type="text" id="url" name="url">
