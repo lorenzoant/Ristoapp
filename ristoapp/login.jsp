@@ -4,12 +4,13 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Login RistoApp</title>
+		<title>RistoApp</title>
 		<%@include file="graphicspuntoacca.jsp"%>
 	</head>
 	<body style="text-align: center;">
-		<br>
-		<h3>RistoApp</h3>
+		<div class="mdl-layout__header">
+			<h3>RistoApp</h3>
+		</div>
 		<form action = "loginservlet" name = "login" method ="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    <input class="mdl-textfield__input" type="email" id="email" name="email" required>
