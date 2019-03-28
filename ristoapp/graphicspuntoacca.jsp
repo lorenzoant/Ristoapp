@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-red.min.css" /> 
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <style>
-	body,h1,h2,h3,h4,h5,div {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
+	body,h1,h2,h3,h4,h5 {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
 	.occhio{max-height: 2%;max-width: 2%;}
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
@@ -16,6 +16,6 @@ ESEMPI:
 
 header:
 <div class="mdl-layout__header">
-	<h3>TITOLO</h3>
+	<h2>TITOLO</h2>
 </div>
  -->
