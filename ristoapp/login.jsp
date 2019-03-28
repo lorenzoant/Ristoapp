@@ -22,7 +22,7 @@
 			    <label class="mdl-textfield__label" for="password">Password</label>
 	  		</div><br>
 	  		
-			<img src="MEDIA/occhio.png" onmouseover="mostra();" onmouseout="nascondi();"/>
+			<img class="occhio" src="MEDIA/occhio.png" onmouseover="mostra();" onmouseout="nascondi();"/><br>
 	  		
 			<input name = "whatsend" value = "invia" type = "hidden"/>
 			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "accedi"/><br>
@@ -36,7 +36,7 @@
 				<%
 			}
 		%>
-		<a href="recuperopassword.jsp">Password dimenticata?</a>
+		<br><a href="recuperopassword.jsp">Password dimenticata?</a>
 	</body>
 	<script>
 		function mostra() {
