@@ -5,10 +5,12 @@
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <style>
 	body,h1,h2,h3,h4,h5 {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
-	.occhio{max-height: 2%;max-width: 2%;}
+	.occhio{width: 20px; height: 20px;}
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
+    body{text-align: center;}
+    @media screen and (max-width:1024px){.mdl-layout__header{display:block}
 </style>
 
 <!--
