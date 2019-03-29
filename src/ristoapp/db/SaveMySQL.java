@@ -556,8 +556,8 @@ public class SaveMySQL {
 				prenota.setIDFCatPrenotazione(result.getInt("IDFCatPrenotazione"));
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
 				prenota.setData(result.getDate("Data"));
-				prenota.setOra(result.getDate("Ora"));
-				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				//prenota.setOra(result.getDate("Ora"));
+				//prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
 				prenota.setNumeroPersone(result.getInt("NumeroPersone"));
 
 				

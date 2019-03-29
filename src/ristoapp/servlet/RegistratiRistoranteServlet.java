@@ -41,33 +41,29 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String whatsend = request.getParameter("whatseend");
+		String whatsend = request.getParameter("whatsend");
 		
 		if (whatsend.equalsIgnoreCase("aggiunginuovoristorante")) {
 			
 			// Lettura campi da request e manipolazione prima di inserirli nel database
 			ClientiBean utenteLoggato = null;
-			try {
-				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-
-			}
-			catch (Exception e) {
-				// Nessun ristoratore loggato
+			
+			utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			if (utenteLoggato == null) {
 				System.out.println("AggiungiRistoranteServlet: user not logged");
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
 				return;
 			}
-						
+			
 			//cliccando il bottone Invia nel form
-			String nome_ristorante = request.getParameter("nome_ristorante");
-			String indirizzo = request.getParameter("indirizzo");
-			String telefono = request.getParameter("telefono");
-			String email = request.getParameter("email");
-			String comuni = request.getParameter("comuni");
-			int categoria = Integer.parseInt(request.getParameter("categoria"));
-			String descrizione = request.getParameter("descrizione");
+			int categoria = 0;
+			try {
+				categoria = Integer.parseInt(request.getParameter("categoria"));
+			}catch (Exception e){
+				categoria = 0;
+			}
 			
 			boolean climatizzazione = true;
 			if(request.getParameter("ser-climatizzazione") == null) climatizzazione = false;
@@ -87,12 +83,12 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			//salvataggio valori nel bean
 			RistorantiBean ristorante = new RistorantiBean();
 			
-			ristorante.setNome(nome_ristorante);
-			ristorante.setIndirizzo(indirizzo);
-			ristorante.setTelefono(telefono);
-			ristorante.setEmail(email);
-			ristorante.setComune(comuni);
-			ristorante.setDescrizione(descrizione);
+			ristorante.setNome(request.getParameter("nome_ristorante"));
+			ristorante.setIndirizzo(request.getParameter("indirizzo"));
+			ristorante.setTelefono(request.getParameter("telefono"));
+			ristorante.setEmail(request.getParameter("email"));
+			ristorante.setComune(request.getParameter("comuni"));
+			ristorante.setDescrizione(request.getParameter("descrizione"));
 			ristorante.setSerClimatizzazione(climatizzazione);
 			ristorante.setSerAnimali(animali);
 			ristorante.setSerWifi(wifi);
@@ -100,6 +96,9 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			ristorante.setSerParcheggio(parcheggio);
 			ristorante.setIDFCatCucina(categoria);
 			ristorante.setIDFCliente(utenteLoggato.getIDCliente());
+			ristorante.setCoordinataLat(0);
+			ristorante.setCoordinataLon(0);
+			ristorante.setSerScegliTavolo(false);
 			
 			// Salvo nel database il piatto creato
 			SaveMySQL saveOnDb = new SaveMySQL();
