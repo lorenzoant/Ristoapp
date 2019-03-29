@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ristoapp.bean.ClientiBean;
+
 /**
  * Servlet implementation class BachecaServlet
  */
@@ -57,7 +59,10 @@ public class BachecaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String whatsend = request.getParameter("profilo");
+		//ASPETTARE FRIGERIO PER FARE IL DIRECT A MODIFICA UTENTE
+		//if(whatsend.equals("profilo"))
+		
 	}
 
 	/**
@@ -65,6 +70,11 @@ public class BachecaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//System.out.println(id.getEmail() + " " + id.getPassHash() + " " + id.getIDCliente() + " " + id.getLivAutorizzazioni());
+		String RistorantePrenotare = request.getParameter("ristodaprenotare");
+		
+		request.getSession().removeAttribute("RISTOPRENOTO");
+		request.getSession().setAttribute("RISTOPRENOTO",RistorantePrenotare );
 		doGet(request, response);
 	}
 
