@@ -69,6 +69,11 @@
 							<a href="recuperopassword.jsp">Password dimenticata?</a>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="2">
+							<a href="scelta.jsp">Sei un nuovo cliente?</a>
+						</td>
+					</tr>
 				</table>
 			</form>
 		</center>
