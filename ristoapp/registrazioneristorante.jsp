@@ -105,17 +105,17 @@
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
 				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-climatizzazione"/>	
-				<label class="mdl-textfield__label" for="nome">Ser-Climatizzazione</label>
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Climatizzazione</label>
 			</div>
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
 				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-animali"/>	
-				<label class="mdl-textfield__label" for="nome">Ser-Animali</label>
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Animali</label>
 			</div><br>
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-wifi"/>		
-				<label class="mdl-textfield__label" for="nome">Ser-Wifi</label>
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Wifi</label>
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
@@ -125,7 +125,7 @@
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-parcheggio"/>
-				<label class="mdl-textfield__label" for="nome">Parcheggio</label>
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Parcheggio</label>
 			</div><br>
 			
 			<input name="whatsend" value="aggiunginuovoristorante" type="hidden"/>	
