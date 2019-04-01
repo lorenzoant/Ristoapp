@@ -7,10 +7,21 @@
 		<title>RistoApp</title>
 		<%@include file="graphicspuntoacca.jsp"%>
 	</head>
-	<body style="text-align: center;">
+	<body class="text-center">
 		<center>
 			<div class="mdl-layout__header">
-				<h2>RistoApp</h2>
+				<center>
+					<table>
+						<tr>
+							<td>
+								<h2>RistoApp</h2>
+							</td>
+							<td>
+								<img class="logo" src="MEDIA/logo.png"/>
+							</td>
+						</tr>
+					</center>
+				</table>
 			</div>
 			
 			<form action = "loginservlet" name = "login" method ="post">
