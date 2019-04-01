@@ -97,7 +97,91 @@ public class SaveMySQL {
 			}
 		}
 	}//End nuovaPrenotazione()
+
+	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
+			
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "UPDATE Prenotazioni SET" +
+					"IDFRistorante = '" + prenotazione.getIDFRistorante()+ "'," +  
+					"IDFCatPrenotazione = '" + prenotazione.getIDFCatPrenotazione()+ "'," + 
+					//"IDFCliente = '" + prenotazione.getIDFCliente()+ "'," +  
+					"Data = '" + prenotazione.getData()+ "'," +  
+					"Ora = '" + prenotazione.getOra()+ "'," + 
+					"NumeroPersone = '" + prenotazione.getNumeroPersone()+ "'," + 
+					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL modificaPrenotazione() confirmed");
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL connection modificaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End modificaPrenotazione()
 	
+	
+	public void eliminaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "DELETE FROM Prenotazioni" +
+					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL eliminaPrenotazione() confirmed");
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL connection eliminaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End eliminaPrenotazione()	
 	
 	public void inserisciPiatto(PiattiBean piatto) throws Exception{
 		
