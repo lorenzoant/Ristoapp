@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ristoapp.bean.ClientiBean;
+import ristoapp.bean.PrenotazioniBean;
 
 @WebServlet("/nuovaprenotazioneservlet")
 public class NuovaPrenotazioneServlet extends HttpServlet {
@@ -29,9 +30,12 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			String data = request.getParameter("data");
 			String ora = request.getParameter("ora");
 			String posti = request.getParameter("posti");
-			String idristorante= request.getParameter("ristorante"); //creare campo hidden per raccogliere l'id del ristorante
 			
 			ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
+			PrenotazioniBean prenotazione= new PrenotazioniBean();
+			prenotazione.set
+			int idristorante=  (int) request.getSession().getAttribute("idristorante");
+			
 			
 			response.getWriter().append("Prenotazione inviata al ristorante...");
 		}
