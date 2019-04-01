@@ -9,8 +9,7 @@
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
-    body{text-align: center;}
-    @media screen and (max-width:1024px){.mdl-layout__header{display:block}
+    @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
 </style>
 
 <!--

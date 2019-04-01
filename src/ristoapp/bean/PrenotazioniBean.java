@@ -2,6 +2,7 @@ package ristoapp.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.Time;
 
 public class PrenotazioniBean implements java.io.Serializable {
 
@@ -12,8 +13,8 @@ public class PrenotazioniBean implements java.io.Serializable {
 	private int IDFCatPrenotazione;
 	private int IDFCliente;
 	private Date Data;
-	private String Ora;
-	private String StatoPagamento;
+	private Time Ora;
+	private Boolean StatoPagamento;
 	private int NumeroPersone;
 	
 	private ArrayList<PrenotazioniDettagliBean> DettagliPrenotazioni;
@@ -60,11 +61,11 @@ public class PrenotazioniBean implements java.io.Serializable {
 		Data = data;
 	}
 
-	public String getStatoPagamento() {
+	public Boolean getStatoPagamento() {
 		return StatoPagamento;
 	}
 
-	public void setStatoPagamento(String statoPagamento) {
+	public void setStatoPagamento(Boolean statoPagamento) {
 		StatoPagamento = statoPagamento;
 	}
 
@@ -84,11 +85,11 @@ public class PrenotazioniBean implements java.io.Serializable {
 		DettagliPrenotazioni = dettagliPrenotazioni;
 	}
 
-	public String getOra() {
+	public Time getOra() {
 		return Ora;
 	}
 
-	public void setOra(String ora) {
+	public void setOra(Time ora) {
 		Ora = ora;
 	}
 }

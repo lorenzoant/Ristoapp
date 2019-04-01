@@ -92,6 +92,7 @@ public class LoginServlet extends HttpServlet {
 					}
 					else {
 						risto.setRistorantePiatti(verifica.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante
+						risto.setPrenotazioni(verifica.prelevaPrenotazioniRistoranteTraDueDate(risto)); // Prelevo prenotazioni del ristorante
 						request.getSession().removeAttribute("RISTORANTELOGGATO");
 						request.getSession().setAttribute("RISTORANTELOGGATO", risto);
 						System.out.println("Interfaccia ristoratore");

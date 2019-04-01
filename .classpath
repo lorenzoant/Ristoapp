@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/activation.jar"/>
 	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/javax.mail-1.4.4.jar"/>
 	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/json-20140107.jar"/>
+	<classpathentry kind="lib" path="ristoapp/WEB-INF/lib/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

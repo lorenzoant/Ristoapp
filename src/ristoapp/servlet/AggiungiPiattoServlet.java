@@ -94,6 +94,13 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			try {
 				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
+				// Scarico le nuove informazioni e poi torno a ilmiorisorante
+				SaveMySQL getNewInfo = new SaveMySQL();
+				RistorantiBean risto = getNewInfo.getInfoRistoranteDalProprietario(utenteLoggato); // Prelevo info del suo ristorante
+				risto.setRistorantePiatti(getNewInfo.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante
+				request.getSession().removeAttribute("RISTORANTELOGGATO");
+				request.getSession().setAttribute("RISTORANTELOGGATO", risto);
+				
 				response.sendRedirect("ilmioristorante.jsp");
 			} 
 			catch (Exception e) {

@@ -98,6 +98,7 @@ public class SaveMySQL {
 		}
 	}//End nuovaPrenotazione()
 	
+	
 	public void inserisciPiatto(PiattiBean piatto) throws Exception{
 		
 		Statement stmt = null;
@@ -254,6 +255,56 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPiattRistorante()
+	
+	
+	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueDate(RistorantiBean risto) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + ";"; 
+					
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+			
+			// Estraggo dati
+			ArrayList<PrenotazioniBean> prenotazioniList = new ArrayList<PrenotazioniBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				PrenotazioniBean prenotazione = new PrenotazioniBean();
+				prenotazione.setIDPrenotazione(resultList.getInt("IDPrenotazione"));
+				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
+				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
+				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
+				prenotazione.setData(resultList.getDate("Data"));
+				prenotazione.setOra(resultList.getTime("Ora"));
+				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
+				prenotazione.setNumeroPersone(resultList.getInt("NumeroPersone"));
+				prenotazioniList.add(prenotazione);// Aggiungo al vettore
+			}
+			
+			return (ArrayList<PrenotazioniBean>)prenotazioniList;
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End prelevaPrenotazioniRistoranteTraDueDate()
 		
 	
 	public void inserisciCliente(ClientiBean cliente) throws Exception{
