@@ -9,8 +9,16 @@
 	<%@include file="graphicspuntoacca.jsp"%>
 </head>
 <body class="text-center">
+
 	<div class="mdl-layout__header">
-		<h3>RistoApp - Aggiungi piatto</h3>
+		<center>
+			<table>
+				<tr>
+					<td><h2>RistoApp - Aggiungi piatto</h2></td>
+					<td><img class="logo" src="MEDIA/logo.png"/></td>
+				</tr>
+			</table>
+		</center>
 	</div>
 	
 	<div class="page">

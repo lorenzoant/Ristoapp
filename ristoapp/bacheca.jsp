@@ -12,12 +12,12 @@
 <!-- INIZIO CODICE  -->
 	<html>
 	<!-- BARRA DI CARICAMENTO -->
-		<div id="p1" class="mdl-progress mdl-js-progress"></div>
+		<!--  <div id="p1" class="mdl-progress mdl-js-progress"></div> -->
 		
 		<script>
-		  document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-		    this.MaterialProgress.setProgress(44);
-		  });
+		//  document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+	//	    this.MaterialProgress.setProgress(44);
+		//  });
 		</script>
 		<head>
 		
@@ -28,7 +28,7 @@
 					<table>
 						<tr>
 							<td>
-								<h2>BACHECA</h2>
+								<h2>RistoApp - Bacheca</h2>
 							</td>
 							<td>
 								<img class="logo" src="MEDIA/logo.png"/>
@@ -44,9 +44,7 @@
 		
 		
 		<center>
-		<div class="mdl-layout__header">
-				<h2>RistoApp</h2>
-			</div>
+
 		<div>
 		<!-- AGGIUNGO DENTRO I BLOCCI PER I RISTORANTI -->
 		
