@@ -11,13 +11,7 @@
 
 <!-- INIZIO CODICE  -->
 	<html>
-		<head>
-			<title>RistoApp-Bacheca</title>
-			<%@include file="graphicspuntoacca.jsp"%>
-		</head>
-	
-	<body class="text-center">
-		<!-- BARRA DI CARICAMENTO -->
+	<!-- BARRA DI CARICAMENTO -->
 		<div id="p1" class="mdl-progress mdl-js-progress"></div>
 		
 		<script>
@@ -25,6 +19,29 @@
 		    this.MaterialProgress.setProgress(44);
 		  });
 		</script>
+		<head>
+		
+			<title>RistoApp-Bacheca</title>
+			<%@include file="graphicspuntoacca.jsp"%>
+			<div class="mdl-layout__header">
+			<center>
+					<table>
+						<tr>
+							<td>
+								<h2>BACHECA</h2>
+							</td>
+							<td>
+								<img class="logo" src="MEDIA/logo.png"/>
+							</td>
+						</tr>
+					</center>
+					</table>
+			</div>
+			
+		</head>
+	
+	<body class="text-center">
+		
 		
 		<center>
 		<div class="mdl-layout__header">
