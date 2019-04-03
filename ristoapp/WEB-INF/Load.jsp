@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@page import="ristoapp.bean.ClientiBean"%>
+    
+    <%//riprendo la session da Login per avere i dati del cliente
+		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +15,9 @@
 <body>
 	<div align="center">
 	
-	<form action = "LoadServelet" name = "load" method ="post" onLoad="setTimeout('manda_form()',velocita*15)">
+	<form action = "LoadServlet" name = "Load" method ="post" onLoad="setTimeout('manda_form()',velocita*15)">
 
-		<div style='font-size:8pt;padding:1px;border:solid silver 2px;width:303px; color:#FFD350'''>
+		<!-- <div style='font-size:8px; padding:1px; border:solid silver 2px; width:303px; color:#FFD350'''> -->
 		
 		<span id='progress1'>#</span>
 		<span id='progress2'>#</span>
@@ -28,6 +34,20 @@
 		<span id='progress13'>#</span>
 		<span id='progress14'>#</span>
 		<span id='progress15'>#</span>
+		
+		<input name = "whatsend"  value="fine" type="hidden">
+		
+		
+		<%
+		String problemi = (String)request.getAttribute("err");
+		if(problemi == "err"){
+		%>
+		
+		<h1>errore nel caricamento</h1>
+		
+		<%
+		}
+		%>
 		
 	</form>
 		
@@ -69,7 +89,7 @@
 	progress_update();		// start progress bar
 	
 	</script>
-	</div>
+	<!-- </div> -->
 	
 </body>
 </html>
