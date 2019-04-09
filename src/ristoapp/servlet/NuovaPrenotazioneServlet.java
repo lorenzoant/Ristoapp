@@ -33,8 +33,12 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			
 			ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
 			PrenotazioniBean prenotazione= new PrenotazioniBean();
-			prenotazione.set
+			prenotazione.setIDFCliente(cliente.getIDCliente());
+			prenotazione.setData(data);
+			prenotazione.setOra(ora);
+			prenotazione.setNumeroPersone(posti);
 			int idristorante=  (int) request.getSession().getAttribute("idristorante");
+			prenotazione.setIDFRistorante(idristorante);
 			
 			
 			response.getWriter().append("Prenotazione inviata al ristorante...");
