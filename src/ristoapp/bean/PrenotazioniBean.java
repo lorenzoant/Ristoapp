@@ -12,10 +12,10 @@ public class PrenotazioniBean implements java.io.Serializable {
 	private int IDFRistorante;
 	private int IDFCatPrenotazione;
 	private int IDFCliente;
-	private Date Data;
-	private Time Ora;
+	private String Data;
+	private String Ora;
 	private Boolean StatoPagamento;
-	private int NumeroPersone;
+	private String NumeroPersone;
 	
 	private ArrayList<PrenotazioniDettagliBean> DettagliPrenotazioni;
 
@@ -53,12 +53,12 @@ public class PrenotazioniBean implements java.io.Serializable {
 		IDFCliente = iDFCliente;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return Data;
 	}
 
-	public void setData(Date data) {
-		Data = data;
+	public void setData(String data2) {
+		Data = data2;
 	}
 
 	public Boolean getStatoPagamento() {
@@ -69,12 +69,12 @@ public class PrenotazioniBean implements java.io.Serializable {
 		StatoPagamento = statoPagamento;
 	}
 
-	public int getNumeroPersone() {
+	public String getNumeroPersone() {
 		return NumeroPersone;
 	}
 
-	public void setNumeroPersone(int numeroPersone) {
-		NumeroPersone = numeroPersone;
+	public void setNumeroPersone(String posti) {
+		NumeroPersone = posti;
 	}
 
 	public ArrayList<PrenotazioniDettagliBean> getDettagliPrenotazioni() {
@@ -85,11 +85,11 @@ public class PrenotazioniBean implements java.io.Serializable {
 		DettagliPrenotazioni = dettagliPrenotazioni;
 	}
 
-	public Time getOra() {
+	public String getOra() {
 		return Ora;
 	}
 
-	public void setOra(Time ora) {
-		Ora = ora;
+	public void setOra(String ora2) {
+		Ora = ora2;
 	}
 }
