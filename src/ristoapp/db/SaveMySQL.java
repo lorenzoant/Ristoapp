@@ -696,7 +696,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End inserisciRistorante()
-	
+	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
 	
 }
 
