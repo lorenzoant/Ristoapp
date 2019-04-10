@@ -1,7 +1,6 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PrenotazioniBean;
+import ristoapp.db.SaveMySQL;
 
 @WebServlet("/nuovaprenotazioneservlet")
 public class NuovaPrenotazioneServlet extends HttpServlet {
@@ -30,15 +30,26 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			String data = request.getParameter("data");
 			String ora = request.getParameter("ora");
 			String posti = request.getParameter("posti");
+			int categoria = Integer.parseInt(request.getParameter("categoria"));
 			
-			ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
+			//ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
 			PrenotazioniBean prenotazione= new PrenotazioniBean();
-			prenotazione.setIDFCliente(cliente.getIDCliente());
+			prenotazione.setIDFCliente(1/*cliente.getIDCliente()*/);
 			prenotazione.setData(data);
 			prenotazione.setOra(ora);
 			prenotazione.setNumeroPersone(posti);
-			int idristorante=  (int) request.getSession().getAttribute("idristorante");
-			prenotazione.setIDFRistorante(idristorante);
+			prenotazione.setIDFCatPrenotazione(categoria);
+			prenotazione.setStatoPagamento(false);
+			//int idristorante=  (int) request.getSession().getAttribute("idristorante");
+			prenotazione.setIDFRistorante(1/*idristorante*/);
+			
+			SaveMySQL db = new SaveMySQL();
+			try {
+				db.nuovaPrenotazione(prenotazione);
+			} catch (Exception e) {
+				System.out.println("Errore in scrittura sul databass");
+				e.printStackTrace();
+			}
 			
 			
 			response.getWriter().append("Prenotazione inviata al ristorante...");

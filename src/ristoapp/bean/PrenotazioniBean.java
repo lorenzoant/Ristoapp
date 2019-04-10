@@ -1,8 +1,6 @@
 package ristoapp.bean;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.sql.Time;
 
 public class PrenotazioniBean implements java.io.Serializable {
 
