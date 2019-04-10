@@ -7,7 +7,7 @@
     
 
 <%//riprendo la session da Login per avere i dati del cliente
-		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	
+		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
 		ArrayList<RistorantiBean> rist = new ArrayList<RistorantiBean>();
 		if(request.getSession(),getAttribute("") != null){
 			
@@ -33,19 +33,18 @@
 			<%@include file="graphicspuntoacca.jsp"%>
 			
 			<div class="mdl-layout__header">
-			
-			<center>
-					<table>
-						<tr>
-							<td>
-								<h2>RistoApp - Bacheca</h2>
-							</td>
-							<td>
-								<img class="logo" src="MEDIA/logo.png"/>
-							</td>
-						</tr>
-					</center>
-					</table>
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>RistoApp - Bacheca</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
 			</div>
 			
 		</head>
