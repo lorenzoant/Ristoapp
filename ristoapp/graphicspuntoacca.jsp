@@ -28,7 +28,7 @@ header:
 					<img class="logo" src="MEDIA/logo.png"/>
 				</td>
 			</tr>
-		</center>
-	</table>
+		</table>
+	</center>
 </div>
  -->

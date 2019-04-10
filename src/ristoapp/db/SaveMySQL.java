@@ -504,7 +504,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "UPDATE Clienti SET" +
+			String sql = "UPDATE Clienti SET " +
 					"Email = '" + cliente.getEmail()+ "'," +  
 					"PassHash = '" + cliente.getPassHash()+ "'," + 
 					"Nome = '" + cliente.getNome()+ "'," +  
@@ -809,6 +809,13 @@ public class SaveMySQL {
 			// Committo sul server
 			stmt.executeUpdate(sql);
 			
+			sql = "UPDATE Clienti SET " +
+					"LivAutorizzazioni = '1' " +  
+					"WHERE IDCliente = '" + ristorante.getIDFCliente() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
 			System.out.println("MySQL inserisciRistorante() confirmed");
 		}
 		catch (SQLException e) {
@@ -829,8 +836,128 @@ public class SaveMySQL {
 			}
 		}
 	}// End inserisciRistorante()
-	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
+
+	public void modificaRistorante(RistorantiBean ristorante) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();	
+			
+			// Creo stringa sql
+			String sql = "UPDATE Ristoranti SET " +
+					"IDFCatCucina = '" + ristorante.getIDFCatCucina() + "'," +   
+					"Nome = '" + ristorante.getNome()+ "'," +  
+					"Indirizzo = '" + ristorante.getIndirizzo() + "'," +  
+					"Telefono = '" + ristorante.getTelefono() + "'," + 
+					"Email = '" + ristorante.getEmail() + "'," + 
+					"Comune = '" + ristorante.getComune() + "'," +
+					"Descrizione = '" + ristorante.getDescrizione() + "'," +
+					"SerClimatizzazione = '";
+					if(ristorante.getSerClimatizzazione()) sql += "1','";
+					else sql += "0','";
+					sql += "SerAnimali = '";
+					if(ristorante.getSerAnimali()) sql += "1','";
+					else sql += "0','";
+					sql += "SerWifi = '";
+					if(ristorante.getSerWifi()) sql += "1','";
+					else sql += "0','";
+					sql += "SerDisabili = '";
+					if(ristorante.getSerDisabili()) sql += "1','";
+					else sql += "0','";
+					sql += "SerParcheggio = '";
+					if(ristorante.getSerParcheggio()) sql += "1');";
+					else sql += "0');";
+					sql += "WHERE IDCliente = '" + ristorante.getIDFCliente() + "'"; 
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL modificaRistorante() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL modificaRistorante() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End modificaRistorante()
 	
+	public RistorantiBean selectRistorante(int id) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();	
+			
+			// Creo stringa sql
+			String sql = "SELECT * FROM Ristoranti INNER JOIN Clienti  ON Ristoranti.IDFCliente = Clienti.IDCliente WHERE Clienti.IDCliente = '" + id + "';";
+			ResultSet result = stmt.executeQuery(sql);
+			
+			RistorantiBean ristorante = new RistorantiBean();
+			
+			if(result.next()) {
+				ristorante.setIDFCatCucina(result.getInt("IDFCatCucina"));
+				ristorante.setIDFCliente(result.getInt("IDFCliente"));
+				ristorante.setNome(result.getString("Nome"));
+				ristorante.setCoordinataLat(result.getInt("CoordinataLat"));
+				ristorante.setCoordinataLon(result.getInt("CoordinataLon"));
+				ristorante.setIndirizzo(result.getString("Indirizzo"));
+				ristorante.setTelefono(result.getString("Telefono"));
+				ristorante.setEmail(result.getString("Email"));
+				ristorante.setComune(result.getString("Comune"));
+				ristorante.setDescrizione(result.getString("Descrizione"));
+				ristorante.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
+				ristorante.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
+				ristorante.setSerAnimali(result.getBoolean("SerAnimali"));
+				ristorante.setSerWifi(result.getBoolean("SerWifi"));
+				ristorante.setSerDisabili(result.getBoolean("SerDisabili"));
+				ristorante.setSerParcheggio(result.getBoolean("SerParcheggio"));
+			}
+			System.out.println("MySQL selectRistorante() confirmed");
+			
+			return ristorante;
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL selectRistorante() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End selectRistorante()
+
 }
 
 
