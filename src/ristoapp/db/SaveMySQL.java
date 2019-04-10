@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
 import ristoapp.bean.PrenotazioniBean;
+import ristoapp.bean.PrenotazioniDettagliBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.bean.CarteBean;
 
@@ -53,10 +54,11 @@ public class SaveMySQL {
 	
 	
 	
-	public void nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
+	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
 		Statement stmt = null;
 		Connection conn = null;
-		
+		//Creo un resultset per prendere l'id alla fine
+		ResultSet rs = null;
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
@@ -73,6 +75,53 @@ public class SaveMySQL {
 						prenotazione.getOra() + "','" + 
 						prenotazione.getStatoPagamento() + "','" + 
 						prenotazione.getNumeroPersone() + "');";
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			rs= stmt.getGeneratedKeys();
+			
+			System.out.println("MySQL nuovaPrenotazione() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL nuovaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+		if(rs.next())
+			return rs.getInt(1);
+		else
+			return 0;
+	}//End nuovaPrenotazione()
+	
+	public void inserisciDettagli(PrenotazioniDettagliBean dettagli) throws Exception{
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			String sql = "INSERT INTO PrenotazioniDettagli (IDFOrdine, IDFPiatto, Prezzo, Sconto, Quantita) VALUES ('" +
+						dettagli.getIDFOrdine() + "','" +
+						dettagli.getIDFPiatto() + "','" + 
+						dettagli.getPrezzo() + "','" + 
+						dettagli.getSconto() + "','" + 
+						dettagli.getQuantita() + "');";
 			
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -96,7 +145,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}//End nuovaPrenotazione()
+	}//End inserisciDettagli()
 
 	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
 			

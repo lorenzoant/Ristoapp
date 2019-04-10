@@ -42,15 +42,17 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			prenotazione.setStatoPagamento(false);
 			//int idristorante=  (int) request.getSession().getAttribute("idristorante");
 			prenotazione.setIDFRistorante(1/*idristorante*/);
-			
+			int IDPren = 0;
 			SaveMySQL db = new SaveMySQL();
 			try {
-				db.nuovaPrenotazione(prenotazione);
+				IDPren=db.nuovaPrenotazione(prenotazione);
 			} catch (Exception e) {
 				System.out.println("Errore in scrittura sul databass");
 				e.printStackTrace();
 			}
 			
+			request.getSession().removeAttribute("IDPREN");
+			request.getSession().setAttribute("IDPREN", IDPren);
 			
 			response.getWriter().append("Prenotazione inviata al ristorante...");
 		}
