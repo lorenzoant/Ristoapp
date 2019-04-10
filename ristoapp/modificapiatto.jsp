@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
+<%@page import="ristoapp.bean.PiattiBean"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>RistoApp - Aggiungi piatto</title>
+	<title>RistoApp - Modifica piatto</title>
 	<%@include file="graphicspuntoacca.jsp"%>
 </head>
 <body class="text-center">
@@ -14,22 +15,28 @@
 		<center>
 			<table>
 				<tr>
-					<td><h2>RistoApp - Aggiungi piatto</h2></td>
+					<td><h2>RistoApp - Modifica piatto</h2></td>
 					<td><img class="logo" src="MEDIA/logo.png"/></td>
 				</tr>
 			</table>
 		</center>
 	</div>
 	
+	
+	<% if(request.getSession() != null && request.getSession().getAttribute("PIATTODAMODIFICARE") != null){
+		
+		PiattiBean p = (PiattiBean)request.getSession().getAttribute("PIATTODAMODIFICARE");
+	%>
+	
 	<div class="page">
 		<form action="aggiungipiattoservlet" name="aggiungipiatto" method="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="nome" name="nome" required>
+			    <input class="mdl-textfield__input" type="text" id="nome" name="nome" value="<%=p.getNome()%>" required>
 			    <label class="mdl-textfield__label" for="nome">Nome</label>
 	  		</div><br>
 	  		
 	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="descrizione" name="descrizione">
+			    <input class="mdl-textfield__input" type="text" id="descrizione" name="descrizione" value="<%=p.getDescrizione()%>" >
 			    <label class="mdl-textfield__label" for="descrizione">Breve descrizione</label>
 	  		</div><br>
 	
@@ -50,7 +57,11 @@
 					    	int id = rs.getInt("IDCatPiatto");
 							String nome = rs.getString("Nome");
 					%>
-					<option value="<%=id%>"><%=nome%></option>
+					<option value="<%=id%>"
+					<%if(id == p.getIDFCatPiatto()){%>
+						selected
+					<%}%>
+					><%=nome%></option>
 					<%
 						}
 					}
@@ -63,26 +74,35 @@
 			</div><br>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" name="prezzo" type="number" min="0" step="0.01" required>
+			    <input class="mdl-textfield__input" name="prezzo" type="number" min="0" step="0.01" value="<%=p.getPrezzo()%>" required>
 			    <label class="mdl-textfield__label" for="prezzo">Prezzo</label>
 	  		</div><br>
 			
-			<input type="checkbox" name="disponibile" checked>Disponibile<br>
+			<input type="checkbox" name="disponibile"
+			<%if(p.getDisponibile()){%>
+				checked
+			<%}%>
+			>Disponibile<br>
 	  		
 	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="url" name="url">
+			    <input class="mdl-textfield__input" type="text" id="url" name="url" value="<%=p.getUrl()%>">
 			    <label class="mdl-textfield__label" for="url">URL http foto</label>
 	  		</div><br>
 	  		
 	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="allergeni" name="allergeni">
+			    <input class="mdl-textfield__input" type="text" id="allergeni" name="allergeni"value="<%=p.getAllergeni()%>">
 			    <label class="mdl-textfield__label" for="allergeni">Allergeni</label>
 	  		</div><br>
 	  	
-			<input name="whatsend" value="aggiunginuovopiatto" type="hidden"/>
+			<input name="whatsend" value="aggiornapiatto" type="hidden"/>
 			
-			<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Aggiungi piatto al tuo ristorante</button>
+			<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Modifica piatto del tuo ristorante</button>
 		</form>
 	</div>
+	
+	<% }else{%>
+		Abbiamo riscontrato un problema, perfavore riprova più tardi...
+	<%}%>
+	
 </body>
 </html>

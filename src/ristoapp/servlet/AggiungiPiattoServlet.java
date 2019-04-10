@@ -1,6 +1,7 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -24,20 +25,25 @@ public class AggiungiPiattoServlet extends HttpServlet {
         super();
     }
 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Devi comunicare con post");
+		
+		// Se l'utente ha usato GET probabilmente non è loggato -> login
+		response.sendRedirect("login.jsp");
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String whatsend = request.getParameter("whatsend");
 		
-		if(whatsend.equalsIgnoreCase("aggiunginuovopiatto")) {
+		if(whatsend.equalsIgnoreCase("aggiunginuovopiatto")) { // Aggiungo piatto al database
 			
 			// Lettura campi da request e manipolazione prima di inserirli nel database
 			int IDFRistorante = 0;
 			ClientiBean utenteLoggato = null;
 			try {
+				// Identifico l'utente e il suo ristorante
 				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 				RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
 				if(utenteLoggato.getLivAutorizzazioni() == 1 && utenteLoggato.getIDCliente() == risto.getIDFCliente()) {
@@ -94,12 +100,15 @@ public class AggiungiPiattoServlet extends HttpServlet {
 			try {
 				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
+				
+				// TODO: richiamo pagina di aggiornamento
 				// Scarico le nuove informazioni e poi torno a ilmiorisorante
 				SaveMySQL getNewInfo = new SaveMySQL();
 				RistorantiBean risto = getNewInfo.getInfoRistoranteDalProprietario(utenteLoggato); // Prelevo info del suo ristorante
-				risto.setRistorantePiatti(getNewInfo.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante
+				risto.setRistorantePiatti(getNewInfo.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante	
 				request.getSession().removeAttribute("RISTORANTELOGGATO");
 				request.getSession().setAttribute("RISTORANTELOGGATO", risto);
+				
 				
 				response.sendRedirect("ilmioristorante.jsp");
 			} 
@@ -111,6 +120,93 @@ public class AggiungiPiattoServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 				rd.forward(request, response);
 			}
+		}
+		
+		
+		else if(whatsend.equalsIgnoreCase("modificapiatto")) { // Prelevo informazioni per modificare il piatto
+			
+			int idPiattoDaModificare = Integer.parseInt(request.getParameter("piattoDaModificare"));
+			
+			// Prelevo i piatti dalla sessione e cerco quello da modificare (tramite id)
+			// per prendere le informazioni da caricare nella pagina jsp di modifica
+			RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
+			ArrayList<PiattiBean> piatti = risto.getPiatti();
+			
+			for(PiattiBean piatto:piatti){
+				if(piatto.getIDPiatto() == idPiattoDaModificare) {
+					// Ho trovato il piatto da modificare
+					// Salvo in sessione per aprirlo nella JSP
+					request.getSession().removeAttribute("PIATTODAMODIFICARE");
+					request.getSession().setAttribute("PIATTODAMODIFICARE", piatto);
+					
+					// Reindirizzo a modifica piatto
+					response.sendRedirect("modificapiatto.jsp");
+					return;
+				}
+			}
+			
+			// Se non ho trovato il piatto ritorno a il mio ristorante
+			response.sendRedirect("ilmioristorante.jsp");
+		}
+		
+		
+		else if(whatsend.equalsIgnoreCase("aggiornapiatto")) { // Aggiorno sul database con le nuove informazioni ricevute
+			
+			// Prendo alcune info essenziali dal vecchio piatto prima della modifica
+			PiattiBean vecchiopiatto = (PiattiBean)request.getSession().getAttribute("PIATTODAMODIFICARE");
+			
+			// Lettura campi da request e manipolazione prima di inserirli nel database
+			int IDFCatPiatto = 0;
+			try {
+				IDFCatPiatto = Integer.parseInt(request.getParameter("categoria"));
+			}catch (Exception e){
+				IDFCatPiatto = 0;
+			}
+			
+			double Prezzo = 10;
+			try {
+				Prezzo = Double.parseDouble(request.getParameter("prezzo"));
+			}catch (Exception e){
+				Prezzo = 10;
+			}
+			
+			Boolean Disponibile = true; 
+			if(request.getParameter("disponibile") == null) Disponibile = false;
+			
+			
+			// Salvataggio dei valori nel Bean
+			PiattiBean piatto = new PiattiBean();
+			
+			piatto.setIDPiatto(vecchiopiatto.getIDPiatto());
+			piatto.setIDFRistorante(vecchiopiatto.getIDFRistorante());
+			piatto.setIDFCatPiatto(IDFCatPiatto);
+			piatto.setNome(request.getParameter("nome"));
+			piatto.setPrezzo(Prezzo);
+			piatto.setDisponibile(Disponibile);
+			piatto.setDescrizione(request.getParameter("descrizione"));
+			piatto.setUrl(request.getParameter("url"));
+			piatto.setAllergeni(request.getParameter("allergeni"));
+			
+			// Aggiorno il piatto nel database
+			SaveMySQL saveOnDb = new SaveMySQL();
+			
+			try {
+				// Provo ad aggiornare nel database
+				saveOnDb.aggiornaPiatto(piatto);
+				request.getSession().removeAttribute("PIATTODAMODIFICARE");
+				
+				// TODO: richiamo pagina di aggiornamento
+				response.sendRedirect("ilmioristorante.jsp");
+			} 
+			catch (Exception e) {
+				// Problema nel database, reindirizzo alla pagine di errore generico
+				e.printStackTrace();
+				
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
+			
 		}
 		
 		

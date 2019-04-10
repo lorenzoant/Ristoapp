@@ -162,14 +162,15 @@
 					
 					%>
 					<tr>
-					<td><img height='70px' src='<%=piatto.getUrl()%>'/></td>
+					<td><img style="float:left" height='70px' src='<%=piatto.getUrl()%>'/></td>
 					<td><%=piatto.getNome()%></td>
 					<td><%=piatto.getPrezzo()%></td>
 					<td><%=dispOut%></td>
 					<td><%=piatto.getDescrizione()%></td>
 					<td>
-						<form action="modificaPiatto" name="modificaPiatto" method="post">
+						<form action="aggiungipiattoservlet" name="modificapiatto" method="post">
 						<input type="hidden" name="piattoDaModificare" value="<%=piatto.getIDPiatto()%>"></input>
+						<input type="hidden" name="whatsend" value="modificapiatto"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Modifica"/>
 						</form>
 					</td>

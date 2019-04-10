@@ -232,7 +232,9 @@ public class SaveMySQL {
 		}
 	}// End eliminaPrenotazione()	
 	
-	public void inserisciPiatto(PiattiBean piatto) throws Exception{
+	
+	
+	public void inserisciPiatto(PiattiBean piatto) throws Exception{ // Vellons
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -281,7 +283,57 @@ public class SaveMySQL {
 	}// End inserisciPiatto()
 	
 	
-	public RistorantiBean getInfoRistoranteDalProprietario(ClientiBean ristoratore) throws Exception{
+	public void aggiornaPiatto(PiattiBean piatto) throws Exception{ // Vellons
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			String sql = "UPDATE Piatti SET "
+					+ "IDFCatPiatto = " +  piatto.getIDFCatPiatto()
+					+ ", Nome = '" + piatto.getNome()
+					+ "', Prezzo = '" + piatto.getPrezzo()
+					+ "', Disponibile = '";
+					if(piatto.getDisponibile()) sql += "1',";
+					else sql += "0',";
+					sql += " Descrizione = '" + piatto.getDescrizione()
+					+ "', Foto = '" + piatto.getUrl()
+					+ "', Allergeni = '" + piatto.getAllergeni()
+					+ "' WHERE IDPiatto = " + piatto.getIDPiatto() + ";";
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			System.out.println("MySQL aggiornaPiatto() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL aggiornaPiatto() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End aggiornaPiatto()
+	
+	
+	public RistorantiBean getInfoRistoranteDalProprietario(ClientiBean ristoratore) throws Exception{ // Vellons
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -339,7 +391,7 @@ public class SaveMySQL {
 	}// End getInfoRistoranteDalProprietario()
 	
 	
-	public ArrayList<PiattiBean> prelevaPiattRistorante(RistorantiBean risto) throws Exception{
+	public ArrayList<PiattiBean> prelevaPiattRistorante(RistorantiBean risto) throws Exception{  // Vellons
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -390,8 +442,9 @@ public class SaveMySQL {
 	}// End prelevaPiattRistorante()
 	
 	
-	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueDate(RistorantiBean risto) throws Exception{
+	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueDate(RistorantiBean risto) throws Exception{ // Vellons
 		
+		// TODO: aggiungere le due date nella query (Vellons)
 		Statement stmt = null;
 		Connection conn = null;
 		
