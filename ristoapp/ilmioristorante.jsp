@@ -29,7 +29,6 @@
 	      <a class="mdl-navigation__link" href="">Riaggiorna [DA FARE]</a>
 	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
 	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
-	      <a class="mdl-navigation__link" href="">Modifica piatto [PRESTO DISPONIBILE]</a>
 	      <a class="mdl-navigation__link" href="">Logout [DA FARE]</a>
 	    </nav>
 	  </div>
@@ -142,6 +141,7 @@
 				<th>Prezzo</th>
 				<th>Disponibile</th>
 				<th>Descrizione</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -167,6 +167,12 @@
 					<td><%=piatto.getPrezzo()%></td>
 					<td><%=dispOut%></td>
 					<td><%=piatto.getDescrizione()%></td>
+					<td>
+						<form action="modificaPiatto" name="modificaPiatto" method="post">
+						<input type="hidden" name="piattoDaModificare" value="<%=piatto.getIDPiatto()%>"></input>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Modifica"/>
+						</form>
+					</td>
 					</tr>
 				<%}
 			}%>
