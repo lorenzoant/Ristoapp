@@ -27,9 +27,10 @@
 				<label class="mdl-textfield__label" for="nome">Indirizzo</label>
 			</div><br>
 			
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
-				<input class="mdl-textfield__input" type = "text" name = "telefono"/>
-				<label class="mdl-textfield__label" for="nome">Telefono</label>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name = "telefono">
+			  <label class="mdl-textfield__label" for="telefono">Telefono</label>
+			  <span class="mdl-textfield__error">Input is not a number!</span>
 			</div>
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
@@ -67,9 +68,10 @@
 	        			<label class="mdl-textfield__label" for="nome">Comuni</label>
 	        </div>
 	        
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"> 
-				<select class="mdl-textfield__input" name = "categoria">
-					<option value="null"> </option>
+			<div class="mdc-select">
+			 	<i class="mdc-select__dropdown-icon"></i>
+			  	<select class="mdc-select__native-control" name = "categoria">
+			    	<option value="" disabled selected></option>
 						<% 
 	
 						Connection con = null;
@@ -95,39 +97,48 @@
 						}
 						%>
 						</select>
-	      				<label class="mdl-textfield__label" for="nome">Categoria</label>
-	        </div><br>
-	        
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-				<textarea class="mdl-textfield__input" rows="3" cols="50" name = "descrizione"></textarea>
-				<label class="mdl-textfield__label" for="nome">Descrizione</label>
-			</div><br>
-				
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-climatizzazione"/>	
-				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Climatizzazione</label>
+			  <label class="mdc-floating-label">Categoria</label>
+			  <div class="mdc-line-ripple"></div>
 			</div>
-				
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-animali"/>	
-				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Animali</label>
-			</div><br>
-				
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-wifi"/>		
-				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Ser-Wifi</label>
-			</div>
+	       <br>
 			
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-disabili"/>	
-				<label class="mdl-textfield__label" for="nome">Ser-Disabili</label>
-			</div>
-				
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input type="checkbox" id="list-switch-1" class="mdl-switch__input" name = "ser-parcheggio"/>
-				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="nome">Parcheggio</label>
-			</div><br>
+			<div class="mdl-textfield mdl-js-textfield">
+			   <textarea class="mdl-textfield__input" rows = "3" name = "descrizione" ></textarea>
+			   <label class="mdl-textfield__label" for="nome">Descrizione...</label>
+			 </div><br>
 			
+			<!-- ---------------------------------------CHECKBOX--------------------------------------------------- -->
+			
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+			  <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" checked>
+			  <span class="mdl-checkbox__label">Checkbox</span>
+			</label>
+			
+		    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+			  <input type="checkbox" id="switch-1" class="mdl-switch__input" name = "ser-climatizzazione">
+			  <span class="mdl-switch__label">Ser-Climatizzazione</span>
+			</label>
+			
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+			  <input type="checkbox" id="switch-2" class="mdl-switch__input" name = "ser-animali">
+			  <span class="mdl-switch__label">Ser-Animali</span>
+			</label>
+			
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-3">
+			  <input type="checkbox" id="switch-3" class="mdl-switch__input" name = "ser-wifi">
+			  <span class="mdl-switch__label">Ser-Wifi</span>
+			</label>
+			
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-4">
+			  <input type="checkbox" id="switch-4" class="mdl-switch__input" name = "ser-disabili">
+			  <span class="mdl-switch__label">Ser-Disabili</span>
+			</label>
+			
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-5">
+			  <input type="checkbox" id="switch-5" class="mdl-switch__input" name = "ser-parcheggio">
+			  <span class="mdl-switch__label">Ser-Parcheggio</span>
+			</label>
+			    
 			<input name="whatsend" value="aggiunginuovoristorante" type="hidden"/>	
 	
 			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Aggiungi ristorante"/><br>

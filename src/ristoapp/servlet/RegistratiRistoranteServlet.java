@@ -117,6 +117,58 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 			
+		}else if (whatsend.equalsIgnoreCase("modificaristorante")) {
+				
+			ClientiBean utenteLoggato = null;
+			
+			/*utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			
+			if (utenteLoggato == null) {
+				System.out.println("ModificaRistoranteServlet: user not logged");
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+				return;
+			}*/
+			
+			SaveMySQL saveOnDb = new SaveMySQL();
+			
+			RistorantiBean ristorante = new RistorantiBean();
+				
+			try {
+				// Provo ad aggiungere il ristorante nel database
+				//ristorante = saveOnDb.selectRistorante(utenteLoggato.getIDCliente());
+				ristorante = saveOnDb.selectRistorante(2);
+				response.sendRedirect("ilmioristorante.jsp");
+			} 
+			catch (Exception e) {
+				// Problema nel database, reindirizzo alla pagine di errore generico
+				e.printStackTrace();
+				
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
+		}else if (whatsend.equalsIgnoreCase("selectristorante")) {
+		
+			SaveMySQL saveOnDb = new SaveMySQL();
+			
+			RistorantiBean ristorante = new RistorantiBean();
+				
+			try {
+				// Provo ad aggiungere il ristorante nel database
+				//ristorante = saveOnDb.selectRistorante(utenteLoggato.getIDCliente());
+				ristorante = saveOnDb.selectRistorante(2);
+				response.sendRedirect("ilmioristorante.jsp");
+			} 
+			catch (Exception e) {
+				// Problema nel database, reindirizzo alla pagine di errore generico
+				e.printStackTrace();
+				
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
 		}
 	}
 
