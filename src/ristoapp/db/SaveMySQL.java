@@ -415,10 +415,10 @@ public class SaveMySQL {
 				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
 				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
 				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
-				prenotazione.setData(resultList.getDate("Data"));
-				prenotazione.setOra(resultList.getTime("Ora"));
+				prenotazione.setData(resultList.getString("Data"));
+				prenotazione.setOra(resultList.getString("Ora"));
 				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
-				prenotazione.setNumeroPersone(resultList.getInt("NumeroPersone"));
+				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
 				prenotazioniList.add(prenotazione);// Aggiungo al vettore
 			}
 			
@@ -739,10 +739,10 @@ public class SaveMySQL {
 				prenota.setIDFRistorante(result.getInt("IDFRistorante"));
 				prenota.setIDFCatPrenotazione(result.getInt("IDFCatPrenotazione"));
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
-				prenota.setData(result.getDate("Data"));
+				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
 				//prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
-				prenota.setNumeroPersone(result.getInt("NumeroPersone"));
+				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 				
 				return prenota;
