@@ -1,40 +1,31 @@
 <%@page import="ristoapp.bean.ClientiBean"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="ristoapp.bean.RistorantiBean" %>
-
+<%@page import="ristoapp.db.SaveMySQL" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
 
 <%//riprendo la session da Login per avere i dati del cliente
-		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	
-		ArrayList<RistorantiBean> rist = new ArrayList<RistorantiBean>();
-		if(request.getSession(),getAttribute("") != null){
-			
-		}
+		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	//utente loggato
+		ArrayList<RistorantiBean> rist = new ArrayList <>(); //oggetto ristorante
+		SaveMySQL save = new SaveMySQL(); //oggeto save
+		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
+		
 %>
     
 <!DOCTYPE html>
 <!-- INIZIO CODICE  -->
 	<html>
 	
-<!--  div id="p1" class="mdl-progress mdl-js-progress"></div> -->
-		
-		<script>
-		//  document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-	    //  this.MaterialProgress.setProgress(44);
-	    
-		//  });
-		</script>
-		
 		<head>		
 			<title>RistoApp-Bacheca </title>
 			
 			<%@include file="graphicspuntoacca.jsp"%>
 			
-			<div class="mdl-layout__header">
+			<div class="mdl-layout__header" text-align="center">
 			
-			<center>
+			
 					<table>
 						<tr>
 							<td>
@@ -44,15 +35,46 @@
 								<img class="logo" src="MEDIA/logo.png"/>
 							</td>
 						</tr>
-					</center>
+					
 					</table>
+				
 			</div>
 			
 		</head>
 	
 	<body class="text-center" style="background-color: red;">
 		
-		
+		<%
+			for(RistorantiBean lista:rist){
+				
+				// int IDRistorante;
+				 String NomeCatCucina = lista.getNomeCatCucina();
+				 //int IDFCliente; 
+				 String Nome = lista.getNome(); //nome ristorante
+				 //double CoordinataLat;
+			     //double CoordinataLon;
+				 String Indirizzo = lista.getIndirizzo();
+				 String Telefono = lista.getTelefono();
+				 String Email = lista.getEmail();
+				 String Comune = lista.getComune();
+				 String Descrizione = lista.getDescrizione();
+				 Boolean SerClimatizzazione = lista.getSerClimatizzazione();
+				 Boolean SerAnimali = lista.getSerAnimali();
+				 Boolean SerWifi = lista.getSerWifi();
+				 Boolean SerDisabili = lista.getSerDisabili();
+				 Boolean SerParcheggio = lista.getSerParcheggio(); 
+
+				
+			%>
+			<tr>
+				<td><%=%></td>
+				<td><%= %></td>
+				<td><%= %></td>
+			</tr>
+			<%
+			}
+		%>
+		</table>
 		
 
 		<div >	<!-- AGGIUNGO DENTRO I BLOCCI PER I RISTORANTI -->

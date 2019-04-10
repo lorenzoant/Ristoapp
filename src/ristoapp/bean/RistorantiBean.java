@@ -24,6 +24,8 @@ public class RistorantiBean implements java.io.Serializable{
 	private Boolean SerDisabili;
 	private Boolean SerParcheggio;
 	
+	private String NomeCatCucina;
+	
 	//per collegarlo alle altre tabelle
 	private ArrayList<PiattiBean> Piatti;
 	private ArrayList<PrenotazioniDettagliBean> Offerte;
@@ -156,5 +158,11 @@ public class RistorantiBean implements java.io.Serializable{
 	}
 	public void setRecensioniRisto(ArrayList<RecensioniRistorantiBean> recensioniRistoranti) {
 		RecensioniRistoranti = recensioniRistoranti;
+	}
+	public String getNomeCatCucina() {
+		return NomeCatCucina;
+	}
+	public void setNomeCatCucina(String nomeCatCucina) {
+		NomeCatCucina = nomeCatCucina;
 	}
 }

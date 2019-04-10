@@ -282,10 +282,10 @@ public class SaveMySQL {
 				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
 				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
 				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
-				prenotazione.setData(resultList.getDate("Data"));
-				prenotazione.setOra(resultList.getTime("Ora"));
+				prenotazione.setData(resultList.getString("Data"));
+				prenotazione.setOra(resultList.getString("Ora"));
 				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
-				prenotazione.setNumeroPersone(resultList.getInt("NumeroPersone"));
+				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
 				prenotazioniList.add(prenotazione);// Aggiungo al vettore
 			}
 			
@@ -606,10 +606,10 @@ public class SaveMySQL {
 				prenota.setIDFRistorante(result.getInt("IDFRistorante"));
 				prenota.setIDFCatPrenotazione(result.getInt("IDFCatPrenotazione"));
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
-				prenota.setData(result.getDate("Data"));
+				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
 				//prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
-				prenota.setNumeroPersone(result.getInt("NumeroPersone"));
+				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 				
 				return prenota;
@@ -696,7 +696,69 @@ public class SaveMySQL {
 			}
 		}
 	}// End inserisciRistorante()
+	
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
+public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+		
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			// Creo stringa sql
+			
+			String sql = "SELECT * FROM Ristoranti LEFT JOIN CategoriaCucina ON Ristoranti.IDFCatCucina = CategoriaCucina.IDCatCucina"; 
+					
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+			
+			// Estraggo dati
+			ArrayList<RistorantiBean> ristorante = new ArrayList<RistorantiBean>();
+			
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				
+				RistorantiBean ristoset = new RistorantiBean();
+				
+				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
+				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
+				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
+				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
+				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
+				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
+				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
+				ristoset.setEmail(resultList.getString("Email"));
+				ristoset.setComune(resultList.getString("Comune"));
+				ristoset.setDescrizione(resultList.getString("Descrizione"));
+				ristoset.setSerClimatizzazione(resultList.getBoolean("SerClimatizzazione"));
+				ristoset.setSerAnimali(resultList.getBoolean("serAnimali"));
+				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
+				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
+				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
+				
+				ristorante.add(ristoset);// Aggiungo al vettore
+			}
+			
+			return (ArrayList<RistorantiBean>) ristorante;
+		}
+		
+		catch (SQLException e) {
+			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END
 	
 }
 
