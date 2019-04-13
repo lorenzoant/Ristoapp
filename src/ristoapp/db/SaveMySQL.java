@@ -146,6 +146,50 @@ public class SaveMySQL {
 			}
 		}
 	}//End inserisciDettagli()
+	
+	public int listaPiatti(PrenotazioniBean prenotazione) throws Exception {
+		Statement stmt = null;
+		Connection conn = null;
+		//Creo un resultset per prendere l'id alla fine
+		ResultSet rs = null;
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			String sql = "SELECT";
+			
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			rs= stmt.getGeneratedKeys();
+			
+			System.out.println("MySQL nuovaPrenotazione() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL nuovaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+		if(rs.next())
+			return rs.getInt(1);
+		else
+			return 0;
+	}//End listaPiatti()
+	
 
 	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
 			

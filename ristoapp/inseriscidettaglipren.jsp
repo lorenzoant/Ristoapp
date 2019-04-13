@@ -7,6 +7,10 @@
 <title>Dettagli Prenotazione</title>
 </head>
 <body>
-
+	<table>
+	<thead>Selezione i piatti che vuoi ordinare</thead>
+		
+	
+	</table>
 </body>
 </html>
