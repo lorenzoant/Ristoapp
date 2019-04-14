@@ -48,7 +48,7 @@
 			  		<tr>
 			  			<td colspan="2">
 							<input name = "whatsend" value = "invia" type = "hidden"/>
-							<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "accedi"/><br>
+							<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "accedi"/><br><br>
 						</td>
 					</tr>
 					<%
@@ -71,7 +71,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<a href="scelta.jsp">Sei un nuovo cliente?</a>
+							<a href="account.jsp">Sei un nuovo cliente?</a>
 						</td>
 					</tr>
 				</table>

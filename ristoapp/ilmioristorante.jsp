@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
-<%@page import="org.apache.commons.lang3.time.DateUtils"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="ristoapp.bean.PiattiBean"%>
 <%@page import="ristoapp.bean.RistorantiBean"%>
 <%@page import="ristoapp.bean.PrenotazioniBean"%>
@@ -27,7 +29,6 @@
 	      <a class="mdl-navigation__link" href="">Riaggiorna [DA FARE]</a>
 	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
 	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
-	      <a class="mdl-navigation__link" href="">Modifica piatto [PRESTO DISPONIBILE]</a>
 	      <a class="mdl-navigation__link" href="">Logout [DA FARE]</a>
 	    </nav>
 	  </div>
@@ -49,19 +50,31 @@
 		<tbody>
 	
 		<% 	if(request.getSession() != null && request.getSession().getAttribute("RISTORANTELOGGATO") != null){
-				Date today = new Date();
+				Date today = Calendar.getInstance().getTime(); 
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				String today_str = df.format(today);
+				
 				RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
 				ArrayList<PrenotazioniBean> prenotazioni = risto.getPrenotazioni();
 				for(PrenotazioniBean p:prenotazioni){
-					if(DateUtils.isSameDay(p.getData(), today)){%>
-					<tr>
-					<td><%=p.getData()%></td>
-					<td><%=p.getOra()%></td>
-					<td><%=p.getNumeroPersone()%></td>
-					<td><%=p.getStatoPagamento()%></td>
-					<td><%=p.getIDFCliente()%></td>
-					<td><%=p.getIDFCatPrenotazione()%></td>
-					</tr>
+					
+					// Scritta per pagato
+					String pagatoOut;
+					if(p.getStatoPagamento()){
+						pagatoOut = "<span style='color:green'>pagato</span>";
+					}else{
+						pagatoOut = "<span style='color:red'>non pagato</span>";
+					}
+
+					if(p.getData().equals(today_str)){%>
+						<tr>
+						<td><%=p.getData()%></td>
+						<td><%=p.getOra()%></td>
+						<td><%=p.getNumeroPersone()%></td>
+						<td><%=pagatoOut%></td>
+						<td><%=p.getIDFCliente()%></td>
+						<td><%=p.getIDFCatPrenotazione()%></td>
+						</tr>
 					<%}
 				}
 				
@@ -91,12 +104,22 @@
 				
 				RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
 				ArrayList<PrenotazioniBean> prenotazioni = risto.getPrenotazioni();
-				for(PrenotazioniBean p:prenotazioni){%>
+				for(PrenotazioniBean p:prenotazioni){
+					
+					// Scritta per pagato
+					String pagatoOut;
+					if(p.getStatoPagamento()){
+						pagatoOut = "<span style='color:green'>pagato</span>";
+					}else{
+						pagatoOut = "<span style='color:red'>non pagato</span>";
+					}
+					
+					%>
 					<tr>
 					<td><%=p.getData()%></td>
 					<td><%=p.getOra()%></td>
 					<td><%=p.getNumeroPersone()%></td>
-					<td><%=p.getStatoPagamento()%></td>
+					<td><%=pagatoOut%></td>
 					<td><%=p.getIDFCliente()%></td>
 					<td><%=p.getIDFCatPrenotazione()%></td>
 					</tr>
@@ -118,6 +141,7 @@
 				<th>Prezzo</th>
 				<th>Disponibile</th>
 				<th>Descrizione</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -126,13 +150,30 @@
 				
 				RistorantiBean risto = (RistorantiBean)request.getSession().getAttribute("RISTORANTELOGGATO");
 				ArrayList<PiattiBean> piatti = risto.getPiatti();
-				for(PiattiBean piatto:piatti){%>
+				for(PiattiBean piatto:piatti){
+					
+					// Scritta per disponibile
+					String dispOut;
+					if(piatto.getDisponibile()){
+						dispOut = "disponibile";
+					}else{
+						dispOut = "<span style='color:red'>non disponibile</span>";
+					}
+					
+					%>
 					<tr>
-					<td><img height='70px' src='<%=piatto.getUrl()%>'/></td>
+					<td><img style="float:left" height='70px' src='<%=piatto.getUrl()%>'/></td>
 					<td><%=piatto.getNome()%></td>
 					<td><%=piatto.getPrezzo()%></td>
-					<td><%=piatto.getDisponibile()%></td>
+					<td><%=dispOut%></td>
 					<td><%=piatto.getDescrizione()%></td>
+					<td>
+						<form action="aggiungipiattoservlet" name="modificapiatto" method="post">
+						<input type="hidden" name="piattoDaModificare" value="<%=piatto.getIDPiatto()%>"></input>
+						<input type="hidden" name="whatsend" value="modificapiatto"></input>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Modifica"/>
+						</form>
+					</td>
 					</tr>
 				<%}
 			}%>

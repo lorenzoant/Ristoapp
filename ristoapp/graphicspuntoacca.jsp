@@ -9,7 +9,7 @@
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
-    .logo{width: 100px; height: 100px;}
+    .logo{width: 100px;}
     @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
 </style>
 <link rel="icon" href="MEDIA/icona.ico"> <!-- icona in cima -->
@@ -28,7 +28,7 @@ header:
 					<img class="logo" src="MEDIA/logo.png"/>
 				</td>
 			</tr>
-		</center>
-	</table>
+		</table>
+	</center>
 </div>
  -->

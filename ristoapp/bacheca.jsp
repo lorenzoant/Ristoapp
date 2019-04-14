@@ -4,52 +4,50 @@
 <%@page import="ristoapp.db.SaveMySQL" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+
 
 <%//riprendo la session da Login per avere i dati del cliente
 		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	//utente loggato
 		ArrayList<RistorantiBean> rist = new ArrayList <>(); //oggetto ristorante
 		SaveMySQL save = new SaveMySQL(); //oggeto save
 		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
-		
+
 %>
     
 <!DOCTYPE html>
 <!-- INIZIO CODICE  -->
 	<html>
-	
-		<head>		
+
+		<head>
 			<title>RistoApp-Bacheca </title>
-			
+
 			<%@include file="graphicspuntoacca.jsp"%>
-			
-			<div class="mdl-layout__header" text-align="center">
-			
-			
-					<table>
-						<tr>
-							<td>
-								<h2>RistoApp - Bacheca</h2>
-							</td>
-							<td>
-								<img class="logo" src="MEDIA/logo.png"/>
-							</td>
-						</tr>
-					
-					</table>
-				
+
+			<div class="mdl-layout__header">
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>RistoApp - Bacheca</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
 			</div>
-			
+
 		</head>
-	
+
 	<body class="text-center" style="background-color: red;">
-		
+
 		<%
 			for(RistorantiBean lista:rist){
-				
+
 				// int IDRistorante;
 				 String NomeCatCucina = lista.getNomeCatCucina();
-				 //int IDFCliente; 
+				 //int IDFCliente;
 				 String Nome = lista.getNome(); //nome ristorante
 				 //double CoordinataLat;
 			     //double CoordinataLon;
@@ -62,9 +60,9 @@
 				 Boolean SerAnimali = lista.getSerAnimali();
 				 Boolean SerWifi = lista.getSerWifi();
 				 Boolean SerDisabili = lista.getSerDisabili();
-				 Boolean SerParcheggio = lista.getSerParcheggio(); 
+				 Boolean SerParcheggio = lista.getSerParcheggio();
 
-				
+
 			%>
 			<tr>
 				<td><%=%></td>
@@ -75,11 +73,11 @@
 			}
 		%>
 		</table>
-		
+
 
 		<div >	<!-- AGGIUNGO DENTRO I BLOCCI PER I RISTORANTI -->
-		
-		
+
+
 		</div>
 		<div>
 			<!-- API GOOGLE DA METTERE LATO A DESTRA -->
@@ -97,7 +95,7 @@
 					google.maps.event.addDomListener(window, 'load', initialize);*/
 			</script>
 		</div>
-	
+
 
 </body>
 
