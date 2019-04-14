@@ -8,7 +8,8 @@
 
 <%//riprendo la session da Login per avere i dati del cliente
 		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	//utente loggato
-		ArrayList<RistorantiBean> rist = new ArrayList <>(); //oggetto ristorante
+		ArrayList<RistorantiBean> rist = new ArrayList <RistorantiBean>(); //oggetto ristorante
+
 		SaveMySQL save = new SaveMySQL(); //oggeto save
 		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
 
@@ -19,6 +20,7 @@
 	<html>
 
 		<head>
+			<meta name="viewport" content="width=device-width">
 			<title>RistoApp-Bacheca </title>
 
 			<%@include file="graphicspuntoacca.jsp"%>
@@ -40,11 +42,22 @@
 
 		</head>
 
-	<body class="text-center" style="background-color: red;">
+	<body>
+	
+	<button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon">
+ 		 <i class="material-icons">menu</i>
+	</button>
 
-		<%
-			for(RistorantiBean lista:rist){
+	<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left">
+	 	 <a class="mdl-menu__item" href="profilo.jsp">MyProfile [finire]</a>
+	 	 <a class="mdl-menu__item" >Filter [fare]</a>
+		  <a class="mdl-menu__item mdl-menu__item--full-bleed-divider" href="mappa.jsp"> Maps</a>
+		  <a class="mdl-menu__item">Logout [fare]</a>
+	</ul>
 
+	<center>
+		<table width="500px" border="1">
+		<% for(RistorantiBean lista:rist){
 				// int IDRistorante;
 				 String NomeCatCucina = lista.getNomeCatCucina();
 				 //int IDFCliente;
@@ -61,77 +74,29 @@
 				 Boolean SerWifi = lista.getSerWifi();
 				 Boolean SerDisabili = lista.getSerDisabili();
 				 Boolean SerParcheggio = lista.getSerParcheggio();
-
-
 			%>
-			<tr>
-				<td><%=%></td>
-				<td><%= %></td>
-				<td><%= %></td>
+			<tr >
+			
+				<td><%=Nome%></td>
+				<td><%=NomeCatCucina %></td>
+				<td><%=Indirizzo%></td>
+				<td><%=Telefono%></td>
+				<td><%=Email%></td>
+				<td><%=Comune%></td>
+				<td><%=Descrizione%></td>
+				<td><%=SerClimatizzazione%></td>
+				<td><%=SerAnimali%></td>
+				<td><%=SerWifi%></td>
+				<td><%=SerDisabili%></td>
+				<td><%=SerParcheggio%></td>
+			
 			</tr>
-			<%
+		<%
 			}
 		%>
 		</table>
-
-
-		<div >	<!-- AGGIUNGO DENTRO I BLOCCI PER I RISTORANTI -->
-
-
-		</div>
-		<div>
-			<!-- API GOOGLE DA METTERE LATO A DESTRA -->
-			<!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
-			<script>
-				/* var map;
-					function initialize() {
-  						 var mapOptions = {
-   						 zoom: 8,
-   						 center: new google.maps.LatLng(-34.397, 150.644)
- 						 };
-  						 map = new google.maps.Map(document.getElementById('map-canvas'),
-     				     mapOptions);
-					}
-					google.maps.event.addDomListener(window, 'load', initialize);*/
-			</script>
-		</div>
-
+	</center>
 
 </body>
-
-    <footer style="background-color: yellow;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="https://www.instagram.com/therealristoapp/?hl=">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/davide.preatoni.31">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/Lorenzoamt/Ristoapp">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                   <p class="copyright text-muted">Copyright &copy; Preatoni Davide 5AITI 4/02/2019</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+	
 </html>

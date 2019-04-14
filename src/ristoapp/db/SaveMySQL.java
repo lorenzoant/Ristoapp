@@ -967,6 +967,7 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
 				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
 				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
+				ristoset.setTelefono(resultList.getString("Telefono"));
 				ristoset.setEmail(resultList.getString("Email"));
 				ristoset.setComune(resultList.getString("Comune"));
 				ristoset.setDescrizione(resultList.getString("Descrizione"));
@@ -980,10 +981,8 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 			}
 
 			return (ArrayList<RistorantiBean>) ristorante;
-		}
-
-		catch (SQLException e) {
-			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+		}catch (SQLException e) {
+			System.out.println("MySQL InformazioneRistorante() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {

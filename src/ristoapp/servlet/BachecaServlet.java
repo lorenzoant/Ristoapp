@@ -35,8 +35,12 @@ public class BachecaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//request.getSession().removeAttribute("RISTOPRENOTO");
-		//request.getSession().setAttribute("RISTOPRENOTO",RistorantePrenotare );
+		String whatsend = request.getParameter("whatsend");
+		
+		if(whatsend.equalsIgnoreCase("MyProfile")) { //faccio un redirect con tutte le informazioni di base del cliente loggato
+			response.sendRedirect("profilo.jsp");
+		}
+
 		
 	}
 
