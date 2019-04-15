@@ -541,32 +541,33 @@ public class SaveMySQL {
 
 		Statement stmt = null;
 		Connection conn = null;
-
+				
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-
+			
 			// Creo stringa sql
-			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, PuntiFedeltà) VALUES('" +
-					cliente.getIDCliente() + "','" +
-					cliente.getEmail() + "','" +
-					cliente.getPassHash() + "','" +
-					cliente.getNome() + "','" +
-					cliente.getCognome() + "','" +
-					cliente.getLivAutorizzazioni() + "','" +
-					cliente.getIndirizzo() + "','" +
-					cliente.getComune() + "','" +
-					cliente.getLingua() + "','" +
-					cliente.getNotificaEmail() + "','" +
-					cliente.getGeolocalizzazione() + "','" +
-					cliente.getPuntiFedelta() + "');";
-
+			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione) VALUES('" +
+					cliente.getIDCliente() + "','" + 
+					cliente.getEmail() + "','" + 
+					cliente.getPassHash() + "','" + 
+					cliente.getNome() + "','" + 
+					cliente.getCognome() + "','" + 
+					cliente.getLivAutorizzazioni() + "','" + 
+					cliente.getIndirizzo() + "','" + 
+					cliente.getComune() + "','" + 
+					cliente.getLingua() + "','";
+					if (cliente.getNotificaEmail()) sql += "1','";
+					else sql += "0','"; 
+					if (cliente.getGeolocalizzazione()) sql += "1','";
+					else sql += "0');";
+			
 			// Committo sul server
 			stmt.executeUpdate(sql);
-
+			
 			System.out.println("MySQL inserisciCliente() confirmed");
 		}
 		catch (SQLException e) {
