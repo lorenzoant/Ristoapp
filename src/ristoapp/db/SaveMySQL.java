@@ -544,7 +544,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione) VALUES('" +
+			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass) VALUES('" +
 					cliente.getIDCliente() + "','" + 
 					cliente.getEmail() + "','" + 
 					cliente.getPassHash() + "','" + 
@@ -557,8 +557,9 @@ public class SaveMySQL {
 					if (cliente.getNotificaEmail()) sql += "1','";
 					else sql += "0','"; 
 					if (cliente.getGeolocalizzazione()) sql += "1','";
-					else sql += "0');";
-			
+					else sql += "0',";
+			sql = sql + cliente.getCodicePass() + ")";
+			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 			

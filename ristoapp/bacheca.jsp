@@ -31,7 +31,7 @@
 						<table>
 							<tr>
 								<td>
-									<h2>RistoApp - Bacheca</h2>
+									<h2>Home</h2>
 								</td>
 								<td>
 									<img class="logo" src="MEDIA/logo.png"/>
