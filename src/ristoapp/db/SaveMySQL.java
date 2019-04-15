@@ -559,6 +559,7 @@ public class SaveMySQL {
 					if (cliente.getGeolocalizzazione()) sql += "1','";
 					else sql += "0',";
 			sql = sql + cliente.getCodicePass() + ")";
+			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 			
