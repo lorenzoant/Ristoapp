@@ -167,7 +167,7 @@ public class SaveMySQL {
 			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore vabbè che ci devo fare...
+			// Se ricevo un errore vabbÃ¨ che ci devo fare...
 			System.out.println("MySQL nuovaPrenotazione() failed");
 			throw new Exception(e.getMessage());
 		}
@@ -544,7 +544,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione) VALUES('" +
+			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass) VALUES('" +
 					cliente.getIDCliente() + "','" + 
 					cliente.getEmail() + "','" + 
 					cliente.getPassHash() + "','" + 
@@ -557,8 +557,9 @@ public class SaveMySQL {
 					if (cliente.getNotificaEmail()) sql += "1','";
 					else sql += "0','"; 
 					if (cliente.getGeolocalizzazione()) sql += "1','";
-					else sql += "0');";
-			
+					else sql += "0',";
+			sql = sql + cliente.getCodicePass() + ")";
+			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 			
@@ -833,7 +834,7 @@ public class SaveMySQL {
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
 				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
-				//prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
 				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 

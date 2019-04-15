@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ristoapp.Sha;
 import ristoapp.bean.ClientiBean;
 import ristoapp.db.SaveMySQL;
+import ristoapp.GeneraCodice;
 
 
 @WebServlet("/accountservlet")
@@ -64,6 +65,7 @@ public class AccountServlet extends HttpServlet {
 			else{
 				// Salvataggio dei valori n el Bean
 				ClientiBean cliente = new ClientiBean();
+				GeneraCodice codice = new GeneraCodice();
 			
 				cliente.setEmail(Email);
 				cliente.setPassHash(encrypt.sha1(PassHash));
@@ -74,6 +76,7 @@ public class AccountServlet extends HttpServlet {
 				cliente.setLingua(Lingua);
 				cliente.setNotificaEmail(NotificaEmail);
 				cliente.setGeolocalizzazione(Geolocalizzazione);
+				cliente.setCodicePass(codice.Genera());
 				
 				//Salvo in sessione
 				
@@ -88,12 +91,12 @@ public class AccountServlet extends HttpServlet {
 				SaveMySQL saveOnDb = new SaveMySQL();
 				try {
 					saveOnDb.inserisciCliente(cb);
-					response.sendRedirect("/account.jsp");
+					response.sendRedirect("login.jsp");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					sc = request.getSession().getServletContext();																								
-					rd = sc.getRequestDispatcher("/account.jsp");																																		
+					rd = sc.getRequestDispatcher("account.jsp");																																		
 					rd.forward(request, response);	
 				}
 			}	

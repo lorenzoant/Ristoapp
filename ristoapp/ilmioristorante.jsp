@@ -29,7 +29,7 @@
 	      <a class="mdl-navigation__link" href="">Riaggiorna [DA FARE]</a>
 	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
 	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
-	      <a class="mdl-navigation__link" href="">Logout [DA FARE]</a>
+	      <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 	    </nav>
 	  </div>
 	  <div class="mdl-layout__content page">
