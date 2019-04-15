@@ -147,7 +147,7 @@ public class SaveMySQL {
 		}
 	}//End inserisciDettagli()
 
-	public int listaPiatti(PrenotazioniBean prenotazione) throws Exception {
+	public ResultSet listaPiatti(int risto) throws Exception {
 		Statement stmt = null;
 		Connection conn = null;
 		//Creo un resultset per prendere l'id alla fine
@@ -159,20 +159,16 @@ public class SaveMySQL {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
-			String sql = "SELECT";
+			String sql = "SELECT * FROM Piatti INNER JOIN CategoriaPiatti ON Piatti.IDFCatPiatto = CategoriaPiatti.IDCatPiatto WHERE Piatti.IDFRistorante = " + risto + " ORDER BY CategoriaPiatti.Nome;";
 
-			// Committo sul server
-			stmt.executeUpdate(sql);
-			rs= stmt.getGeneratedKeys();
+			// Eseguo la query
+			rs = stmt.executeQuery(sql);
 
 			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
+			// Se ricevo un errore vabbè che ci devo fare...
 			System.out.println("MySQL nuovaPrenotazione() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -184,10 +180,8 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-		if(rs.next())
-			return rs.getInt(1);
-		else
-			return 0;
+			//Restituisco il resultset
+			return rs;
 	}//End listaPiatti()
 
 
@@ -968,6 +962,7 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
 				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
 				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
+				ristoset.setTelefono(resultList.getString("Telefono"));
 				ristoset.setEmail(resultList.getString("Email"));
 				ristoset.setComune(resultList.getString("Comune"));
 				ristoset.setDescrizione(resultList.getString("Descrizione"));
@@ -981,10 +976,8 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 			}
 
 			return (ArrayList<RistorantiBean>) ristorante;
-		}
-
-		catch (SQLException e) {
-			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+		}catch (SQLException e) {
+			System.out.println("MySQL InformazioneRistorante() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
