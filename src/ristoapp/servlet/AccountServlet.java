@@ -88,12 +88,12 @@ public class AccountServlet extends HttpServlet {
 				SaveMySQL saveOnDb = new SaveMySQL();
 				try {
 					saveOnDb.inserisciCliente(cb);
-					response.sendRedirect("/account.jsp");
+					response.sendRedirect("login.jsp");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					sc = request.getSession().getServletContext();																								
-					rd = sc.getRequestDispatcher("/account.jsp");																																		
+					rd = sc.getRequestDispatcher("account.jsp");																																		
 					rd.forward(request, response);	
 				}
 			}	
