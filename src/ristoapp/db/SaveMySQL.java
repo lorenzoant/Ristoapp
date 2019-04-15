@@ -167,7 +167,7 @@ public class SaveMySQL {
 			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore vabbè che ci devo fare...
+			// Se ricevo un errore vabbÃ¨ che ci devo fare...
 			System.out.println("MySQL nuovaPrenotazione() failed");
 			throw new Exception(e.getMessage());
 		}
@@ -834,7 +834,7 @@ public class SaveMySQL {
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
 				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
-				//prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
 				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 
