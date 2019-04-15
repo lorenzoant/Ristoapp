@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				else if(loggedUser.getLivAutorizzazioni() == 0){//utente loggato cliente
 					System.out.println("Interfaccia cliente");
-					response.sendRedirect("load.jsp");
+					response.sendRedirect("bacheca.jsp");
 				}
 				else if(loggedUser.getLivAutorizzazioni() == 1){//utente loggato ristorante
 					RistorantiBean risto = verifica.getInfoRistoranteDalProprietario(loggedUser); // Prelevo info del suo ristorante

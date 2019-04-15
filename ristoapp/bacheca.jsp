@@ -6,7 +6,8 @@
     pageEncoding="ISO-8859-1"%>
 
 
-<%//riprendo la session da Login per avere i dati del cliente
+<%
+		//riprendo la session da Login per avere i dati del cliente
 		ClientiBean cli = (ClientiBean) request.getSession().getAttribute("CREDENZIALI");	//utente loggato
 		ArrayList<RistorantiBean> rist = new ArrayList <RistorantiBean>(); //oggetto ristorante
 
@@ -21,7 +22,7 @@
 
 		<head>
 			<meta name="viewport" content="width=device-width">
-			<title>RistoApp-Bacheca </title>
+			<title>Bacheca </title>
 
 			<%@include file="graphicspuntoacca.jsp"%>
 
@@ -50,9 +51,9 @@
 
 	<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left">
 	 	 <a class="mdl-menu__item" href="profilo.jsp">MyProfile [finire]</a>
-	 	 <a class="mdl-menu__item" >Filter [fare]</a>
+	 	 <a class="mdl-menu__item" >Filtri [fare]</a>
 		  <a class="mdl-menu__item mdl-menu__item--full-bleed-divider" href="mappa.jsp"> Maps</a>
-		  <a class="mdl-menu__item">Logout [fare]</a>
+		  <a class="mdl-menu__item" href="logoutservlet">Logout [fare]</a>
 	</ul>
 
 	<center>
