@@ -6,6 +6,8 @@
 <style>
 	body,h1,h2,h3,h4,h5 {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
 	.occhio{width: 20px; height: 20px;}
+	.indietro{width: 70px; height: 70px;}
+	.indietro:hover{opacity: .5;}	
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
@@ -18,17 +20,40 @@ ESEMPI:
 
 header:
 <div class="mdl-layout__header">
-	<center>
-		<table>
-			<tr>
-				<td>
-					<h2>TITOLO</h2>
-				</td>
-				<td>
-					<img class="logo" src="MEDIA/logo.png"/>
-				</td>
-			</tr>
-		</table>
-	</center>
+	<table style="width:100%">
+		<tr>
+			<td align="left"><a href="pagina di ritorno"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+			<td align="center" style="width:100%">
+				<h2 style="display: inline;vertical-align:middle">titolo</h2>
+				<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+header con barra di navigazione:
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="custom-header mdl-layout__header mdl-layout__header--waterfall">
+	<div class="mdl-layout__header-row">
+		<div class="mdl-layout__header">
+			<h2>titolo</h2>
+		</div>
+		<div class="mdl-layout-spacer"></div>
+	</div>
+	</header>
+	<div class="mdl-layout__drawer">
+		<span class="mdl-layout-title">Sidebar Menu</span>
+		<nav class="mdl-navigation">
+		    <a class="mdl-navigation__link" href="">Link</a>
+		    <a class="mdl-navigation__link" href="">Link</a>
+		    <a class="mdl-navigation__link" href="">Link</a>
+		    <a class="mdl-navigation__link" href="">Link</a>
+	  	</nav>
+	</div>
+	<main class="mdl-layout__content">
+		<div class="page-content">
+			contenuto della pagina
+		</div>
+	</main>
 </div>
  -->

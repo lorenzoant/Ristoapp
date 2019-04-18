@@ -6,23 +6,20 @@
 
 <head>
 		<meta charset="ISO-8859-1">
-		<title>RistoApp</title>
+		<title>Nuovo Account</title>
 		<%@include file="graphicspuntoacca.jsp"%>
 	</head>
 	<body class="text-center">
 		<center>
 			<div class="mdl-layout__header">
-				<center>
-					<table>
-						<tr>
-							<td>
-								<h2>RistoApp</h2>
-							</td>
-							<td>
-								<img class="logo" src="MEDIA/logo.png"/>
-							</td>
-						</tr>
-					</center>
+				<table style="width:100%">
+					<tr>
+						<td align="left"><a href="login.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+						<td align="center" style="width:100%">
+							<h2 style="display: inline;vertical-align:middle" >Nuovo Account</h2>
+							<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+						</td>
+					</tr>
 				</table>
 			</div>
 
