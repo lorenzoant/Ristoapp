@@ -86,17 +86,12 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("IDRistorante: " + risto.getIDRistorante());
 					if(risto.getIDRistorante() == 0) {
 						// L'utente ha appena completato la registrazione, deve ancora registrare il ristorante
-						// TODO: modificare link con quello per la registrazione del ristorante
 						request.getSession().removeAttribute("RISTORANTELOGGATO");
 						response.sendRedirect("erroregenerico.jsp");
 					}
 					else {
-						risto.setRistorantePiatti(verifica.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante
-						risto.setPrenotazioni(verifica.prelevaPrenotazioniRistoranteTraDueDate(risto)); // Prelevo prenotazioni del ristorante
-						request.getSession().removeAttribute("RISTORANTELOGGATO");
-						request.getSession().setAttribute("RISTORANTELOGGATO", risto);
 						System.out.println("Interfaccia ristoratore");
-						response.sendRedirect("ilmioristorante.jsp");
+						response.sendRedirect("aggiornainforistoratoreservlet"); // Richiamo servlet per prelevare le informazioni sul ristorante
 					}	
 				}
 				else if(loggedUser.getLivAutorizzazioni() == 2){//utente loggato admin

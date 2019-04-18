@@ -42,7 +42,7 @@
 	  <div class="mdl-layout__drawer">
 	    <span class="mdl-layout-title">Menu ristoratore</span>
 	    <nav class="mdl-navigation">
-	      <a class="mdl-navigation__link" href="">Riaggiorna [DA FARE]</a>
+	      <a class="mdl-navigation__link" href="aggiornainforistoratoreservlet">Riaggiorna</a>
 	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
 	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
 	      <a class="mdl-navigation__link" href="logoutservlet">Logout</a>

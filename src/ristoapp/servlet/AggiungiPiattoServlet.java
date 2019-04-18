@@ -101,16 +101,7 @@ public class AggiungiPiattoServlet extends HttpServlet {
 				// Provo ad aggiungere il piatto nel database
 				saveOnDb.inserisciPiatto(piatto);
 				
-				// TODO: richiamo pagina di aggiornamento
-				// Scarico le nuove informazioni e poi torno a ilmiorisorante
-				SaveMySQL getNewInfo = new SaveMySQL();
-				RistorantiBean risto = getNewInfo.getInfoRistoranteDalProprietario(utenteLoggato); // Prelevo info del suo ristorante
-				risto.setRistorantePiatti(getNewInfo.prelevaPiattRistorante(risto)); // Prelevo piatti del ristorante	
-				request.getSession().removeAttribute("RISTORANTELOGGATO");
-				request.getSession().setAttribute("RISTORANTELOGGATO", risto);
-				
-				
-				response.sendRedirect("ilmioristorante.jsp");
+				response.sendRedirect("aggiornainforistoratoreservlet"); // Richiamo servlet per prelevare le informazioni sul ristorante
 			} 
 			catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico
@@ -195,8 +186,7 @@ public class AggiungiPiattoServlet extends HttpServlet {
 				saveOnDb.aggiornaPiatto(piatto);
 				request.getSession().removeAttribute("PIATTODAMODIFICARE");
 				
-				// TODO: richiamo pagina di aggiornamento
-				response.sendRedirect("ilmioristorante.jsp");
+				response.sendRedirect("aggiornainforistoratoreservlet"); // Richiamo servlet per prelevare le informazioni sul ristorante
 			} 
 			catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico
