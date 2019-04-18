@@ -10,18 +10,15 @@
 	<body class="text-center">
 		<center>
 			<div class="mdl-layout__header">
-				<div class="mdl-layout__header">
 				<table style="width:100%">
 					<tr>
 						<td align="center" style="width:100%">
-							<h2 style="display: inline;vertical-align:middle" >RistoApp</h2>
+							<h2 style="display: inline;vertical-align:middle">RistoApp</h2>
 							<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
 						</td>
 					</tr>
 				</table>
 			</div>
-			</div>
-			<head>
 			<form action = "loginservlet" name = "login" method ="post">
 				<table style="text-align:center;">
 					<tr>
