@@ -1,24 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
+<%@page import="ristoapp.bean.ClientiBean"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
 	<title>RistoApp - Aggiungi piatto</title>
 	<%@include file="graphicspuntoacca.jsp"%>
+	<% 
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome();
+  		if(cli.getLivAutorizzazioni() != 1){
+  			// L'utente non è un ristoratore
+  			response.sendRedirect("login.jsp");
+  		}%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
 </head>
 <body class="text-center">
 
-	<div class="mdl-layout__header">
-		<center>
-			<table>
-				<tr>
-					<td><h2>RistoApp - Aggiungi piatto</h2></td>
-					<td><img class="logo" src="MEDIA/logo.png"/></td>
-				</tr>
-			</table>
-		</center>
+	<div class="mdl-layout__header">		
+		<table style="width:100%">
+			<tr>
+				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+				<td align="center" style="width:100%">
+					<h2 style="display: inline;vertical-align:middle">RistoApp - Aggiungi piatto</h2>
+					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+				</td>
+			</tr>
+		</table>
 	</div>
 	
 	<div class="page">

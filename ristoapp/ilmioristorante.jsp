@@ -4,6 +4,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="ristoapp.bean.ClientiBean"%>
 <%@page import="ristoapp.bean.PiattiBean"%>
 <%@page import="ristoapp.bean.RistorantiBean"%>
 <%@page import="ristoapp.bean.PrenotazioniBean"%>
@@ -13,6 +14,21 @@
 	<meta charset="ISO-8859-1">
 	<title>Il mio ristorante</title>
 	<%@include file="graphicspuntoacca.jsp"%>
+	<% 
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome();
+  		if(cli.getLivAutorizzazioni() != 1){
+  			// L'utente non è un ristoratore
+  			response.sendRedirect("login.jsp");
+  		}%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
 </head>
 <body>
 
@@ -35,7 +51,7 @@
 	  <div class="mdl-layout__content page">
 	  
 	  	<!-- PAGE CONTENT -->
-		<h3>Prenotazioni di oggi</h3>
+	  	<h3>Ciao <%=nomeLoggato%>, ecco le prenotazioni di oggi</h3>
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 		<thead>
 			<tr>
@@ -85,8 +101,8 @@
 		
 		
 		
-		
-		<h3>Prenotazioni di questa settimana [Da mettere le date nella query]</h3>
+		<h3>Tutte le prenotazioni</h3>
+		<!--h3>Prenotazioni di questa settimana [Da mettere le date nella query]</h3-->
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 		<thead>
 			<tr>
