@@ -4,8 +4,12 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-red.min.css" /> 
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <style>
-	body,h1,h2,h3,h4,h5 {font-family: "Bahnschrift SemiBold SemiConden", sans-serif}
-	.occhio{width: 20px; height: 20px;}
+	@font-face {
+	  font-family: ristofont;
+	  src: url(MEDIA/bahnschrift.ttf);
+	}
+	body,h1,h2,h3,h4,h5 {font-family: Bahnschrift SemiBold SemiConden, ristofont, sans-serif}
+	.occhio{width: 25px; height: 20px;}
 	.indietro{width: 70px; height: 70px;}
 	.indietro:hover{opacity: .5;}	
 	.text-center {text-align: center;}
