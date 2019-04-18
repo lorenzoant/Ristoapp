@@ -44,7 +44,8 @@
 	    <nav class="mdl-navigation">
 	      <a class="mdl-navigation__link" href="aggiornainforistoratoreservlet">Riaggiorna</a>
 	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
-	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
+	      <a class="mdl-navigation__link" href="">Modifica ristorante [Albertini]</a>
+	      <a class="mdl-navigation__link" href="">Modifica account [Frigerio]</a>
 	      <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 	    </nav>
 	  </div>

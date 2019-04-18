@@ -39,7 +39,7 @@ public class AggiornaInfoRistoratoreServlet extends HttpServlet {
 		  			request.getSession().removeAttribute("PIATTODAMODIFICARE");
 		  			request.getSession().removeAttribute("RISTORANTELOGGATO");
 		  			request.getSession().setAttribute("RISTORANTELOGGATO", risto);
-		  			System.out.println("Info ristorante aggiornate");
+		  			System.out.println(" -> Info ristorante aggiornate");
 	  			}
 	  			catch (Exception e) {
 					// Nessun ristoratore loggato, quini la query ha generato errori

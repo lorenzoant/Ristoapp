@@ -24,6 +24,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		response.getWriter().append("<meta http-equiv='refresh' content='1;url=login.jsp'/>Logout eseguito...");
 		
+		System.out.println("User logout");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

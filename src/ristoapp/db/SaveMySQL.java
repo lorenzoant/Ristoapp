@@ -105,6 +105,7 @@ public class SaveMySQL {
 			return 0;
 	}//End nuovaPrenotazione()
 
+	
 	public void inserisciDettagli(PrenotazioniDettagliBean dettagli) throws Exception{
 		Statement stmt = null;
 		Connection conn = null;
@@ -126,11 +127,11 @@ public class SaveMySQL {
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
-			System.out.println("MySQL nuovaPrenotazione() confirmed");
+			System.out.println("MySQL inserisciDettagli() confirmed");
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL nuovaPrenotazione() failed");
+			System.out.println("MySQL inserisciDettagli() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -147,6 +148,7 @@ public class SaveMySQL {
 		}
 	}//End inserisciDettagli()
 
+	
 	public ResultSet listaPiatti(int risto) throws Exception {
 		Statement stmt = null;
 		Connection conn = null;
@@ -164,11 +166,11 @@ public class SaveMySQL {
 			// Eseguo la query
 			rs = stmt.executeQuery(sql);
 
-			System.out.println("MySQL nuovaPrenotazione() confirmed");
+			System.out.println("MySQL listaPiatti() confirmed");
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore vabbè che ci devo fare...
-			System.out.println("MySQL nuovaPrenotazione() failed");
+			System.out.println("MySQL listaPiatti() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -180,8 +182,8 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			//Restituisco il resultset
-			return rs;
+		//Restituisco il resultset
+		return rs;
 	}//End listaPiatti()
 
 
@@ -213,7 +215,7 @@ public class SaveMySQL {
 			System.out.println("MySQL modificaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			System.out.println("MySQL connection modificaPrenotazione() failed");
+			System.out.println("MySQL modificaPrenotazione() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -253,7 +255,7 @@ public class SaveMySQL {
 			System.out.println("MySQL eliminaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			System.out.println("MySQL connection eliminaPrenotazione() failed");
+			System.out.println("MySQL eliminaPrenotazione() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -404,7 +406,8 @@ public class SaveMySQL {
 				risto.setSerWifi(result.getBoolean("SerWifi"));
 				risto.setSerDisabili(result.getBoolean("SerDisabili"));
 				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
-
+				
+				System.out.println("MySQL getInfoRistoranteDalProprietario() confirmed");
 				return risto;
 			}
 			else {
@@ -461,7 +464,8 @@ public class SaveMySQL {
 				piatto.setAllergeni(resultList.getString("Allergeni"));
 				piattiList.add(piatto);// Aggiungo al vettore
 			}
-
+			
+			System.out.println("MySQL prelevaPiattRistorante() confirmed");
 			return (ArrayList<PiattiBean>)piattiList;
 		}
 		catch (SQLException e) {
@@ -482,7 +486,7 @@ public class SaveMySQL {
 
 	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueDate(RistorantiBean risto) throws Exception{ // Vellons
 
-		// TODO: aggiungere le due date nella query (Vellons)
+		// TODO: aggiungere le due date per settimana corrente nella query (Vellons)
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -513,6 +517,7 @@ public class SaveMySQL {
 				prenotazioniList.add(prenotazione);// Aggiungo al vettore
 			}
 
+			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() confirmed");
 			return (ArrayList<PrenotazioniBean>)prenotazioniList;
 		}
 		catch (SQLException e) {
@@ -931,7 +936,7 @@ public class SaveMySQL {
 	}// End inserisciRistorante()
 
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
-public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
+	public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -943,7 +948,7 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 
 			// Creo stringa sql
 
-			String sql = "SELECT * FROM Ristoranti LEFT JOIN CategoriaCucina ON Ristoranti.IDFCatCucina = CategoriaCucina.IDCatCucina";
+			String sql = "SELECT * FROM Ristoranti INNER JOIN CategoriaCucina ON Ristoranti.IDFCatCucina = CategoriaCucina.IDCatCucina";
 
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
@@ -990,7 +995,7 @@ public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
 				conn.close();
 			}
 		}
-	}// END
+	}// END InformazioniRistorante()
 
 	public RistorantiBean selectRistorante(int id) throws Exception{
 
