@@ -1070,4 +1070,55 @@ public class SaveMySQL {
 		}
 	}// End selectRistorante()
 
+	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
+	public ArrayList<ClientiBean> InformazioniClienti() throws Exception{
+	
+		Statement stmt = null;
+		Connection conn = null;
+	
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+	
+			// Creo stringa sql
+	
+			String sql = "SELECT * FROM Clienti";
+	
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+	
+			// Estraggo dati
+			ArrayList<ClientiBean> listaclienti = new ArrayList<ClientiBean>();
+	
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				ClientiBean cliente = new ClientiBean();
+				
+				cliente.setEmail(resultList.getString("Email"));
+				cliente.setNome(resultList.getString("Nome"));
+				cliente.setCognome(resultList.getString("Cognome"));
+				cliente.setLivAutorizzazioni(Integer.parseInt(resultList.getString("LivAutorizzazioni")));
+				cliente.setIndirizzo(resultList.getString("Indirizzo"));
+				cliente.setComune(resultList.getString("Comune"));
+				cliente.setLingua(resultList.getString("Lingua"));
+	
+				listaclienti.add(cliente);// Aggiungo al vettore
+			}
+	
+			return (ArrayList<ClientiBean>) listaclienti;
+		}catch (SQLException e) {
+			System.out.println("MySQL informazioniClienti() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END informazioniClienti()
 }

@@ -16,6 +16,7 @@
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
     .logo{width: 100px;}
+    .centratabella{width: 50%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
     @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
 </style>
 <link rel="icon" href="MEDIA/icona.ico"> <!-- icona in cima -->

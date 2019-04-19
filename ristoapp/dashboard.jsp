@@ -1,3 +1,7 @@
+<%@page import="ristoapp.bean.ClientiBean" %>
+<%@page import="ristoapp.bean.RistorantiBean" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="ristoapp.db.SaveMySQL" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,6 +13,9 @@
 	Boolean Listaristoranti = Boolean.parseBoolean(request.getParameter("listaristoranti"));
 	Boolean Listautenti = Boolean.parseBoolean(request.getParameter("listautenti"));
 	if(Introiti == false && Listaristoranti == false && Listautenti == false) Statistiche = true;
+	
+	ClientiBean admin = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");	//utente loggato
+	String nome = admin.getNome();
 %>
 
 <html>
@@ -44,28 +51,70 @@
 			</div>
 			<main class="mdl-layout__content">
 				<div class="page-content">
-				
+					
+					<h5>Ciao <%=nome %>:
 					<%if(Statistiche == true){%>
+						Statistiche</h5>
 						<div>
 							mostra Statistiche
 						</div>
 					<%}
 					else if(Introiti == true){%>
+						Introiti</h5>
 						<div>
 							mostra Introiti
 						</div>
 					<%}
 					else if(Listaristoranti == true){%>
-						<div>
-							mostra Lista ristoranti
-						</div>
+						Lista ristoranti</h5>
+						<%@include file="listaristoranti.jsp"%>
 					<%}
 						else if(Listautenti == true){%>
+						Lista utenti</h5>
 						<div>
-							mostra Lista utenti
+							<table border="1" class="centratabella" style="width:80%;">
+								<tr style="font-size: 18px;">
+									<th>Cognome</th>
+									<th>Nome</th>
+									<th>Email</th>
+									<th>Livello Autorizzazioni</th>
+									<th>Indirizzo</th>
+									<th>Comune</th>
+									<th>Lingua</th>
+								</tr>
+								<%
+								ArrayList<ClientiBean> listautenti = new ArrayList <ClientiBean>(); //oggetto ristorante
+								SaveMySQL prendiutenti = new SaveMySQL(); //oggeto save
+								listautenti = prendiutenti.InformazioniClienti(); //prendo tutti i ristoranti
+								
+								for(ClientiBean lista:listautenti){
+									String Cognome = lista.getCognome();
+									String Nome = lista.getNome();
+									String Email = lista.getEmail();
+									String Indirizzo = lista.getIndirizzo();
+									String Comune = lista.getComune();
+									String Lingua = lista.getLingua();
+									String LivAutorizzazioni = "";
+									if(lista.getLivAutorizzazioni() == 0) LivAutorizzazioni = "cliente";
+									else if(lista.getLivAutorizzazioni() == 1) LivAutorizzazioni = "ristoratore";
+									else LivAutorizzazioni = "amministratore";
+											
+									%>
+									<tr>
+										<td><%=Cognome%></td>
+										<td><%=Nome%></td>
+										<td><%=Email%></td>
+										<td><%=LivAutorizzazioni%></td>
+										<td><%=Indirizzo%></td>
+										<td><%=Comune%></td>
+										<td><%=Lingua%></td>
+									</tr>
+								<%} %>
+							</table>
 						</div>
 					<%} %>
-				
+					
+					<hr>
 					<br>Account RistoApp creati<br/>
 					dato<br/>
 					Crescita rispetto all'ultimo mese<br/>
