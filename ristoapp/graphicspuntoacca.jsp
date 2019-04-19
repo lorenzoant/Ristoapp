@@ -36,17 +36,21 @@ header:
 </div>
 
 header con barra di navigazione:
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="custom-header mdl-layout__header mdl-layout__header--waterfall">
-	<div class="mdl-layout__header-row">
-		<div class="mdl-layout__header">
-			<h2>titolo</h2>
+<div class="mdl-layout mdl-js-layout">
+	<header class="custom-header mdl-layout__header mdl-layout__header--waterfall">
+		<div>
+			<table style="width:100%">
+				<tr>
+					<td align="center" style="width:100%">
+						<h2 style="display: inline;vertical-align:middle">Dashboard</h2>
+						<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+					</td>
+				</tr>
+			</table>
 		</div>
-		<div class="mdl-layout-spacer"></div>
-	</div>
 	</header>
 	<div class="mdl-layout__drawer">
-		<span class="mdl-layout-title">Sidebar Menu</span>
+		<h4 style="text-align:center;">Avanzate</h4><hr>
 		<nav class="mdl-navigation">
 		    <a class="mdl-navigation__link" href="">Link</a>
 		    <a class="mdl-navigation__link" href="">Link</a>
