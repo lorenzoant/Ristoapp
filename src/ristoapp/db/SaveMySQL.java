@@ -149,28 +149,44 @@ public class SaveMySQL {
 	}//End inserisciDettagli()
 
 	
-	public ResultSet listaPiatti(int risto) throws Exception {
+	public ArrayList<PiattiBean> prelevaPiattRistorante(int risto) throws Exception{  // Vellons
+
 		Statement stmt = null;
 		Connection conn = null;
-		//Creo un resultset per prendere l'id alla fine
-		ResultSet rs = null;
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
-			String sql = "SELECT * FROM Piatti INNER JOIN CategoriaPiatti ON Piatti.IDFCatPiatto = CategoriaPiatti.IDCatPiatto WHERE Piatti.IDFRistorante = " + risto + " ORDER BY CategoriaPiatti.Nome;";
+			// Creo stringa sql
+			String sql = "SELECT * FROM Piatti WHERE IDFRistorante = " + risto + ";";
 
-			// Eseguo la query
-			rs = stmt.executeQuery(sql);
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
 
-			System.out.println("MySQL listaPiatti() confirmed");
+			// Estraggo dati
+			ArrayList<PiattiBean> piattiList = new ArrayList<PiattiBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				PiattiBean piatto = new PiattiBean();
+				piatto.setIDPiatto(resultList.getInt("IDPiatto"));
+				piatto.setIDFRistorante(resultList.getInt("IDFRistorante"));
+				piatto.setIDFCatPiatto(resultList.getInt("IDFCatPiatto"));
+				piatto.setNome(resultList.getString("Nome"));
+				piatto.setPrezzo(resultList.getDouble("Prezzo"));
+				piatto.setDisponibile(resultList.getBoolean("Disponibile"));
+				piatto.setDescrizione(resultList.getString("Descrizione"));
+				piatto.setUrl(resultList.getString("Foto"));
+				piatto.setAllergeni(resultList.getString("Allergeni"));
+				piattiList.add(piatto);// Aggiungo al vettore
+			}
+			
+			System.out.println("MySQL prelevaPiattRistorante() confirmed");
+			return (ArrayList<PiattiBean>)piattiList;
 		}
 		catch (SQLException e) {
-			// Se ricevo un errore vabbè che ci devo fare...
-			System.out.println("MySQL listaPiatti() failed");
+			System.out.println("MySQL prelevaPiattRistorante() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -182,9 +198,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-		//Restituisco il resultset
-		return rs;
-	}//End listaPiatti()
+	}// End prelevaPiattRistorante()
 
 
 	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
