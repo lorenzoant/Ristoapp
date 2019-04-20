@@ -1,5 +1,6 @@
 <%@page import="ristoapp.bean.ClientiBean" %>
 <%@page import="ristoapp.bean.RistorantiBean" %>
+<%@page import="ristoapp.bean.QueryIntroitiBean" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="ristoapp.db.SaveMySQL" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -41,10 +42,10 @@
 			<div class="mdl-layout__drawer">
 				<h4 style="text-align:center;">Avanzate</h4><hr>
 				<nav class="mdl-navigation">
-					<a class="mdl-navigation__link" href="dashboard.jsp?statistiche=true">Statistiche</a>
-					<a class="mdl-navigation__link" href="dashboard.jsp?introiti=true">Introiti</a>
-					<a class="mdl-navigation__link" href="dashboard.jsp?listaristoranti=true">Lista ristoranti</a>
-				    <a class="mdl-navigation__link" href="dashboard.jsp?listautenti=true">Lista utenti</a>
+					<a class="mdl-navigation__link" href="?statistiche=true">Statistiche</a>
+					<a class="mdl-navigation__link" href="?introiti=true">Introiti</a>
+					<a class="mdl-navigation__link" href="?listaristoranti=true">Lista ristoranti</a>
+				    <a class="mdl-navigation__link" href="?listautenti=true&ordine=data">Lista utenti</a>
 				    <hr>
 				    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 			  	</nav>
@@ -61,8 +62,33 @@
 					<%}
 					else if(Introiti == true){%>
 						Introiti</h5>
-						<div>
-							mostra Introiti
+						<div style="overflow-x:auto;">
+							<table border="1" class="centratabella" style="width:80%;">
+								<tr style="font-size: 18px;">
+									<th>Nome</th>
+									<th>Comune</th>
+									<th>Stelle</th>
+									<th>Ricavi</th>
+								</tr>
+								<%
+								ArrayList<QueryIntroitiBean> informazioni = new ArrayList <QueryIntroitiBean>(); //lista delle info
+								SaveMySQL prendiinfo = new SaveMySQL(); //per chiamare la funzione
+								informazioni = prendiinfo.mostraIntroiti(); //prendo le info degli introiti
+								
+								for(QueryIntroitiBean lista:informazioni){
+									String NomeRistorante = lista.getNome();
+									String ComuneRistorante = lista.getComune();
+									double Stelle = lista.getStelle();
+									double Ricavi = lista.getRicavi();
+									%>
+									<tr>
+										<td><%=NomeRistorante%></td>
+										<td><%=ComuneRistorante%></td>
+										<td><%=Stelle%>&#9733;</td>
+										<td>&euro; <%=Ricavi%></td>
+									</tr>
+								<%} %>
+							</table>
 						</div>
 					<%}
 					else if(Listaristoranti == true){%>
@@ -71,7 +97,14 @@
 					<%}
 						else if(Listautenti == true){%>
 						Lista utenti</h5>
-						<div>
+						<div style="overflow-x:auto;">
+							ordina per:
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=data'">Data Inserimento</button>
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Cognome'">Cognome</button>
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Nome'">Nome</button>
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=LivAutorizzazioni'">Autorizzazione</button>
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Comune'">Comune</button>
+							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Lingua'">Lingua</button><br/><br/>
 							<table border="1" class="centratabella" style="width:80%;">
 								<tr style="font-size: 18px;">
 									<th>Cognome</th>
@@ -83,9 +116,10 @@
 									<th>Lingua</th>
 								</tr>
 								<%
-								ArrayList<ClientiBean> listautenti = new ArrayList <ClientiBean>(); //oggetto ristorante
-								SaveMySQL prendiutenti = new SaveMySQL(); //oggeto save
-								listautenti = prendiutenti.InformazioniClienti(); //prendo tutti i ristoranti
+								ArrayList<ClientiBean> listautenti = new ArrayList <ClientiBean>(); //lista degli utenti
+								SaveMySQL prendiutenti = new SaveMySQL(); //per chiamare la funzione
+								String ordine = request.getParameter("ordine");
+								listautenti = prendiutenti.InformazioniClienti(ordine); //prendo tutti i clienti
 								
 								for(ClientiBean lista:listautenti){
 									String Cognome = lista.getCognome();
@@ -113,17 +147,6 @@
 							</table>
 						</div>
 					<%} %>
-					
-					<hr>
-					<br>Account RistoApp creati<br/>
-					dato<br/>
-					Crescita rispetto all'ultimo mese<br/>
-					dato<br/>
-					Introiti generati dalle iscrizioni<br/>
-					dato<br/>
-					Stacco super mitico dopo la tabella per introdurre l'utente ai grafici pewpew, tipo un qualcosa a comparsa ma devo vedere cosa riesco a fare<br/>
-					dropdown per decidere il periodo, categoria, regione<br/>
-					Magari qualcosa per inviare un messaggio o immagine da mettere in home page<br/>
 				</div>
 			</main>
 		</div>
