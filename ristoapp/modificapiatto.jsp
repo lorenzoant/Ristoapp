@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>RistoApp - Modifica piatto</title>
+	<title>Modifica piatto</title>
 	<%@include file="graphicspuntoacca.jsp"%>
 	<% 
 	// Controllo se chi accede a questa pagina ha l'autorizzazione
@@ -32,7 +32,7 @@
 			<tr>
 				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
-					<h2 style="display: inline;vertical-align:middle">RistoApp - Modifica piatto</h2>
+					<h2 style="display: inline;vertical-align:middle">Modifica piatto</h2>
 					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
 				</td>
 			</tr>

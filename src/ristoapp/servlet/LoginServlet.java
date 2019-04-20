@@ -91,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 					}
 					else {
 						System.out.println("Interfaccia ristoratore");
-						response.sendRedirect("aggiornainforistoratoreservlet"); // Richiamo servlet per prelevare le informazioni sul ristorante
+						response.sendRedirect("ilmioristorantecaricamento.jsp"); // Richiamo servlet per prelevare le informazioni sul ristorante
 					}	
 				}
 				else if(loggedUser.getLivAutorizzazioni() == 2){//utente loggato admin
