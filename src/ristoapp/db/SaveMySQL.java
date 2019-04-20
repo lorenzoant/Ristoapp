@@ -13,6 +13,7 @@ import ristoapp.bean.PrenotazioniBean;
 import ristoapp.bean.PrenotazioniDettagliBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.bean.CarteBean;
+import ristoapp.bean.QueryIntroitiBean;
 
 public class SaveMySQL {
 
@@ -1071,7 +1072,7 @@ public class SaveMySQL {
 	}// End selectRistorante()
 
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
-	public ArrayList<ClientiBean> InformazioniClienti() throws Exception{
+	public ArrayList<ClientiBean> InformazioniClienti(String ordine) throws Exception{
 	
 		Statement stmt = null;
 		Connection conn = null;
@@ -1082,8 +1083,9 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 	
 			// Creo stringa sql
-	
-			String sql = "SELECT * FROM Clienti";
+			String sql = "";
+			if(ordine.equalsIgnoreCase("data"))sql = "SELECT * FROM Clienti";
+			else sql = "SELECT * FROM Clienti ORDER BY " + ordine;
 	
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
@@ -1121,4 +1123,62 @@ public class SaveMySQL {
 			}
 		}
 	}// END informazioniClienti()
+	
+	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE PRENOTAZIONI PER RISTORANTE
+	public ArrayList<QueryIntroitiBean> mostraIntroiti() throws Exception{
+	
+		Statement stmt = null;
+		Connection conn = null;
+	
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+	
+			// Creo stringa sql
+			String sql = "";
+			sql = "SELECT Ristoranti.IDRistorante, Ristoranti.Nome, Ristoranti.Comune, AVG(RecensioniRistoranti.Stelle) AS Stelle, SUM((PrenotazioniDettagli.Prezzo - (PrenotazioniDettagli.Prezzo * PrenotazioniDettagli.Sconto)) * PrenotazioniDettagli.Quantita) AS Ricavi"
+					+ " FROM Ristoranti"
+					+ " LEFT JOIN RecensioniRistoranti ON RecensioniRistoranti.IDFRistorante = Ristoranti.IDRistorante"
+					+ " LEFT JOIN Prenotazioni ON Prenotazioni.IDFRistorante = IDRistorante"
+					+ " LEFT JOIN PrenotazioniDettagli ON PrenotazioniDettagli.IDFOrdine = Prenotazioni.IDPrenotazione"
+					+ " WHERE Prenotazioni.StatoPagamento = 1"
+					+ " GROUP BY Ristoranti.IDRistorante";
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+	
+			// Estraggo dati
+			ArrayList<QueryIntroitiBean> informazioni = new ArrayList<QueryIntroitiBean>();
+	
+			while(resultList.next()){
+				System.out.println("ciao1");
+				// Scorro tutte le righe del risultato
+				QueryIntroitiBean introiti = new QueryIntroitiBean();
+				introiti.setIDRistorante(Integer.parseInt(resultList.getString("IDRistorante")));
+				introiti.setNome(resultList.getString("Nome"));
+				introiti.setComune(resultList.getString("Comune"));
+				if(resultList.getString("Stelle") == null)introiti.setStelle(0);
+				else introiti.setStelle(Double.parseDouble(resultList.getString("Stelle")));
+				if(resultList.getString("Ricavi") == null)introiti.setRicavi(0);
+				else introiti.setRicavi(Double.parseDouble(resultList.getString("Ricavi")));
+				informazioni.add(introiti);// Aggiungo al vettore
+				
+				System.out.println("ciao2");
+			}
+	
+			return (ArrayList<QueryIntroitiBean>) informazioni;
+		}catch (SQLException e) {
+			System.out.println("MySQL mostraIntroiti() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END mostraIntroiti()
 }
