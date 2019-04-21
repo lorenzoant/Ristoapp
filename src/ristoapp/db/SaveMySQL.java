@@ -1125,7 +1125,7 @@ public class SaveMySQL {
 	}// END informazioniClienti()
 	
 	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE PRENOTAZIONI PER RISTORANTE
-	public ArrayList<QueryIntroitiBean> mostraIntroiti() throws Exception{
+	public ArrayList<QueryIntroitiBean> mostraIntroiti(String tempo) throws Exception{
 	
 		Statement stmt = null;
 		Connection conn = null;
@@ -1142,8 +1142,11 @@ public class SaveMySQL {
 					+ " LEFT JOIN RecensioniRistoranti ON RecensioniRistoranti.IDFRistorante = Ristoranti.IDRistorante"
 					+ " LEFT JOIN Prenotazioni ON Prenotazioni.IDFRistorante = IDRistorante"
 					+ " LEFT JOIN PrenotazioniDettagli ON PrenotazioniDettagli.IDFOrdine = Prenotazioni.IDPrenotazione"
-					+ " WHERE Prenotazioni.StatoPagamento = 1"
-					+ " GROUP BY Ristoranti.IDRistorante";
+					+ " WHERE Prenotazioni.StatoPagamento = 1";
+			if(tempo == "totale") sql = sql + " GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "oggi") sql = sql + " AND DAY(Prenotazioni.Data) = DAY(NOW()) AND MONTH(Prenotazioni.Data) = MONTH(NOW()) AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "mese") sql = sql +  " AND MONTH(Prenotazioni.Data) = MONTH(NOW()) AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "anno") sql = sql +  " AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
 	
@@ -1151,7 +1154,6 @@ public class SaveMySQL {
 			ArrayList<QueryIntroitiBean> informazioni = new ArrayList<QueryIntroitiBean>();
 	
 			while(resultList.next()){
-				System.out.println("ciao1");
 				// Scorro tutte le righe del risultato
 				QueryIntroitiBean introiti = new QueryIntroitiBean();
 				introiti.setIDRistorante(Integer.parseInt(resultList.getString("IDRistorante")));
@@ -1162,8 +1164,6 @@ public class SaveMySQL {
 				if(resultList.getString("Ricavi") == null)introiti.setRicavi(0);
 				else introiti.setRicavi(Double.parseDouble(resultList.getString("Ricavi")));
 				informazioni.add(introiti);// Aggiungo al vettore
-				
-				System.out.println("ciao2");
 			}
 	
 			return (ArrayList<QueryIntroitiBean>) informazioni;

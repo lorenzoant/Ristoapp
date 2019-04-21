@@ -9,14 +9,29 @@
 
 <%
 	//decido cosa mostrare
- 	Boolean Statistiche = Boolean.parseBoolean(request.getParameter("statistiche"));
+	String scelta = "";
+	if(request.getParameter("scelta") == null) scelta = "listastatistiche.jsp";
+	else scelta = request.getParameter("scelta") + ".jsp";
+ 	/*Boolean Statistiche = Boolean.parseBoolean(request.getParameter("statistiche"));
 	Boolean Introiti = Boolean.parseBoolean(request.getParameter("introiti"));
 	Boolean Listaristoranti = Boolean.parseBoolean(request.getParameter("listaristoranti"));
 	Boolean Listautenti = Boolean.parseBoolean(request.getParameter("listautenti"));
-	if(Introiti == false && Listaristoranti == false && Listautenti == false) Statistiche = true;
+	if(Introiti == false && Listaristoranti == false && Listautenti == false) Statistiche = true;*/
 	
-	ClientiBean admin = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");	//utente loggato
-	String nome = admin.getNome();
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nome = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nome = cli.getNome();
+  		if(cli.getLivAutorizzazioni() != 2){
+  			// L'utente non è un ristoratore
+  			response.sendRedirect("login.jsp");
+  		}
+	}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}
 %>
 
 <html>
@@ -42,10 +57,11 @@
 			<div class="mdl-layout__drawer">
 				<h4 style="text-align:center;">Avanzate</h4><hr>
 				<nav class="mdl-navigation">
-					<a class="mdl-navigation__link" href="?statistiche=true">Statistiche</a>
-					<a class="mdl-navigation__link" href="?introiti=true">Introiti</a>
-					<a class="mdl-navigation__link" href="?listaristoranti=true">Lista ristoranti</a>
-				    <a class="mdl-navigation__link" href="?listautenti=true&ordine=data">Lista utenti</a>
+					<a class="mdl-navigation__link" href="?scelta=listastatistiche">Statistiche</a>
+					<a class="mdl-navigation__link" href="?scelta=listaintroiti">Introiti</a>
+					<a class="mdl-navigation__link" href="?scelta=listaristoranti">Lista ristoranti</a>
+				    <a class="mdl-navigation__link" href="?scelta=listautenti&ordine=data">Lista utenti</a>
+				    <!--<a class="mdl-navigation__link" href="?listautenti=true&ordine=data">Lista utenti</a>-->
 				    <hr>
 				    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 			  	</nav>
@@ -53,100 +69,8 @@
 			<main class="mdl-layout__content">
 				<div class="page-content">
 					
-					<h5>Ciao <%=nome %>:
-					<%if(Statistiche == true){%>
-						Statistiche</h5>
-						<div>
-							mostra Statistiche
-						</div>
-					<%}
-					else if(Introiti == true){%>
-						Introiti</h5>
-						<div style="overflow-x:auto;">
-							<table border="1" class="centratabella" style="width:80%;">
-								<tr style="font-size: 18px;">
-									<th>Nome</th>
-									<th>Comune</th>
-									<th>Stelle</th>
-									<th>Ricavi</th>
-								</tr>
-								<%
-								ArrayList<QueryIntroitiBean> informazioni = new ArrayList <QueryIntroitiBean>(); //lista delle info
-								SaveMySQL prendiinfo = new SaveMySQL(); //per chiamare la funzione
-								informazioni = prendiinfo.mostraIntroiti(); //prendo le info degli introiti
-								
-								for(QueryIntroitiBean lista:informazioni){
-									String NomeRistorante = lista.getNome();
-									String ComuneRistorante = lista.getComune();
-									double Stelle = lista.getStelle();
-									double Ricavi = lista.getRicavi();
-									%>
-									<tr>
-										<td><%=NomeRistorante%></td>
-										<td><%=ComuneRistorante%></td>
-										<td><%=Stelle%>&#9733;</td>
-										<td>&euro; <%=Ricavi%></td>
-									</tr>
-								<%} %>
-							</table>
-						</div>
-					<%}
-					else if(Listaristoranti == true){%>
-						Lista ristoranti</h5>
-						<%@include file="listaristoranti.jsp"%>
-					<%}
-						else if(Listautenti == true){%>
-						Lista utenti</h5>
-						<div style="overflow-x:auto;">
-							ordina per:
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=data'">Data Inserimento</button>
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Cognome'">Cognome</button>
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Nome'">Nome</button>
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=LivAutorizzazioni'">Autorizzazione</button>
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Comune'">Comune</button>
-							<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?listautenti=true&ordine=Lingua'">Lingua</button><br/><br/>
-							<table border="1" class="centratabella" style="width:80%;">
-								<tr style="font-size: 18px;">
-									<th>Cognome</th>
-									<th>Nome</th>
-									<th>Email</th>
-									<th>Livello Autorizzazioni</th>
-									<th>Indirizzo</th>
-									<th>Comune</th>
-									<th>Lingua</th>
-								</tr>
-								<%
-								ArrayList<ClientiBean> listautenti = new ArrayList <ClientiBean>(); //lista degli utenti
-								SaveMySQL prendiutenti = new SaveMySQL(); //per chiamare la funzione
-								String ordine = request.getParameter("ordine");
-								listautenti = prendiutenti.InformazioniClienti(ordine); //prendo tutti i clienti
-								
-								for(ClientiBean lista:listautenti){
-									String Cognome = lista.getCognome();
-									String Nome = lista.getNome();
-									String Email = lista.getEmail();
-									String Indirizzo = lista.getIndirizzo();
-									String Comune = lista.getComune();
-									String Lingua = lista.getLingua();
-									String LivAutorizzazioni = "";
-									if(lista.getLivAutorizzazioni() == 0) LivAutorizzazioni = "cliente";
-									else if(lista.getLivAutorizzazioni() == 1) LivAutorizzazioni = "ristoratore";
-									else LivAutorizzazioni = "amministratore";
-											
-									%>
-									<tr>
-										<td><%=Cognome%></td>
-										<td><%=Nome%></td>
-										<td><%=Email%></td>
-										<td><%=LivAutorizzazioni%></td>
-										<td><%=Indirizzo%></td>
-										<td><%=Comune%></td>
-										<td><%=Lingua%></td>
-									</tr>
-								<%} %>
-							</table>
-						</div>
-					<%} %>
+					<h5>Ciao <%=nome %></h5>
+					<jsp:include page="<%=scelta %>" ></jsp:include>
 				</div>
 			</main>
 		</div>
