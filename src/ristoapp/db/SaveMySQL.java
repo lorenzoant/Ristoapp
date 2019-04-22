@@ -14,6 +14,7 @@ import ristoapp.bean.PrenotazioniDettagliBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.bean.CarteBean;
 import ristoapp.bean.QueryIntroitiBean;
+import ristoapp.bean.QueryPiattiPrenotatiBean;
 
 public class SaveMySQL {
 
@@ -549,6 +550,59 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPrenotazioniRistoranteTraDueDate()
+	
+	
+	public ArrayList<QueryPiattiPrenotatiBean> prelevaDettagliPrenotazioneConPiatti(int idPrenotazione) throws Exception{ // Vellons
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT * FROM PrenotazioniDettagli INNER JOIN Piatti ON IDFPiatto = IDPiatto"
+					+ " WHERE IDFOrdine = " + idPrenotazione + ";";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			ArrayList<QueryPiattiPrenotatiBean> prenotazioniList = new ArrayList<QueryPiattiPrenotatiBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				QueryPiattiPrenotatiBean p = new QueryPiattiPrenotatiBean();
+				p.setIDPrenotazioneDett(resultList.getInt("IDPrenotazioneDett"));
+				p.setIDFOrdine(resultList.getInt("IDFOrdine"));
+				p.setIDFPiatto(resultList.getInt("IDFPiatto"));
+				p.setPrezzo(resultList.getFloat("Prezzo"));
+				p.setSconto(resultList.getInt("Sconto"));
+				p.setQuantita(resultList.getInt("Quantita"));
+				p.setIDFCatPiatto(resultList.getInt("IDFCatPiatto"));
+				p.setNome(resultList.getString("Nome"));
+				p.setUrl(resultList.getString("Foto"));
+				prenotazioniList.add(p);// Aggiungo al vettore
+			}
+
+			System.out.println("MySQL prelevaDettagliPrenotazioneConPiatti() confirmed");
+			return (ArrayList<QueryPiattiPrenotatiBean>)prenotazioniList;
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL prelevaDettagliPrenotazioneConPiatti() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End prelevaDettagliPrenotazioneConPiatti()
 
 
 	public void inserisciCliente(ClientiBean cliente) throws Exception{

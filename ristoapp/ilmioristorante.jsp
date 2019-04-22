@@ -71,8 +71,8 @@
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>IDF cliente</th>
-				<th>IDF cat prenotazione</th>
+				<th>Codice cliente</th>
+				<th>Tipo prenotazione</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -109,7 +109,7 @@
 						<td><%=p.getIDFCliente()%></td>
 						<td><%=catPren%></td>
 						<td>
-							<form action="visualizzaprenotazione" name="visualizzaDettPrenotazione" method="post">
+							<form action="visualizzaprenotazioneindettaglio" name="visualizzaDettPrenotazione" method="post">
 							<input type="hidden" name="idPrenotazione" value="<%=p.getIDPrenotazione()%>"></input>
 							<input type="hidden" name="whatsend" value="visualizzaDettPrenotazione"></input>
 							<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
@@ -137,8 +137,8 @@
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>IDF cliente</th>
-				<th>IDF cat prenotazione</th>
+				<th>Codice cliente</th>
+				<th>Tipo prenotazione</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -172,7 +172,7 @@
 					<td><%=p.getIDFCliente()%></td>
 					<td><%=catPren%></td>
 					<td>
-						<form action="visualizzaprenotazione" name="visualizzaDettPrenotazione" method="post">
+						<form action="visualizzaprenotazioneindettaglio" name="visualizzaDettPrenotazione" method="post">
 						<input type="hidden" name="idPrenotazione" value="<%=p.getIDPrenotazione()%>"></input>
 						<input type="hidden" name="whatsend" value="visualizzaDettPrenotazione"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
