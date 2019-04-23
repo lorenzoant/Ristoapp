@@ -1028,6 +1028,48 @@ public class SaveMySQL {
 			}
 		}
 	}// End getInfoCarte()
+
+	public void aggiungiCarta(CarteBean carta) throws Exception{
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+
+			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, PAN, CVV, DataScadenza) VALUES ('" +
+						carta.getIDFCatCarta() + "','" +
+						carta.getIDFCliente() + "','" +
+						carta.getPAN() + "','" +
+						carta.getCVV() + "','" +
+						carta.getDataScadenza() + "');";
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+
+			System.out.println("MySQL aggiungiCarta() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL aggiungiCarta() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}//End aggiungiCarta()
 	
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
