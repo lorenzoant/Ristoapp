@@ -1,53 +1,78 @@
+<%@page import="ristoapp.bean.ClientiBean" %>
+<%@page import="ristoapp.bean.RistorantiBean" %>
+<%@page import="ristoapp.bean.QueryIntroitiBean" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="ristoapp.db.SaveMySQL" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Dashboard</title>
-</head>
-<body>
 
-	<!-- Stacco super mitico dopo la tabella per introdurre l'utente ai grafici pewpew, tipo un qualcosa a comparsa ma devo vedere cosa riesco a fare -->
-	<!-- dropdown per decidere il periodo, categoria, regione -->
-	<!-- Magari qualcosa per inviare un messaggio o immagine da mettere in home page -->
-	<form>
-		<select>
-			<!-- coso di albertini -->
-		</select>
-	</form>
-	<h1 style="text-align: center; font-size: 40px; font-weight: bolder; padding-top: 100px; padding-bottom: 100px;">Sono un grafico, pota</h1>
+<%
+	//decido cosa mostrare
+	String scelta = "";
+	if(request.getParameter("scelta") == null) scelta = "listastatistiche.jsp";
+	else scelta = request.getParameter("scelta") + ".jsp";
+ 	/*Boolean Statistiche = Boolean.parseBoolean(request.getParameter("statistiche"));
+	Boolean Introiti = Boolean.parseBoolean(request.getParameter("introiti"));
+	Boolean Listaristoranti = Boolean.parseBoolean(request.getParameter("listaristoranti"));
+	Boolean Listautenti = Boolean.parseBoolean(request.getParameter("listautenti"));
+	if(Introiti == false && Listaristoranti == false && Listautenti == false) Statistiche = true;*/
 	
-	<table style="padding-top: 50px; margin:0px auto;">
-		<tr>
-			<td>
-				<div style="text-align:left;">Account RistoApp creati</div>
-			</td>
-			<td>
-				<!-- Aquì necesitamos el numero de account, necesito una query -->
-				<div style="text-align:right;">dato</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div style="text-align:left;">Crescita rispetto all'ultimo mese</div>
-			</td>
-			<td>
-				<!-- Quiero poner aquì alguna statistica -->
-				<div style="text-align:right;">dato</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div style="text-align:left;">Introiti generati dalle iscrizioni</div>
-			</td>
-			<td >
-				<!-- Otra query -->
-				<div style="text-align:right;">dato</div>
-			</td>
-		</tr>
-	</table>
-		<!-- Creo que tengo che ponèr otras statistica ma necesito primero testar -->
-	
-</body>
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nome = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nome = cli.getNome();
+  		if(cli.getLivAutorizzazioni() != 2){
+  			// L'utente non è un ristoratore
+  			response.sendRedirect("login.jsp");
+  		}
+	}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}
+%>
+
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Dashboard</title>
+		<%@include file="graphicspuntoacca.jsp"%>
+	</head>
+	<body class="text-center">
+		<div class="mdl-layout mdl-js-layout">
+		    <header class="mdl-layout__header mdl-layout__header--waterfall">
+				<div>
+					<table style="width:100%">
+						<tr>
+							<td align="center" style="width:100%">
+								<h2 style="display: inline;vertical-align:middle">Dashboard</h2>
+								<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</header>
+			<div class="mdl-layout__drawer">
+				<h4 style="text-align:center;">Avanzate</h4><hr>
+				<nav class="mdl-navigation">
+					<a class="mdl-navigation__link" href="?scelta=listastatistiche">Statistiche</a>
+					<a class="mdl-navigation__link" href="?scelta=listaintroiti">Introiti</a>
+					<a class="mdl-navigation__link" href="?scelta=listaristoranti">Lista ristoranti</a>
+				    <a class="mdl-navigation__link" href="?scelta=listautenti&ordine=data">Lista utenti</a>
+				    <!--<a class="mdl-navigation__link" href="?listautenti=true&ordine=data">Lista utenti</a>-->
+				    <hr>
+				    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
+			  	</nav>
+			</div>
+			<main class="mdl-layout__content">
+				<div class="page-content">
+					
+					<h3>Ciao <%=nome %></h3>
+					<jsp:include page="<%=scelta %>" ></jsp:include>
+				</div>
+			</main>
+		</div>
+	</body>
 </html>

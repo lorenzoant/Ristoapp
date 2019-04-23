@@ -4,6 +4,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="ristoapp.bean.ClientiBean"%>
 <%@page import="ristoapp.bean.PiattiBean"%>
 <%@page import="ristoapp.bean.RistorantiBean"%>
 <%@page import="ristoapp.bean.PrenotazioniBean"%>
@@ -11,40 +12,68 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
+	<meta http-equiv="Refresh" CONTENT="60; url=ilmioristorantecaricamento.jsp"> 
 	<title>Il mio ristorante</title>
 	<%@include file="graphicspuntoacca.jsp"%>
+	<% 
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome();
+  		if(cli.getLivAutorizzazioni() != 1){
+  			// L'utente non è un ristoratore
+  			response.sendRedirect("login.jsp");
+  		}%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
 </head>
 <body>
 
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header">
-	    <div class="mdl-layout__header-row">
-	      <span class="mdl-layout-title">RistoApp - Il mio ristorante</span>
-	      <div class="mdl-layout-spacer"></div>
-	    </div>
-	  </header>
-	  <div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Menu ristoratore</span>
-	    <nav class="mdl-navigation">
-	      <a class="mdl-navigation__link" href="">Riaggiorna [DA FARE]</a>
-	      <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
-	      <a class="mdl-navigation__link" href="">Modifica ristorante [albertini]</a>
-	      <a class="mdl-navigation__link" href="">Logout [DA FARE]</a>
-	    </nav>
-	  </div>
-	  <div class="mdl-layout__content page">
+	<div class="mdl-layout mdl-js-layout">
+	    <header class="custom-header mdl-layout__header mdl-layout__header">
+			<div>
+				<table style="width:100%">
+					<tr>
+						<td align="center" style="width:100%">
+							<h2 style="display: inline;vertical-align:middle">Il mio ristorante</h2>
+							<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<h4 style="text-align:center;">Menu</h4><hr>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="ilmioristorantecaricamento.jsp">Riaggiorna</a>
+		        <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
+		        <a class="mdl-navigation__link" href="">Modifica ristorante [Albertini]</a>
+		        <a class="mdl-navigation__link" href="">Modifica account [Frigerio]</a>
+			    <hr>
+			    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
+		  	</nav>
+		</div>
+		
+		
+	  	<div class="mdl-layout__content page">
 	  
 	  	<!-- PAGE CONTENT -->
-		<h3>Prenotazioni di oggi</h3>
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+	  	<h3>Ciao <%=nomeLoggato%>, ecco le prenotazioni di oggi</h3>
+	  	<div style="overflow-x: auto;">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<thead>
 			<tr>
 				<th>Data</th>
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>IDF cliente</th>
-				<th>IDF cat prenotazione</th>
+				<th>Codice cliente</th>
+				<th>Tipo prenotazione</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,6 +94,11 @@
 					}else{
 						pagatoOut = "<span style='color:red'>non pagato</span>";
 					}
+					
+					String catPren = "";
+					if(p.getIDFCatPrenotazione() == 1) catPren = "Asporto";
+					else if(p.getIDFCatPrenotazione() == 2) catPren = "Consegna a casa";
+					else if(p.getIDFCatPrenotazione() == 3) catPren = "Al ristorante";
 
 					if(p.getData().equals(today_str)){%>
 						<tr>
@@ -73,7 +107,14 @@
 						<td><%=p.getNumeroPersone()%></td>
 						<td><%=pagatoOut%></td>
 						<td><%=p.getIDFCliente()%></td>
-						<td><%=p.getIDFCatPrenotazione()%></td>
+						<td><%=catPren%></td>
+						<td>
+							<form action="visualizzaprenotazioneindettaglio" name="visualizzaDettPrenotazione" method="post">
+							<input type="hidden" name="idPrenotazione" value="<%=p.getIDPrenotazione()%>"></input>
+							<input type="hidden" name="whatsend" value="visualizzaDettPrenotazione"></input>
+							<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
+							</form>
+						</td>
 						</tr>
 					<%}
 				}
@@ -81,21 +122,24 @@
 			}%>
 		</tbody>
 		</table>
+		</div>
 		<br>
 		
 		
 		
-		
-		<h3>Prenotazioni di questa settimana [Da mettere le date nella query]</h3>
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+		<h3>Tutte le prenotazioni</h3>
+		<!--h3>Prenotazioni di questa settimana [Da mettere le date nella query]</h3-->
+		<div style="overflow-x: auto;">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<thead>
 			<tr>
 				<th>Data</th>
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>IDF cliente</th>
-				<th>IDF cat prenotazione</th>
+				<th>Codice cliente</th>
+				<th>Tipo prenotazione</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -114,6 +158,11 @@
 						pagatoOut = "<span style='color:red'>non pagato</span>";
 					}
 					
+					String catPren = "";
+					if(p.getIDFCatPrenotazione() == 1) catPren = "Asporto";
+					else if(p.getIDFCatPrenotazione() == 2) catPren = "Consegna a casa";
+					else if(p.getIDFCatPrenotazione() == 3) catPren = "Al ristorante";
+					
 					%>
 					<tr>
 					<td><%=p.getData()%></td>
@@ -121,19 +170,28 @@
 					<td><%=p.getNumeroPersone()%></td>
 					<td><%=pagatoOut%></td>
 					<td><%=p.getIDFCliente()%></td>
-					<td><%=p.getIDFCatPrenotazione()%></td>
+					<td><%=catPren%></td>
+					<td>
+						<form action="visualizzaprenotazioneindettaglio" name="visualizzaDettPrenotazione" method="post">
+						<input type="hidden" name="idPrenotazione" value="<%=p.getIDPrenotazione()%>"></input>
+						<input type="hidden" name="whatsend" value="visualizzaDettPrenotazione"></input>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
+						</form>
+					</td>
 					</tr>
 				<%}
 			}%>
 		</tbody>
 		</table>
+		</div>
 		<br>
 		
 		
 		
 		
 		<h3>I miei piatti</h3>
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+		<div style="overflow-x: auto;">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<thead>
 			<tr>
 				<th class="mdl-data-table__cell--non-numeric">Foto</th>
@@ -179,7 +237,7 @@
 			}%>
 		</tbody>
 		</table>
-	    
+	    </div>
 	    
 	</div>
   </div>

@@ -1,18 +1,21 @@
 package ristoapp.bean;
 
-
-public class PrenotazioniDettagliBean implements java.io.Serializable{
-
-	private static final long serialVersionUID = 8905967347413230537L;
-
+public class QueryPiattiPrenotatiBean {
+	
+	//Da tabella PrenotazioniDettagli
 	private int IDPrenotazioneDett;
 	private int IDFOrdine;
 	private int IDFPiatto;
-	private double Prezzo;
+	private float Prezzo;
 	private int Sconto;
 	private int Quantita;
-		
-	//Getter e Setter
+	
+	//Da tabelle Piatti
+	private int IDFCatPiatto;
+	private String Nome;
+	private String Url;
+	
+	
 	public int getIDPrenotazioneDett() {
 		return IDPrenotazioneDett;
 	}
@@ -31,10 +34,10 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	public void setIDFPiatto(int iDFPiatto) {
 		IDFPiatto = iDFPiatto;
 	}
-	public double getPrezzo() {
+	public float getPrezzo() {
 		return Prezzo;
 	}
-	public void setPrezzo(double prezzo) {
+	public void setPrezzo(float prezzo) {
 		Prezzo = prezzo;
 	}
 	public int getSconto() {
@@ -49,4 +52,23 @@ public class PrenotazioniDettagliBean implements java.io.Serializable{
 	public void setQuantita(int quantita) {
 		Quantita = quantita;
 	}
+	public int getIDFCatPiatto() {
+		return IDFCatPiatto;
+	}
+	public void setIDFCatPiatto(int iDFCatPiatto) {
+		IDFCatPiatto = iDFCatPiatto;
+	}
+	public String getNome() {
+		return Nome;
+	}
+	public void setNome(String nome) {
+		Nome = nome;
+	}
+	public String getUrl() {
+		return Url;
+	}
+	public void setUrl(String url) {
+		Url = url;
+	}
+
 }

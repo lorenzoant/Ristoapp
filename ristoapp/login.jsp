@@ -1,6 +1,28 @@
+<%@page import="ristoapp.bean.ClientiBean" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+
+<%
+//controllo se non è già loggato
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		
+		if(cli.getLivAutorizzazioni() == 0){
+			// L'utente non è un ristoratore
+			response.sendRedirect("bacheca.jsp");
+		}
+		else if(cli.getLivAutorizzazioni() == 1){
+			// L'utente è un ristoratore
+			response.sendRedirect("ilmioristorante.jsp");
+		}
+		else if(cli.getLivAutorizzazioni() == 2){
+			// L'utente è un amministratore
+			response.sendRedirect("dashboard.jsp");
+		}
+	}
+%>
+
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
@@ -10,20 +32,15 @@
 	<body class="text-center">
 		<center>
 			<div class="mdl-layout__header">
-				<center>
-					<table>
-						<tr>
-							<td>
-								<h2>RistoApp</h2>
-							</td>
-							<td>
-								<img class="logo" src="MEDIA/logo.png"/>
-							</td>
-						</tr>
-					</center>
+				<table style="width:100%">
+					<tr>
+						<td align="center" style="width:100%">
+							<h2 style="display: inline;vertical-align:middle">RistoApp</h2>
+							<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
+						</td>
+					</tr>
 				</table>
 			</div>
-			
 			<form action = "loginservlet" name = "login" method ="post">
 				<table style="text-align:center;">
 					<tr>
