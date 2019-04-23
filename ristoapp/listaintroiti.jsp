@@ -44,7 +44,7 @@
 				for(int i = 0; i < 4; i++){
 					informazioni = prendiinfo.mostraIntroiti(tempo[i], dateFormat.format(date)); //prendo le info degli introiti
 					%>
-					<tr><td colspan="4" style="text-align:center"><%=tempo[i] %></td></tr>
+					<tr><td colspan="4" style="text-align:center; font-weight: bold;"><%=tempo[i] %></td></tr>
 					<%
 					for(QueryIntroitiBean lista:informazioni){
 						int IDRistorante = lista.getIDRistorante();

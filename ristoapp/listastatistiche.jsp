@@ -138,10 +138,10 @@
 		<h5><a href="?scelta=listastatistiche">Statistiche</a></h5>
 		<hr>
 		<h5>Prenotazioni per comune</h5>
-	    <div id="piechart_3d" style="width: 80%; height: 400px; display: block; margin: 0 auto;"></div>
+	    <div id="piechart_3d" style="width: 80%; height: auto; display: block; margin: 0 auto;"></div>
 	    <hr>
 	    <h5>Registrazioni per mese/anno</h5>
 	    totale registrazioni = <%=totale %>
-	    <div id="columnchart_material" style="width: 80%; height: 400px; display: block; margin: 0 auto;"></div>
+	    <div id="columnchart_material" style="width: 80%; height: auto; display: block; margin: 0 auto;"></div>
 	</body>
 </html>
