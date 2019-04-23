@@ -955,7 +955,7 @@ public class SaveMySQL {
 
 			// Creo stringa sql
 			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = 'TRUE'," +
+					"StatoPagamento = 'true'," +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
