@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
@@ -15,6 +17,7 @@ import ristoapp.bean.RistorantiBean;
 import ristoapp.bean.CarteBean;
 import ristoapp.bean.QueryIntroitiBean;
 import ristoapp.bean.QueryPiattiPrenotatiBean;
+import ristoapp.bean.QueryStatisticheBean;
 
 public class SaveMySQL {
 
@@ -618,7 +621,10 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 			
 			// Creo stringa sql
-			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass) VALUES('" +
+			Date data = new Date();
+			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+			
+			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
 					cliente.getIDCliente() + "','" + 
 					cliente.getEmail() + "','" + 
 					cliente.getPassHash() + "','" + 
@@ -632,7 +638,7 @@ public class SaveMySQL {
 					else sql += "0','"; 
 					if (cliente.getGeolocalizzazione()) sql += "1','";
 					else sql += "0',";
-			sql = sql + cliente.getCodicePass() + ")";
+			sql = sql + cliente.getCodicePass() + ",'"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -947,7 +953,7 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-
+			
 			// Creo stringa sql
 			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" +
 					ristorante.getIDFCatCucina() + "','" +
@@ -972,6 +978,7 @@ public class SaveMySQL {
 					else sql += "0','";
 					if(ristorante.getSerParcheggio()) sql += "1');";
 					else sql += "0');";
+					
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -1179,7 +1186,7 @@ public class SaveMySQL {
 	}// END informazioniClienti()
 	
 	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE PRENOTAZIONI PER RISTORANTE
-	public ArrayList<QueryIntroitiBean> mostraIntroiti(String tempo) throws Exception{
+	public ArrayList<QueryIntroitiBean> mostraIntroiti(String tempo, String data) throws Exception{
 	
 		Statement stmt = null;
 		Connection conn = null;
@@ -1198,9 +1205,10 @@ public class SaveMySQL {
 					+ " LEFT JOIN PrenotazioniDettagli ON PrenotazioniDettagli.IDFOrdine = Prenotazioni.IDPrenotazione"
 					+ " WHERE Prenotazioni.StatoPagamento = 1";
 			if(tempo == "totale") sql = sql + " GROUP BY Ristoranti.IDRistorante";
-			else if(tempo == "oggi") sql = sql + " AND DAY(Prenotazioni.Data) = DAY(NOW()) AND MONTH(Prenotazioni.Data) = MONTH(NOW()) AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
-			else if(tempo == "mese") sql = sql +  " AND MONTH(Prenotazioni.Data) = MONTH(NOW()) AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
-			else if(tempo == "anno") sql = sql +  " AND YEAR(Prenotazioni.Data) = YEAR(NOW()) GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "oggi") sql = sql + " AND DAY(Prenotazioni.Data) = DAY('"+data+"') AND MONTH(Prenotazioni.Data) = MONTH('"+data+"') AND YEAR(Prenotazioni.Data) = YEAR('"+data+"') GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "mese") sql = sql +  " AND MONTH(Prenotazioni.Data) = MONTH('"+data+"') AND YEAR(Prenotazioni.Data) = YEAR('"+data+"') GROUP BY Ristoranti.IDRistorante";
+			else if(tempo == "anno") sql = sql +  " AND YEAR(Prenotazioni.Data) = YEAR('"+data+"') GROUP BY Ristoranti.IDRistorante";
+			//System.out.println(sql);
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
 	
@@ -1235,4 +1243,93 @@ public class SaveMySQL {
 			}
 		}
 	}// END mostraIntroiti()
+
+	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE STATISTICHE DI RISTOAPP
+	public ArrayList<QueryStatisticheBean> ottieniStatistiche(String informazioni) throws Exception{
+	
+		Statement stmt = null;
+		Connection conn = null;
+	
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+	
+			// Creo stringa sql
+			String sql = "";
+			//System.out.println("informazioni="+informazioni);
+			if(informazioni == "prenotazioni") {//numero di prenotazioni per comune del ristorante
+				sql = "SELECT Comuni.Nome, COUNT(Prenotazioni.IDPrenotazione) AS NumPrenotazioni "
+					+ "FROM Comuni "
+					+ "INNER JOIN Ristoranti ON Comuni.Nome = Ristoranti.Comune "
+					+ "INNER JOIN Prenotazioni ON Ristoranti.IDRistorante = Prenotazioni.IDFRistorante "
+					+ "GROUP BY Comuni.Nome";
+			}
+			else if(informazioni == "dataprimaregistrazione") {//data prima registrazione
+				sql = "SELECT DataRegistrazione "
+					+ "FROM Clienti "
+					+ "WHERE Clienti.LivAutorizzazioni != 2 "
+					+ "ORDER BY DataRegistrazione ASC "
+					+ "LIMIT 1";
+			}
+			else if(informazioni == "dataultimaregistrazione") {//data ultima registrazione
+				sql = "SELECT DataRegistrazione "
+					+ "FROM Clienti "
+					+ "WHERE Clienti.LivAutorizzazioni != 2 "
+					+ "ORDER BY DataRegistrazione DESC "
+					+ "LIMIT 1";
+			}
+			else if(informazioni == "registrazioniclienti") {//numero di registrazioni clienti per mese/anno
+				sql = "SELECT MONTH(DataRegistrazione) AS mese, YEAR(DataRegistrazione) AS anno, COUNT(IDCliente) AS NumRegistrazioni "
+					+ "FROM Clienti "
+					+ "WHERE LivAutorizzazioni = 0 "
+					+ "GROUP BY mese, anno";
+			}
+			else if(informazioni == "registrazioniristoranti") {//numero di registrazioni ristoranti per mese/anno
+				sql = "SELECT MONTH(DataRegistrazione) AS mese, YEAR(DataRegistrazione) AS anno, COUNT(IDCliente) AS NumRegistrazioni "
+					+ "FROM Clienti "
+					+ "WHERE LivAutorizzazioni = 1 "
+					+ "GROUP BY mese, anno";
+			}
+		
+			//System.out.println(sql);
+			
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+	
+			// Estraggo dati
+			ArrayList<QueryStatisticheBean> statistiche = new ArrayList<QueryStatisticheBean>();
+	
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				QueryStatisticheBean info = new QueryStatisticheBean();
+				if(informazioni == "prenotazioni") {
+					if(resultList.getString("Nome") != null)info.setComune(resultList.getString("Nome"));//nome del comune
+					if(resultList.getString("NumPrenotazioni") != null)info.setNumPrenotazioni(Integer.parseInt(resultList.getString("NumPrenotazioni")));//numero di prenotazioni
+				}
+				if(informazioni == "dataprimaregistrazione" || informazioni == "dataultimaregistrazione") {
+					if(resultList.getDate("DataRegistrazione") != null)info.setDataRegistrazione(resultList.getDate("DataRegistrazione"));//data prima o ultima registrazione
+				}
+				if(informazioni == "registrazioniclienti" || informazioni == "registrazioniristoranti") {
+					if(resultList.getString("mese") != null)info.setMese(Integer.parseInt(resultList.getString("mese")));//mese registrazione
+					if(resultList.getString("anno") != null)info.setAnno(Integer.parseInt(resultList.getString("anno")));//anno registrazione
+					if(resultList.getString("NumRegistrazioni") != null)info.setNumRegistrazioni(Integer.parseInt(resultList.getString("NumRegistrazioni")));//data prima o ultima registrazione
+				}
+				statistiche.add(info);// Aggiungo al vettore
+			}
+			return (ArrayList<QueryStatisticheBean>) statistiche;
+		}catch (SQLException e) {
+			System.out.println("MySQL mostraIntroiti() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END ottieniStatistiche()
 }

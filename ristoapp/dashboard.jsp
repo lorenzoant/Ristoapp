@@ -42,7 +42,7 @@
 	</head>
 	<body class="text-center">
 		<div class="mdl-layout mdl-js-layout">
-		    <header class="custom-header mdl-layout__header mdl-layout__header--waterfall">
+		    <header class="mdl-layout__header mdl-layout__header--waterfall">
 				<div>
 					<table style="width:100%">
 						<tr>
@@ -69,7 +69,7 @@
 			<main class="mdl-layout__content">
 				<div class="page-content">
 					
-					<h5>Ciao <%=nome %></h5>
+					<h3>Ciao <%=nome %></h3>
 					<jsp:include page="<%=scelta %>" ></jsp:include>
 				</div>
 			</main>

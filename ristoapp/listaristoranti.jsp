@@ -19,24 +19,28 @@
 	<body>
 		<h5><a href="?scelta=listaristoranti">Lista ristoranti</a></h5>
 		<div style="overflow-x:auto;">
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Nome</th>
-					<th>Categoria</th>
-					<th>Indirizzo</th>
-					<th>Telefono</th>
-					<th>Email</th>
-					<th>Comune</th>
-					<th>Descrizione</th>
-					<th>Climatizzazione</th>
-					<th>Animali</th>
-					<th>Wifi</th>
-					<th>Disabili</th>
-					<th>Parcheggio</th>
-				</tr>
+			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp centratabella" style="width:80%;"><!-- <table border="1" class="centratabella" style="width:80%;"> -->
+				<!-- <tr style="font-size: 18px;"> -->
+				<thead>
+				  	<tr>
+					    <th class="mdl-data-table__cell--non-numeric" style="text-align:right">Nome</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Categoria</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Indirizzo</th>
+						<th style="text-align:right">Telefono</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Email</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Comune</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Descrizione</th>
+						<th class="mdl-data-table__cell--non-numeric">Climatizzazione</th>
+						<th class="mdl-data-table__cell--non-numeric">Animali</th>
+						<th class="mdl-data-table__cell--non-numeric">Wifi</th>
+						<th class="mdl-data-table__cell--non-numeric">Disabili</th>
+						<th class="mdl-data-table__cell--non-numeric">Parcheggio</th>
+					</tr>
+				</thead>
+				<tbody>
 				<% 
 				ArrayList<RistorantiBean> listaristoranti = new ArrayList <RistorantiBean>(); //oggetto ristorante
-				SaveMySQL prendi = new SaveMySQL(); //oggeto save
+				SaveMySQL prendi = new SaveMySQL();
 				listaristoranti = prendi.InformazioniRistorante(); //prendo tutti i ristoranti
 				
 				for(RistorantiBean lista:listaristoranti){
@@ -98,6 +102,7 @@
 					<%}
 					}
 				}%>
+				</tbody>
 			</table>
 			<%
 			if(request.getParameter("ristorante") != null){//mostro i ricavi del ristorante selezionato

@@ -26,16 +26,21 @@
 			<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?scelta=listautenti&ordine=LivAutorizzazioni'">Autorizzazione</button>
 			<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?scelta=listautenti&ordine=Comune'">Comune</button>
 			<button class="mdl-button mdl-js-button mdl-button--primary" onclick="window.location='?scelta=listautenti&ordine=Lingua'">Lingua</button><br/><br/>
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Cognome</th>
-					<th>Nome</th>
-					<th>Email</th>
-					<th>Livello Autorizzazioni</th>
-					<th>Indirizzo</th>
-					<th>Comune</th>
-					<th>Lingua</th>
-				</tr>
+				  
+			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp centratabella" style="width:80%;"><!-- <table border="1" class="centratabella" style="width:80%;"> -->
+				<!-- <tr style="font-size: 18px;"> -->
+				<thead>
+				  	<tr>
+					    <th class="mdl-data-table__cell--non-numeric" style="text-align:right">Cognome</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Nome</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Email</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Livello Autorizzazioni</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Indirizzo</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Comune</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Lingua</th>
+					</tr>
+				</thead>
+				<tbody>
 				<%
 				ArrayList<ClientiBean> listautenti = new ArrayList <ClientiBean>(); //lista degli utenti
 				SaveMySQL prendiutenti = new SaveMySQL(); //per chiamare la funzione
@@ -65,6 +70,7 @@
 						<td><%=Lingua%></td>
 					</tr>
 				<%} %>
+				</tbody>
 			</table>
 		</div>
 	</body>

@@ -1,6 +1,8 @@
 <%@page import="ristoapp.bean.QueryIntroitiBean" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="ristoapp.db.SaveMySQL" %>
+<%@page import="java.util.Date" %>
+<%@page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,35 +20,39 @@
 	</head>
 	<body>
 		<h5><a href="?scelta=listaintroiti">Introiti</a></h5>
+		<%
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		//System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+		%>
 		<div style="overflow-x:auto;">
-			totale
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Nome</th>
-					<th>Comune</th>
-					<th>Stelle</th>
-					<th>Ricavi</th>
-				</tr>
+			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp centratabella" style="width:80%;"><!-- <table border="1" class="centratabella" style="width:80%;"> -->
+				<!-- <tr style="font-size: 18px;"> -->
+				<thead>
+				  	<tr>
+					    <th class="mdl-data-table__cell--non-numeric" style="text-align:right">Nome</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Comune</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Stelle</th>
+						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Ricavi</th>
+					</tr>
+				</thead>
+				<tbody>
 				<%
 				ArrayList<QueryIntroitiBean> informazioni = new ArrayList <QueryIntroitiBean>(); //lista delle info
 				SaveMySQL prendiinfo = new SaveMySQL(); //per chiamare la funzione
-				informazioni = prendiinfo.mostraIntroiti("totale"); //prendo le info degli introiti
-				for(QueryIntroitiBean lista:informazioni){
-					int IDRistorante = lista.getIDRistorante();
-					String NomeRistorante = lista.getNome();
-					String ComuneRistorante = lista.getComune();
-					double Stelle = lista.getStelle();
-					double Ricavi = lista.getRicavi();
-					if(request.getParameter("ristorante") == null){%>
-						<tr>
-							<td><%=NomeRistorante%></td>
-							<td><%=ComuneRistorante%></td>
-							<td><%=Stelle%>&#9733;</td>
-							<td>&euro; <%=Ricavi%></td>
-						</tr>
-					<%}
-					else{//nel caso siamo nell'area "lista ristoranti"
-						if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
+				String[] tempo = {"totale", "oggi", "mese", "anno"};
+				for(int i = 0; i < 4; i++){
+					informazioni = prendiinfo.mostraIntroiti(tempo[i], dateFormat.format(date)); //prendo le info degli introiti
+					%>
+					<tr><td colspan="4" style="text-align:center"><%=tempo[i] %></td></tr>
+					<%
+					for(QueryIntroitiBean lista:informazioni){
+						int IDRistorante = lista.getIDRistorante();
+						String NomeRistorante = lista.getNome();
+						String ComuneRistorante = lista.getComune();
+						double Stelle = lista.getStelle();
+						double Ricavi = lista.getRicavi();
+						if(request.getParameter("ristorante") == null){%>
 							<tr>
 								<td><%=NomeRistorante%></td>
 								<td><%=ComuneRistorante%></td>
@@ -54,116 +60,19 @@
 								<td>&euro; <%=Ricavi%></td>
 							</tr>
 						<%}
-					}
-				} %>
-			</table>
-			<br/>oggi
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Nome</th>
-					<th>Comune</th>
-					<th>Stelle</th>
-					<th>Ricavi</th>
-				</tr>
-				<%
-				informazioni = prendiinfo.mostraIntroiti("oggi"); //prendo le info degli introiti
-				for(QueryIntroitiBean lista:informazioni){
-					int IDRistorante = lista.getIDRistorante();
-					String NomeRistorante = lista.getNome();
-					String ComuneRistorante = lista.getComune();
-					double Stelle = lista.getStelle();
-					double Ricavi = lista.getRicavi();
-					if(request.getParameter("ristorante") == null){%>
-						<tr>
-							<td><%=NomeRistorante%></td>
-							<td><%=ComuneRistorante%></td>
-							<td><%=Stelle%>&#9733;</td>
-							<td>&euro; <%=Ricavi%></td>
-						</tr>
-					<%}
-					else{//nel caso siamo nell'area "lista ristoranti"
-						if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
-							<tr>
-								<td><%=NomeRistorante%></td>
-								<td><%=ComuneRistorante%></td>
-								<td><%=Stelle%>&#9733;</td>
-								<td>&euro; <%=Ricavi%></td>
-							</tr>
-						<%}
-					}
-				} %>
-			</table>
-			<br/>questo mese
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Nome</th>
-					<th>Comune</th>
-					<th>Stelle</th>
-					<th>Ricavi</th>
-				</tr>
-				<%
-				informazioni = prendiinfo.mostraIntroiti("mese"); //prendo le info degli introiti
-				for(QueryIntroitiBean lista:informazioni){
-					int IDRistorante = lista.getIDRistorante();
-					String NomeRistorante = lista.getNome();
-					String ComuneRistorante = lista.getComune();
-					double Stelle = lista.getStelle();
-					double Ricavi = lista.getRicavi();
-					if(request.getParameter("ristorante") == null){%>
-						<tr>
-							<td><%=NomeRistorante%></td>
-							<td><%=ComuneRistorante%></td>
-							<td><%=Stelle%>&#9733;</td>
-							<td>&euro; <%=Ricavi%></td>
-						</tr>
-					<%}
-					else{//nel caso siamo nell'area "lista ristoranti"
-						if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
-							<tr>
-								<td><%=NomeRistorante%></td>
-								<td><%=ComuneRistorante%></td>
-								<td><%=Stelle%>&#9733;</td>
-								<td>&euro; <%=Ricavi%></td>
-							</tr>
-						<%}
-					}
-				} %>
-			</table>
-			<br/>quest'anno
-			<table border="1" class="centratabella" style="width:80%;">
-				<tr style="font-size: 18px;">
-					<th>Nome</th>
-					<th>Comune</th>
-					<th>Stelle</th>
-					<th>Ricavi</th>
-				</tr>
-				<%
-				informazioni = prendiinfo.mostraIntroiti("anno"); //prendo le info degli introiti
-				for(QueryIntroitiBean lista:informazioni){
-					int IDRistorante = lista.getIDRistorante();
-					String NomeRistorante = lista.getNome();
-					String ComuneRistorante = lista.getComune();
-					double Stelle = lista.getStelle();
-					double Ricavi = lista.getRicavi();
-					if(request.getParameter("ristorante") == null){%>
-						<tr>
-							<td><%=NomeRistorante%></td>
-							<td><%=ComuneRistorante%></td>
-							<td><%=Stelle%>&#9733;</td>
-							<td>&euro; <%=Ricavi%></td>
-						</tr>
-					<%}
-					else{//nel caso siamo nell'area "lista ristoranti"
-						if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
-							<tr>
-								<td><%=NomeRistorante%></td>
-								<td><%=ComuneRistorante%></td>
-								<td><%=Stelle%>&#9733;</td>
-								<td>&euro; <%=Ricavi%></td>
-							</tr>
-						<%}
-					}
-				} %>
+						else{//nel caso siamo nell'area "lista ristoranti"
+							if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
+								<tr>
+									<td><%=NomeRistorante%></td>
+									<td><%=ComuneRistorante%></td>
+									<td><%=Stelle%>&#9733;</td>
+									<td>&euro; <%=Ricavi%></td>
+								</tr>
+							<%}
+						}
+					} 
+				}%>
+				</tbody>
 			</table>
 		</div>
 	</body>

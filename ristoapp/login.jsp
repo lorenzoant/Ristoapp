@@ -1,6 +1,28 @@
+<%@page import="ristoapp.bean.ClientiBean" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+
+<%
+//controllo se non è già loggato
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		
+		if(cli.getLivAutorizzazioni() == 0){
+			// L'utente non è un ristoratore
+			response.sendRedirect("bacheca.jsp");
+		}
+		else if(cli.getLivAutorizzazioni() == 1){
+			// L'utente è un ristoratore
+			response.sendRedirect("ilmioristorante.jsp");
+		}
+		else if(cli.getLivAutorizzazioni() == 2){
+			// L'utente è un amministratore
+			response.sendRedirect("dashboard.jsp");
+		}
+	}
+%>
+
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
