@@ -980,7 +980,55 @@ public class SaveMySQL {
 			}
 		}
 	}// End setPagamento()
+	
+	public ArrayList<CarteBean> getInfoCarte(ClientiBean cliente) throws Exception{
 
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT * FROM Carte WHERE IDFCliente = " + cliente.getIDCliente() + ";";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			ArrayList<CarteBean> carteList = new ArrayList<CarteBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				CarteBean carta = new CarteBean();
+				carta.setIDCarta(resultList.getInt("IDCarta"));
+				carta.setIDFCatCarta(resultList.getInt("IDFCatCarta"));
+				//carta.setIDFCliente(resultList.getInt("IDFCliete"));
+				carta.setPAN(resultList.getInt("PAN"));
+				carta.setCVV(resultList.getInt("CVV"));
+				carta.setDataScadenza(resultList.getDataScadenza("DataScadenza"));
+				carteList.add(prenotazione);// Aggiungo al vettore
+			}
+
+			System.out.println("MySQL getInfoCarte() confirmed");
+			return (ArrayList<CarteBean>)carteList;
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL getInfoCarte() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End getInfoCarte()
+	
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
