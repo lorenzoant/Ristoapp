@@ -26,15 +26,15 @@
 					    <th class="mdl-data-table__cell--non-numeric" style="text-align:right">Nome</th>
 						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Categoria</th>
 						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Indirizzo</th>
-						<th style="text-align:right">Telefono</th>
+						<th style="text-align:right">Telefono &#9742;</th>
 						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Email</th>
 						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Comune</th>
 						<th class="mdl-data-table__cell--non-numeric" style="text-align:right">Descrizione</th>
-						<th class="mdl-data-table__cell--non-numeric">Climatizzazione</th>
-						<th class="mdl-data-table__cell--non-numeric">Animali</th>
-						<th class="mdl-data-table__cell--non-numeric">Wifi</th>
-						<th class="mdl-data-table__cell--non-numeric">Disabili</th>
-						<th class="mdl-data-table__cell--non-numeric">Parcheggio</th>
+						<th class="mdl-data-table__cell--non-numeric">Climatizzazione &#10052;</th>
+						<th class="mdl-data-table__cell--non-numeric">Animali &#128021</th>
+						<th class="mdl-data-table__cell--non-numeric">Wifi &#xe63e;</th>
+						<th class="mdl-data-table__cell--non-numeric">Disabili &#9855;</th>
+						<th class="mdl-data-table__cell--non-numeric">Parcheggio &#9933;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,16 +55,16 @@
 					String Email = lista.getEmail();
 					String Comune = lista.getComune();
 					String Descrizione = lista.getDescrizione();
-					String SerClimatizzazione = "no";
-					if(lista.getSerClimatizzazione() == true) SerClimatizzazione = "si";
-					String SerAnimali = "no";
-					if(lista.getSerAnimali() == true) SerAnimali = "si";
-					String SerWifi = "no";
-					if(lista.getSerWifi() == true) SerWifi = "si";
-					String SerDisabili = "no";
-					if(lista.getSerDisabili() == true) SerDisabili = "si";
-					String SerParcheggio = "no";
-					if(lista.getSerParcheggio() == true) SerParcheggio = "si";
+					String SerClimatizzazione = "&#10008;";
+					if(lista.getSerClimatizzazione() == true) SerClimatizzazione = "&#10004;";
+					String SerAnimali = "&#10008;";
+					if(lista.getSerAnimali() == true) SerAnimali = "&#10004;";
+					String SerWifi = "&#10008;";
+					if(lista.getSerWifi() == true) SerWifi = "&#10004;";
+					String SerDisabili = "&#10008;";
+					if(lista.getSerDisabili() == true) SerDisabili = "&#10004;";
+					String SerParcheggio = "&#10008;";
+					if(lista.getSerParcheggio() == true) SerParcheggio = "&#10004;";
 				
 					if(request.getParameter("idristo") == null){%>
 						<tr>
