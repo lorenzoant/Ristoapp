@@ -8,21 +8,6 @@
 	<meta charset="ISO-8859-1">
 	<title>Modifica account</title>
 	<%@include file="graphicspuntoacca.jsp"%>
-	<% 
-	// Controllo se chi accede a questa pagina ha l'autorizzazione
-	String nomeLoggato = "";
-	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
-		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-		nomeLoggato = cli.getNome();
-  		if(cli.getLivAutorizzazioni() != 1){
-  			// L'utente non è un ristoratore
-  			response.sendRedirect("login.jsp");
-  		}%>
-	<%}
-	else{
-		// L'utente non  loggato
-		response.sendRedirect("login.jsp");
-	}%>
 </head>
 <body class="text-center">
 
