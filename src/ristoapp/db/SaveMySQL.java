@@ -1092,7 +1092,8 @@ public class SaveMySQL {
 				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
 				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
 				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
-
+				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
+				
 				ristorante.add(ristoset);// Aggiungo al vettore
 			}
 
