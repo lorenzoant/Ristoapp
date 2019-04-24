@@ -1007,8 +1007,8 @@ public class SaveMySQL {
 				//carta.setIDFCliente(resultList.getInt("IDFCliete"));
 				carta.setPAN(resultList.getInt("PAN"));
 				carta.setCVV(resultList.getInt("CVV"));
-				carta.setDataScadenza(resultList.getDataScadenza("DataScadenza"));
-				carteList.add(prenotazione);// Aggiungo al vettore
+				carta.setDataScadenza(resultList.getDate("DataScadenza"));
+				carteList.add(carta);// Aggiungo al vettore
 			}
 
 			System.out.println("MySQL getInfoCarte() confirmed");
