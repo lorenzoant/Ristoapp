@@ -4,20 +4,60 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Nuova prenotazione</title>
+				<meta name="viewport" content="width=device-width">
+			<title>RistoApp-Nuova Prenotazione </title>
+
+			<%@include file="graphicspuntoacca.jsp"%>
+
+			<div class="mdl-layout__header">
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>RistoApp - Prenotazione</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
+			</div>
 </head>
-<body>
+<body class="text-center">
+<center>
 <form action="nuovaprenotazioneservlet" name="nuovaprenotazione" method="POST">
-		Data<input name="data" value="" type="date"/><br>
-		Ora<input name="ora" value="" type="time"/><br>
-		Posti<input name="posti" value="" type="number"/><br>
-		Categoria<select name="categoria">
+
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		<input class="mdl-textfield__input" name="data" value="" type="date" required/>
+		<label class="mdl-textfield__label" for="data">Data</label>
+		</div><br>
+		
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		<input class="mdl-textfield__input" name="ora" value="" type="time" required/>
+		<label class="mdl-textfield__label" for="ora">Ora</label>
+		</div><br>
+		
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		<input class="mdl-textfield__input" name="posti" value="" type="number" required/>
+		<label class="mdl-textfield__label" for="posti">Posti</label>
+		</div><br>
+		
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		<select class="mdl-textfield__input" name="categoria">
 			<option value="1">Asporto</option>
 			<option value="2">Consegna a casa</option>
 			<option value="3">Al ristorante</option>
 		</select>
-		<input name="whatsend" value="creaprenotazione" type="hidden">
-		<input value="Crea la prenotazione" type="submit">	
+		<label class="mdl-textfield__label" for="categoria">Categoria</label>
+		</div><br>
+		
+		<input name="whatsend" value="creaprenotazione" type="hidden"><br>
+		
+		<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Crea Prenotazione"/><br><br>
+		
 	</form>
+	</center>
 </body>
+
 </html>

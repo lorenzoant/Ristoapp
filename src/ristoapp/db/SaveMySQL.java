@@ -616,7 +616,7 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
@@ -672,21 +672,25 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
 			String sql = "UPDATE Clienti SET " +
-					"Email = '" + cliente.getEmail()+ "'," +
-					"PassHash = '" + cliente.getPassHash()+ "'," +
-					"Nome = '" + cliente.getNome()+ "'," +
-					"Cognome = '" + cliente.getCognome()+ "'," +
-					"Indirizzo = '" + cliente.getIndirizzo()+ "'," +
-					"Comune = '" + cliente.getComune()+ "'," +
-					"NotificaEmail = '" + cliente.getNotificaEmail()+ "'," +
-					"Geolocalizzazione = '" + cliente.getGeolocalizzazione()+ "'," +
-					"WHERE IDCliente = '" + cliente.getIDCliente() + "'";
+					+ "Email = '" + cliente.getEmail()
+					+ ", PassHash = '" + cliente.getPassHash()
+					+ "',Nome = '" + cliente.getNome()
+					+ "',Cognome = '" + cliente.getCognome()
+					+ "',Indirizzo = '" + cliente.getIndirizzo()
+					+ "',Comune = '" + cliente.getComune()
+					+ "',NotificaEmail = '" + 
+					if(cliente.getNotificaEmail()) sql += "1',";
+					else sql += "0',";
+					+ "',Geolocalizzazione = '" + 
+					if(cliente.getGeolocalizzazione()) sql += "1',";
+					else sql += "0',";	
+					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -710,7 +714,6 @@ public class SaveMySQL {
 			}
 		}
 	}// End modificaCliente()
-
 
 	public void eliminaCliente(ClientiBean cliente) throws Exception{
 
@@ -955,7 +958,7 @@ public class SaveMySQL {
 
 			// Creo stringa sql
 			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = 'TRUE'," +
+					"StatoPagamento = 'true'," +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
@@ -980,7 +983,97 @@ public class SaveMySQL {
 			}
 		}
 	}// End setPagamento()
+	
+	public ArrayList<CarteBean> getInfoCarte(ClientiBean cliente) throws Exception{
 
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT * FROM Carte WHERE IDFCliente = " + cliente.getIDCliente() + ";";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			ArrayList<CarteBean> carteList = new ArrayList<CarteBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				CarteBean carta = new CarteBean();
+				carta.setIDCarta(resultList.getInt("IDCarta"));
+				carta.setIDFCatCarta(resultList.getInt("IDFCatCarta"));
+				//carta.setIDFCliente(resultList.getInt("IDFCliete"));
+				carta.setPAN(resultList.getInt("PAN"));
+				carta.setCVV(resultList.getInt("CVV"));
+				carta.setDataScadenza(resultList.getDataScadenza("DataScadenza"));
+				carteList.add(prenotazione);// Aggiungo al vettore
+			}
+
+			System.out.println("MySQL getInfoCarte() confirmed");
+			return (ArrayList<CarteBean>)carteList;
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL getInfoCarte() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End getInfoCarte()
+
+	public void aggiungiCarta(CarteBean carta) throws Exception{
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+
+			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, PAN, CVV, DataScadenza) VALUES ('" +
+						carta.getIDFCatCarta() + "','" +
+						carta.getIDFCliente() + "','" +
+						carta.getPAN() + "','" +
+						carta.getCVV() + "','" +
+						carta.getDataScadenza() + "');";
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+
+			System.out.println("MySQL aggiungiCarta() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL aggiungiCarta() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}//End aggiungiCarta()
+	
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
