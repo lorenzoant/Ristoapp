@@ -616,7 +616,7 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
@@ -672,21 +672,25 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
+			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
 			String sql = "UPDATE Clienti SET " +
-					"Email = '" + cliente.getEmail()+ "'," +
-					"PassHash = '" + cliente.getPassHash()+ "'," +
-					"Nome = '" + cliente.getNome()+ "'," +
-					"Cognome = '" + cliente.getCognome()+ "'," +
-					"Indirizzo = '" + cliente.getIndirizzo()+ "'," +
-					"Comune = '" + cliente.getComune()+ "'," +
-					"NotificaEmail = '" + cliente.getNotificaEmail()+ "'," +
-					"Geolocalizzazione = '" + cliente.getGeolocalizzazione()+ "'," +
-					"WHERE IDCliente = '" + cliente.getIDCliente() + "'";
+					+ "Email = '" + cliente.getEmail()
+					+ ", PassHash = '" + cliente.getPassHash()
+					+ "',Nome = '" + cliente.getNome()
+					+ "',Cognome = '" + cliente.getCognome()
+					+ "',Indirizzo = '" + cliente.getIndirizzo()
+					+ "',Comune = '" + cliente.getComune()
+					+ "',NotificaEmail = '" + 
+					if(cliente.getNotificaEmail()) sql += "1',";
+					else sql += "0',";
+					+ "',Geolocalizzazione = '" + 
+					if(cliente.getGeolocalizzazione()) sql += "1',";
+					else sql += "0',";	
+					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -710,7 +714,6 @@ public class SaveMySQL {
 			}
 		}
 	}// End modificaCliente()
-
 
 	public void eliminaCliente(ClientiBean cliente) throws Exception{
 
@@ -1182,7 +1185,8 @@ public class SaveMySQL {
 				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
 				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
 				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
-
+				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
+				
 				ristorante.add(ristoset);// Aggiungo al vettore
 			}
 

@@ -23,7 +23,7 @@ public class RistorantiBean implements java.io.Serializable{
 	private Boolean SerWifi;
 	private Boolean SerDisabili;
 	private Boolean SerParcheggio;
-	
+	private int NumeroPosti;
 	private String NomeCatCucina;
 	
 	//per collegarlo alle altre tabelle
@@ -164,5 +164,11 @@ public class RistorantiBean implements java.io.Serializable{
 	}
 	public void setNomeCatCucina(String nomeCatCucina) {
 		NomeCatCucina = nomeCatCucina;
+	}
+	public int getNumeroPosti() {
+		return NumeroPosti;
+	}
+	public void setNumeroPosti(int numeroPosti) {
+		NumeroPosti = numeroPosti;
 	}
 }

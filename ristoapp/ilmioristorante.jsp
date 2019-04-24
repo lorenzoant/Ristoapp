@@ -52,7 +52,7 @@
 				<a class="mdl-navigation__link" href="ilmioristorantecaricamento.jsp">Riaggiorna</a>
 		        <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
 		        <a class="mdl-navigation__link" href="">Modifica ristorante [Albertini]</a>
-		        <a class="mdl-navigation__link" href="">Modifica account [Frigerio]</a>
+		        <a class="mdl-navigation__link" href="modificaaccount.jsp">Modifica account</a>
 			    <hr>
 			    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 		  	</nav>

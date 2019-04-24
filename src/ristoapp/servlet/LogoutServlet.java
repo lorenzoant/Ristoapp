@@ -14,7 +14,6 @@ public class LogoutServlet extends HttpServlet {
        
     public LogoutServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
 		request.getSession().removeAttribute("RISTORANTELOGGATO");
 		request.getSession().removeAttribute("CREDENZIALI");
 		
-		response.getWriter().append("<meta http-equiv='refresh' content='1;url=login.jsp'/>Logout eseguito...");
+		response.getWriter().append("<html><head><meta http-equiv='refresh' content='1;url=login.jsp'/></head><body>Logout eseguito...</body></html>");
 		
 		System.out.println("User logout");
 	}
