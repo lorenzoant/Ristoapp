@@ -76,6 +76,7 @@ public class ModificaPasswordServlet extends HttpServlet {
 						
 						if(verifica.ModificaPassword(cliente) == 1) {//successo
 							//apro la pagina che mi interessa, login
+							request.getSession().removeAttribute("CREDENZIALI");
 							System.out.println("Modifica password avvenuta con successo");
 							response.sendRedirect("login.jsp");
 						}
