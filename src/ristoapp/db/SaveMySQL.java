@@ -113,7 +113,7 @@ public class SaveMySQL {
 			return 0;
 	}//End nuovaPrenotazione()
 
-	
+
 	public void inserisciDettagli(PrenotazioniDettagliBean dettagli) throws Exception{
 		Statement stmt = null;
 		Connection conn = null;
@@ -156,7 +156,7 @@ public class SaveMySQL {
 		}
 	}//End inserisciDettagli()
 
-	
+
 	public ArrayList<PiattiBean> prelevaPiattRistorante(int risto) throws Exception{  // Vellons
 
 		Statement stmt = null;
@@ -189,7 +189,7 @@ public class SaveMySQL {
 				piatto.setAllergeni(resultList.getString("Allergeni"));
 				piattiList.add(piatto);// Aggiungo al vettore
 			}
-			
+
 			System.out.println("MySQL prelevaPiattRistorante() confirmed");
 			return (ArrayList<PiattiBean>)piattiList;
 		}
@@ -428,7 +428,7 @@ public class SaveMySQL {
 				risto.setSerWifi(result.getBoolean("SerWifi"));
 				risto.setSerDisabili(result.getBoolean("SerDisabili"));
 				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
-				
+
 				System.out.println("MySQL getInfoRistoranteDalProprietario() confirmed");
 				return risto;
 			}
@@ -486,7 +486,7 @@ public class SaveMySQL {
 				piatto.setAllergeni(resultList.getString("Allergeni"));
 				piattiList.add(piatto);// Aggiungo al vettore
 			}
-			
+
 			System.out.println("MySQL prelevaPiattRistorante() confirmed");
 			return (ArrayList<PiattiBean>)piattiList;
 		}
@@ -556,8 +556,8 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPrenotazioniRistoranteTraDueDate()
-	
-	
+
+
 	public ArrayList<QueryPiattiPrenotatiBean> prelevaDettagliPrenotazioneConPiatti(int idPrenotazione) throws Exception{ // Vellons
 
 		Statement stmt = null;
@@ -615,37 +615,37 @@ public class SaveMySQL {
 
 		Statement stmt = null;
 		Connection conn = null;
-				
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			// Creo stringa sql
 			Date data = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-			
+
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
-					cliente.getIDCliente() + "','" + 
-					cliente.getEmail() + "','" + 
-					cliente.getPassHash() + "','" + 
-					cliente.getNome() + "','" + 
-					cliente.getCognome() + "','" + 
-					cliente.getLivAutorizzazioni() + "','" + 
-					cliente.getIndirizzo() + "','" + 
-					cliente.getComune() + "','" + 
+					cliente.getIDCliente() + "','" +
+					cliente.getEmail() + "','" +
+					cliente.getPassHash() + "','" +
+					cliente.getNome() + "','" +
+					cliente.getCognome() + "','" +
+					cliente.getLivAutorizzazioni() + "','" +
+					cliente.getIndirizzo() + "','" +
+					cliente.getComune() + "','" +
 					cliente.getLingua() + "','";
 					if (cliente.getNotificaEmail()) sql += "1','";
-					else sql += "0','"; 
+					else sql += "0','";
 					if (cliente.getGeolocalizzazione()) sql += "1','";
 					else sql += "0',";
 			sql = sql + cliente.getCodicePass() + ",'"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
-			
+
 			System.out.println("MySQL inserisciCliente() confirmed");
 		}
 		catch (SQLException e) {
@@ -687,12 +687,12 @@ public class SaveMySQL {
 					+ "',Cognome = '" + cliente.getCognome()
 					+ "',Indirizzo = '" + cliente.getIndirizzo()
 					+ "',Comune = '" + cliente.getComune()
-					+ "',NotificaEmail = '" + 
+					+ "',NotificaEmail = '" +
 					if(cliente.getNotificaEmail()) sql += "1',";
 					else sql += "0',";
-					+ "',Geolocalizzazione = '" + 
+					+ "',Geolocalizzazione = '" +
 					if(cliente.getGeolocalizzazione()) sql += "1',";
-					else sql += "0',";	
+					else sql += "0',";
 					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
 
 			// Committo sul server
@@ -986,7 +986,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End setPagamento()
-	
+
 	public ArrayList<CarteBean> getInfoCarte(ClientiBean cliente) throws Exception{
 
 		Statement stmt = null;
@@ -1076,7 +1076,7 @@ public class SaveMySQL {
 			}
 		}
 	}//End aggiungiCarta()
-	
+
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
@@ -1088,7 +1088,7 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			// Creo stringa sql
 			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" +
 					ristorante.getIDFCatCucina() + "','" +
@@ -1113,7 +1113,7 @@ public class SaveMySQL {
 					else sql += "0','";
 					if(ristorante.getSerParcheggio()) sql += "1');";
 					else sql += "0');";
-					
+
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -1189,7 +1189,7 @@ public class SaveMySQL {
 				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
 				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
 				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
-				
+
 				ristorante.add(ristoset);// Aggiungo al vettore
 			}
 
@@ -1270,30 +1270,30 @@ public class SaveMySQL {
 
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
 	public ArrayList<ClientiBean> InformazioniClienti(String ordine) throws Exception{
-	
+
 		Statement stmt = null;
 		Connection conn = null;
-	
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-	
+
 			// Creo stringa sql
 			String sql = "";
 			if(ordine.equalsIgnoreCase("data"))sql = "SELECT * FROM Clienti";
 			else sql = "SELECT * FROM Clienti ORDER BY " + ordine;
-	
+
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
-	
+
 			// Estraggo dati
 			ArrayList<ClientiBean> listaclienti = new ArrayList<ClientiBean>();
-	
+
 			while(resultList.next()){
 				// Scorro tutte le righe del risultato
 				ClientiBean cliente = new ClientiBean();
-				
+
 				cliente.setEmail(resultList.getString("Email"));
 				cliente.setNome(resultList.getString("Nome"));
 				cliente.setCognome(resultList.getString("Cognome"));
@@ -1301,10 +1301,10 @@ public class SaveMySQL {
 				cliente.setIndirizzo(resultList.getString("Indirizzo"));
 				cliente.setComune(resultList.getString("Comune"));
 				cliente.setLingua(resultList.getString("Lingua"));
-	
+
 				listaclienti.add(cliente);// Aggiungo al vettore
 			}
-	
+
 			return (ArrayList<ClientiBean>) listaclienti;
 		}catch (SQLException e) {
 			System.out.println("MySQL informazioniClienti() failed");
@@ -1320,18 +1320,18 @@ public class SaveMySQL {
 			}
 		}
 	}// END informazioniClienti()
-	
+
 	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE PRENOTAZIONI PER RISTORANTE
 	public ArrayList<QueryIntroitiBean> mostraIntroiti(String tempo, String data) throws Exception{
-	
+
 		Statement stmt = null;
 		Connection conn = null;
-	
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-	
+
 			// Creo stringa sql
 			String sql = "";
 			sql = "SELECT Ristoranti.IDRistorante, Ristoranti.Nome, Ristoranti.Comune, AVG(RecensioniRistoranti.Stelle) AS Stelle, SUM((PrenotazioniDettagli.Prezzo - (PrenotazioniDettagli.Prezzo * PrenotazioniDettagli.Sconto)) * PrenotazioniDettagli.Quantita) AS Ricavi"
@@ -1347,10 +1347,10 @@ public class SaveMySQL {
 			//System.out.println(sql);
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
-	
+
 			// Estraggo dati
 			ArrayList<QueryIntroitiBean> informazioni = new ArrayList<QueryIntroitiBean>();
-	
+
 			while(resultList.next()){
 				// Scorro tutte le righe del risultato
 				QueryIntroitiBean introiti = new QueryIntroitiBean();
@@ -1363,7 +1363,7 @@ public class SaveMySQL {
 				else introiti.setRicavi(Double.parseDouble(resultList.getString("Ricavi")));
 				informazioni.add(introiti);// Aggiungo al vettore
 			}
-	
+
 			return (ArrayList<QueryIntroitiBean>) informazioni;
 		}catch (SQLException e) {
 			System.out.println("MySQL mostraIntroiti() failed");
@@ -1382,15 +1382,15 @@ public class SaveMySQL {
 
 	//FUNZIONE PER PRENDERE TUTTI I DATI RELATIVI ALLE STATISTICHE DI RISTOAPP
 	public ArrayList<QueryStatisticheBean> ottieniStatistiche(String informazioni) throws Exception{
-	
+
 		Statement stmt = null;
 		Connection conn = null;
-	
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-	
+
 			// Creo stringa sql
 			String sql = "";
 			//System.out.println("informazioni="+informazioni);
@@ -1427,15 +1427,15 @@ public class SaveMySQL {
 					+ "WHERE LivAutorizzazioni = 1 "
 					+ "GROUP BY mese, anno";
 			}
-		
+
 			//System.out.println(sql);
-			
+
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
-	
+
 			// Estraggo dati
 			ArrayList<QueryStatisticheBean> statistiche = new ArrayList<QueryStatisticheBean>();
-	
+
 			while(resultList.next()){
 				// Scorro tutte le righe del risultato
 				QueryStatisticheBean info = new QueryStatisticheBean();
@@ -1468,10 +1468,10 @@ public class SaveMySQL {
 			}
 		}
 	}// END ottieniStatistiche()
-	
+
 	//PER DISPONILIBTA' DEL RISTORANTE
 	public int disp( int IDRistorante) throws Exception{
-	
+
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -1479,24 +1479,28 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			Date today = new Date();
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String today_str = df.format(today);
 
-			
+
 			// Creo stringa sql
-			String sql = "SELECT SUM(NumeroPersone) "
+			String sql = "SELECT SUM(NumeroPersone) AS Numero "
 					+ "FROM Prenotazioni"
-					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= " + IDRistorante +"";
-			
-			stmt.executeUpdate(sql); //eseguo
-			
+					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
+
+			ResultSet resultList = stmt.executeQuery(sql);
+			int ris = 1;
+
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				ris = resultList.getInt("Numero");
+			}
+
 			return ris; //restituisco la somma totale delle prenotazioni di un dato ristorante nel giorno in cui guardo
-		
+
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
@@ -1515,5 +1519,5 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End disponibilità()
+	}// End disponibilitï¿½()
 }
