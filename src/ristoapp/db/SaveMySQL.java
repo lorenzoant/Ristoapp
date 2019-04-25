@@ -1479,20 +1479,25 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
-			Date today = Calendar.getInstance().getTime(); 
+			Date today = new Date(); 
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String today_str = df.format(today);
 						
 			// Creo stringa sql
-			String sql = "SELECT SUM (NumeroPersone) "
+			String sql = "SELECT SUM(NumeroPersone) AS Numero "
 					+ "FROM Prenotazioni"
 					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
+
+			ResultSet resultList = stmt.executeQuery(sql);
+			int ris = 1;
 			
-			int ris = stmt.executeUpdate(sql); //eseguo
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				ris = resultList.getInt("Numero");
+			}
+			
 			return ris; //restituisco la somma totale delle prenotazioni di un dato ristorante nel giorno in cui guardo
 		
 		}
