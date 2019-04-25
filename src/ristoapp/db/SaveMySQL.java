@@ -1,10 +1,12 @@
 package ristoapp.db;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,7 @@ import ristoapp.bean.CarteBean;
 import ristoapp.bean.QueryIntroitiBean;
 import ristoapp.bean.QueryPiattiPrenotatiBean;
 import ristoapp.bean.QueryStatisticheBean;
+import java.util.*;
 
 public class SaveMySQL {
 
@@ -1465,4 +1468,50 @@ public class SaveMySQL {
 			}
 		}
 	}// END ottieniStatistiche()
+	
+	//PER DISPONILIBTA' DEL RISTORANTE
+	public int disp( int IDRistorante) throws Exception{
+	
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+			
+			Date today = Calendar.getInstance().getTime(); 
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			String today_str = df.format(today);
+						
+			// Creo stringa sql
+			String sql = "SELECT SUM (NumeroPersone) "
+					+ "FROM Prenotazioni"
+					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
+			
+			int ris = stmt.executeUpdate(sql); //eseguo
+			return ris; //restituisco la somma totale delle prenotazioni di un dato ristorante nel giorno in cui guardo
+		
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL Disp() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End inserisciRistorante()
 }
