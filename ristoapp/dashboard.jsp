@@ -42,7 +42,7 @@
 	</head>
 	<body class="text-center">
 		<div class="mdl-layout mdl-js-layout">
-		    <header class="mdl-layout__header mdl-layout__header--waterfall">
+		    <header class="mdl-layout__header">
 				<div>
 					<table style="width:100%">
 						<tr>

@@ -19,6 +19,7 @@
 <center>
 	<div  style="margin-bottom: 30px;">Seleziona i piatti che vuoi ordinare</div>
 	<table>
+	<form>
 		<% 
 			ArrayList<PiattiBean> rs;
 			SaveMySQL db= new SaveMySQL();
@@ -27,32 +28,40 @@
 			rs=  db.prelevaPiattRistorante(risto);
 			
 			for(int i=0; i<rs.size(); i++){
-				if(rs.get(i).getDisponibile()==true){
-					String Nome= rs.get(i).getNome();
-					String Descrizione= rs.get(i).getDescrizione();
-					double Prezzo= rs.get(i).getPrezzo();
-					String url= rs.get(i).getUrl();
-				%>
-				<tr>
-					<td>
-					<%=Nome%>
-					</td>
-					<td>
-					<%=Descrizione%>
-					</td>
-					<td>
-					<%=Prezzo%>
-					</td>
-					<td>
-					<%if(url!=""){ %>
-					<img class="antemprima"	alt="Immagine del piatto" src="<%=url%>">
-					<%} %>
-					</td>
-				<%
-				}
+				
+					if(rs.get(i).getDisponibile()==true){
+						int id= rs.get(i).getIDPiatto();
+						String Nome= rs.get(i).getNome();
+						String Descrizione= rs.get(i).getDescrizione();
+						double Prezzo= rs.get(i).getPrezzo();
+						String url= rs.get(i).getUrl();
+					%>
+					<tr>
+						<td>
+							<%=Nome%>
+						</td>
+						<td>
+							<%=Descrizione%>
+						</td>
+						<td>
+							<%=Prezzo%>
+						</td>
+						<td>
+							<%if(url!=""){ %>
+							<img class="antemprima"	alt="Immagine del piatto" src="<%=url%>">
+							<%} %>
+						</td>
+						<td>
+							<input name=<%=id%> type="number" max="15">
+						</td>
+					</tr>
+					<%
+					}
+				
 			}
 			%>
-	
+			
+	</form>
 	</table>
 	</center>
 </body>

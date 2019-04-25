@@ -56,7 +56,13 @@
 							<tr>
 								<td><%=NomeRistorante%></td>
 								<td><%=ComuneRistorante%></td>
-								<td><%=Stelle%>&#9733;</td>
+								<td>
+								<%while(Stelle > 0){%>
+									&#9733;
+									<%
+									Stelle = Stelle - 1;
+								}%>
+								</td>
 								<td>&euro; <%=Ricavi%></td>
 							</tr>
 						<%}
