@@ -25,6 +25,9 @@ public class RistorantiBean implements java.io.Serializable{
 	private Boolean SerParcheggio;
 	private int NumeroPosti;
 	private String NomeCatCucina;
+	private String url;
+	private double stelle;
+	
 	
 	//per collegarlo alle altre tabelle
 	private ArrayList<PiattiBean> Piatti;
@@ -171,4 +174,17 @@ public class RistorantiBean implements java.io.Serializable{
 	public void setNumeroPosti(int numeroPosti) {
 		NumeroPosti = numeroPosti;
 	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public double getStelle() {
+		return stelle;
+	}
+	public void setStelle(double stelle) {
+		this.stelle = stelle;
+	}
+
 }

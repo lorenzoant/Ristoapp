@@ -1189,6 +1189,7 @@ public class SaveMySQL {
 				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
 				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
 				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
+				ristoset.setUrl(resultList.getString("URL"));
 
 				ristorante.add(ristoset);// Aggiungo al vettore
 			}
@@ -1492,10 +1493,9 @@ public class SaveMySQL {
 					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
 
 			ResultSet resultList = stmt.executeQuery(sql);
-			int ris = 1;
+			int ris = 0;
 
-			while(resultList.next()){
-				// Scorro tutte le righe del risultato
+			while(resultList.next()){// Scorro tutte le righe del risultato
 				ris = resultList.getInt("Numero");
 			}
 
@@ -1520,4 +1520,50 @@ public class SaveMySQL {
 			}
 		}
 	}// End disponibilit�()
+	public int stelle_risto(int IDRistorante) throws Exception{
+		
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+					// Creo stringa sql
+	
+			
+			String sql = "SELECT AVG(Stelle) AS Media "
+					+ "FROM RecensioniRistoranti"
+					+ " WHERE  IDFRistorante= '" + IDRistorante +"'";
+			
+			ResultSet resultList = stmt.executeQuery(sql);
+			double ris = 0;
+
+			while(resultList.next()){// Scorro tutte le righe del risultato
+				ris = resultList.getInt("Media");
+			}
+			System.out.println(ris);
+			return (int) ris; 
+
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL Disp() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+		
+	}
 }
