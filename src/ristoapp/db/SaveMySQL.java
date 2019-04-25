@@ -1483,16 +1483,18 @@ public class SaveMySQL {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			
-			Date today = Calendar.getInstance().getTime(); 
+			Date today = new Date();
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String today_str = df.format(today);
-						
-			// Creo stringa sql
-			String sql = "SELECT SUM (NumeroPersone) "
-					+ "FROM Prenotazioni"
-					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
+
 			
-			int ris = stmt.executeUpdate(sql); //eseguo
+			// Creo stringa sql
+			String sql = "SELECT SUM(NumeroPersone) "
+					+ "FROM Prenotazioni"
+					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= " + IDRistorante +"";
+			
+			stmt.executeUpdate(sql); //eseguo
+			
 			return ris; //restituisco la somma totale delle prenotazioni di un dato ristorante nel giorno in cui guardo
 		
 		}
@@ -1513,5 +1515,5 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End inserisciRistorante()
+	}// End disponibilità()
 }

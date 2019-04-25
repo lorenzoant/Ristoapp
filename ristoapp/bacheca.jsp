@@ -9,7 +9,7 @@
 <%//riprendo la session da Login per avere i dati del cliente
 
 	
-		ArrayList<RistorantiBean> rist = new ArrayList <RistorantiBean>(); //oggetto ristorante
+		ArrayList<RistorantiBean> rist = new ArrayList <RistorantiBean>(); //oggetto ristorante list
 		SaveMySQL save = new SaveMySQL(); //oggeto save
 		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
 		
