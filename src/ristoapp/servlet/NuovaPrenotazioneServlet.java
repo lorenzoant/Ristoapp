@@ -1,12 +1,15 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ristoapp.bean.ClientiBean;
+import ristoapp.bean.PiattiBean;
 import ristoapp.bean.PrenotazioniBean;
 import ristoapp.db.SaveMySQL;
 
@@ -39,7 +42,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			prenotazione.setOra(ora);
 			prenotazione.setNumeroPersone(posti);
 			prenotazione.setIDFCatPrenotazione(categoria);
-			prenotazione.setStatoPagamento(false);
+			prenotazione.setStatoPagamento(0);
 			//int idristorante=  (int) request.getSession().getAttribute("idristorante");
 			prenotazione.setIDFRistorante(1/*idristorante*/);
 			int IDPren = 0;
@@ -53,8 +56,33 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			
 			request.getSession().removeAttribute("IDPREN");
 			request.getSession().setAttribute("IDPREN", IDPren);
+			request.getSession().removeAttribute("TipoPren");
+			request.getSession().setAttribute("TipoPren", categoria);
 			
-			response.getWriter().append("Prenotazione inviata al ristorante...");
+			response.sendRedirect("inseriscidettaglipren.jsp");
 		}
+		if(whatsend.equalsIgnoreCase("dettaglipren")) {
+			ArrayList<PiattiBean> rs;
+			SaveMySQL db= new SaveMySQL();
+			//int risto= Integer.parseInt(request.getSession().getAttribute("idristorante").toString());
+			int risto=1;
+			try {
+				rs=  db.prelevaPiattRistorante(risto);
+				for(int i=0; i<rs.size(); i++){
+					
+					if(rs.get(i).getDisponibile()==true){
+						//TODO: inserire dettaglipren
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		//TODO: Prevedi nodettagli
+			
+			
+			
 	}
 }

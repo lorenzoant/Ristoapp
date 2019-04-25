@@ -12,7 +12,7 @@ public class PrenotazioniBean implements java.io.Serializable {
 	private int IDFCliente;
 	private String Data;
 	private String Ora;
-	private Boolean StatoPagamento;
+	private int StatoPagamento;
 	private String NumeroPersone;
 	
 	private ArrayList<PrenotazioniDettagliBean> DettagliPrenotazioni;
@@ -59,11 +59,11 @@ public class PrenotazioniBean implements java.io.Serializable {
 		Data = data2;
 	}
 
-	public Boolean getStatoPagamento() {
+	public int getStatoPagamento() {
 		return StatoPagamento;
 	}
 
-	public void setStatoPagamento(Boolean statoPagamento) {
+	public void setStatoPagamento(int statoPagamento) {
 		StatoPagamento = statoPagamento;
 	}
 

@@ -18,8 +18,9 @@
 <body>
 <center>
 	<div  style="margin-bottom: 30px;">Seleziona i piatti che vuoi ordinare</div>
+	<form action="nuovaprenotazioneservlet" name="dettaglipren" method="POST">
 	<table>
-	<form>
+	
 		<% 
 			ArrayList<PiattiBean> rs;
 			SaveMySQL db= new SaveMySQL();
@@ -60,9 +61,20 @@
 				
 			}
 			%>
-			
+			</table>
+			<input name="whatsend" value="dettaglipren" type="hidden"><br>
+		
+			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Prenota"/><br><br>
 	</form>
-	</table>
+	
+	<!-- Nel caso il cliente non voglia ordinare i piatti online, può farlo solo se mangia al ristorante -->
+	<%if(Integer.parseInt(request.getSession().getAttribute("TipoPren").toString())!=3){ %>
+	<form action="nuovaprenotazioneservlet" name="dettaglipren" method="POST">
+			<input name="whatsend" value="nodettagli" type="hidden"><br>
+		
+			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Non ordinare ora"/><br><br>
+	</form>
+	<%} %>
 	</center>
 </body>
 </html>

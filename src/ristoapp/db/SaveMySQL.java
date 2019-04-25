@@ -85,8 +85,9 @@ public class SaveMySQL {
 						prenotazione.getNumeroPersone() + "');";
 
 			// Committo sul server
-			stmt.executeUpdate(sql);
 			rs= stmt.getGeneratedKeys();
+			stmt.executeUpdate(sql);
+			
 
 			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
