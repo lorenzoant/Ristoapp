@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BachecaServlet
+ * Servlet implementation class SchedaRisto
  */
-@WebServlet("/BachecaServlet")
-public class BachecaServlet extends HttpServlet {
+@WebServlet("/SchedaRisto")
+public class SchedaRisto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BachecaServlet() {
+    public SchedaRisto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +35,8 @@ public class BachecaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String whatsend = request.getParameter("whatsend");
-		String ID = request.getParameter("IDRisto");
-		System.out.println("ciao");
-		if(whatsend.equalsIgnoreCase("scheda")) { 
-			System.out.println("ciao");
-			request.getSession().removeAttribute("RISTO");
-			request.getSession().setAttribute("RISTO", ID);
-			response.sendRedirect("scheda.jsp");
-		}
-
-		
+		String ciao = " ia";
+		System.out.println(ciao);
 	}
 
 }

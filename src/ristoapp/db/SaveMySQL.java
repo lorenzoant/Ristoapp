@@ -1472,7 +1472,7 @@ public class SaveMySQL {
 	}// END ottieniStatistiche()
 
 	//PER DISPONILIBTA' DEL RISTORANTE
-	public int disp( int IDRistorante) throws Exception{
+/*	public int disp( int IDRistorante) throws Exception{
 
 
 		Statement stmt = null;
@@ -1520,7 +1520,9 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End disponibilit�()
+	}// End disponibilita()
+	*/
+	//QUANTE STELLE HA IL RISTORANTE
 	public int stelle_risto(int IDRistorante) throws Exception{
 		
 		Statement stmt = null;
@@ -1550,7 +1552,7 @@ public class SaveMySQL {
 		}
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL Disp() failed");
+			System.out.println("MySQL stelle() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -1566,5 +1568,63 @@ public class SaveMySQL {
 			}
 		}
 		
+	}
+	
+	public RistorantiBean getInfoRistoID(int IDRistorante) throws Exception{ // Vellons
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT * FROM Ristoranti WHERE IDRistorante = " + IDRistorante  + ";";
+			ResultSet result = stmt.executeQuery(sql);
+			RistorantiBean risto = new RistorantiBean();
+
+			if(result.next()) { // Prelevo i dati dalla prima riga del risultato
+				risto.setIDRistorante(result.getInt("IDRistorante"));
+				risto.setIDFCatCucina(result.getInt("IDFCatCucina"));
+				risto.setIDFCliente(result.getInt("IDFCliente"));
+				risto.setNome(result.getString("Nome"));
+				risto.setCoordinataLat(result.getInt("CoordinataLat"));
+				risto.setCoordinataLon(result.getDouble("CoordinataLon"));
+				risto.setIndirizzo(result.getString("Indirizzo"));
+				risto.setTelefono(result.getString("Telefono"));
+				risto.setEmail(result.getString("Email"));
+				risto.setComune(result.getString("Comune"));
+				risto.setDescrizione(result.getString("Descrizione"));
+				risto.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
+				risto.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
+				risto.setSerAnimali(result.getBoolean("SerAnimali"));
+				risto.setSerWifi(result.getBoolean("SerWifi"));
+				risto.setSerDisabili(result.getBoolean("SerDisabili"));
+				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
+
+				
+				return risto;
+			}
+			else {
+				// Restituisco oggetto vuoto
+				return risto;
+			}
+
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL getInfoRistoID() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
 	}
 }

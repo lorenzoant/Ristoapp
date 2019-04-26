@@ -13,7 +13,7 @@
 		SaveMySQL save = new SaveMySQL(); //oggeto save
 		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
 				
-		
+	
 %>
     
 <!DOCTYPE html>
@@ -24,15 +24,15 @@
 	<title>Home</title>
 	<%@include file="graphicspuntoacca.jsp"%>
 	<% 
-	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	
+	// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 	
 	String nomeLoggato = "";
 	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-		nomeLoggato = cli.getNome();
+		nomeLoggato = cli.getNome(); //nome del profilo
 		
-  		if(cli.getLivAutorizzazioni() != 0){
-  			// L'utente non è un cliente
+  		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}%>
 	<%}
@@ -62,7 +62,9 @@
 			<h4 style="text-align:center;">Menu</h4><hr>
 			<nav class="mdl-navigation">
 				<a class="mdl-navigation__link" href="profilo.jsp">Profilo di <%=nomeLoggato%></a>
-		        <a class="mdl-navigation__link" href="mappa.jsp">Mappa </a>
+		        <a class="mdl-navigation__link" href="mappa.jsp">About </a>
+		        <a class="mdl-navigation__link" href="">Contatti </a>
+		        <a class="mdl-navigation__link" href="">Mappa </a>
 			    <hr>
 			    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 		  	</nav>
@@ -74,6 +76,18 @@
 	  	<!-- PAGE CONTENT -->
 	  	
 	  	<div style="overflow-x: auto;">
+	  	<!-- Expandable Textfield -->
+			<form action="#">
+			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+			    <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
+			      <i class="material-icons">search</i>
+			    </label>
+			    <div class="mdl-textfield__expandable-holder">
+			      <input class="mdl-textfield__input" type="text" id="sample6">
+			      <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+			    </div>
+			  </div>
+			</form>
 	  	<center>
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<thead>
@@ -87,35 +101,30 @@
 			</tr>
 		</thead>
 		<tbody>
+		
 		<%
 				for(RistorantiBean lista:rist){
 					
 					 int IDRistorante = lista.getIDRistorante();
 					 String NomeCatCucina = lista.getNomeCatCucina();
 					 String Nome = lista.getNome(); //nome ristorante
-					 String Indirizzo = lista.getIndirizzo();
-					 String Telefono = lista.getTelefono();
-					 String Email = lista.getEmail();
+					// String Indirizzo = lista.getIndirizzo();
+					// String Telefono = lista.getTelefono();
+					// String Email = lista.getEmail();
 					 String Comune = lista.getComune();
-					 String Descrizione = lista.getDescrizione();
-					 Boolean SerClimatizzazione = lista.getSerClimatizzazione();
-					 Boolean SerAnimali = lista.getSerAnimali();
-					 Boolean SerWifi = lista.getSerWifi();
-					 Boolean SerDisabili = lista.getSerDisabili();
-					 Boolean SerParcheggio = lista.getSerParcheggio();
+					// String Descrizione = lista.getDescrizione();
+					// Boolean SerClimatizzazione = lista.getSerClimatizzazione();
+					// Boolean SerAnimali = lista.getSerAnimali();
+					// Boolean SerWifi = lista.getSerWifi();
+					// Boolean SerDisabili = lista.getSerDisabili();
+					// Boolean SerParcheggio = lista.getSerParcheggio();
 					 String url = lista.getUrl();
 					
-					 String disp = "";
-					 int np = lista.getNumeroPosti(); //numero posti massimo di un ristorante
-					 int n = save.disp(IDRistorante);
+					// String disp = "";
+				//	 int np = lista.getNumeroPosti(); //numero posti massimo di un ristorante
+					// int n = save.disp(IDRistorante);
 					 int stelle = save.stelle_risto(IDRistorante);
 				
-					 if((np-n)<0){
-						 disp = "Disponibile";
-					 }else{
-						 disp ="<span style='color:red'>non disponibile</span>";
-					 }
-					 
 					
 			%>
 
@@ -124,22 +133,25 @@
 					<td><%=Nome%></td>
 					<td><%=NomeCatCucina%></td>
 					<td><%=Comune%></td>
+					
 					<td><%while(stelle > 0){%>
-									&#9733;
-									<%
-									stelle = stelle - 1;
-								}%></td>
+								&#9733;
+								<% stelle = stelle - 1;
+						} %>
+					</td>
 	
 					<td>
-						<form action="" name="modificapiatto" method="post">
-						<input type="hidden" name="" value=""></input>
-						<input type="hidden" name="whatsend" value=""></input>
-						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="scheda"/>
+						<form action="SchedaRisto" name="SchedaRisto" method="post">
+						<input type="hidden" name="whatsend" value="scheda"></input>
+						<input type="hidden" name="IDRisto" value="<%=IDRistorante%>"></input>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="dettaglio"/>
 						</form>
 					</td>
 					</tr>
 		<%
-	}%>
+	}
+	%>
+	
 		</tbody>
 		</table>
 			
@@ -147,18 +159,8 @@
 		</div>
 		<br>
 		
-		
-
-	
-
 		</div>
 		<br>
-		
-		
-		
-		
-	
 </body>
-	
 </html>
 
