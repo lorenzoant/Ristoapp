@@ -1077,6 +1077,72 @@ public class SaveMySQL {
 		}
 	}//End aggiungiCarta()
 
+	
+
+	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
+	public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+
+			String sql = "SELECT * FROM Ristoranti INNER JOIN CategoriaCucina ON Ristoranti.IDFCatCucina = CategoriaCucina.IDCatCucina";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			ArrayList<RistorantiBean> ristorante = new ArrayList<RistorantiBean>();
+
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+
+				RistorantiBean ristoset = new RistorantiBean();
+
+				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
+				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
+				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
+				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
+				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
+				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
+				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
+				ristoset.setTelefono(resultList.getString("Telefono"));
+				ristoset.setEmail(resultList.getString("Email"));
+				ristoset.setComune(resultList.getString("Comune"));
+				ristoset.setDescrizione(resultList.getString("Descrizione"));
+				ristoset.setSerClimatizzazione(resultList.getBoolean("SerClimatizzazione"));
+				ristoset.setSerAnimali(resultList.getBoolean("serAnimali"));
+				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
+				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
+				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
+				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
+				ristoset.setUrl(resultList.getString("URL"));
+
+				ristorante.add(ristoset);// Aggiungo al vettore
+			}
+
+			return (ArrayList<RistorantiBean>) ristorante;
+		}catch (SQLException e) {
+			System.out.println("MySQL InformazioneRistorante() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END InformazioniRistorante()
+	
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
@@ -1145,9 +1211,8 @@ public class SaveMySQL {
 			}
 		}
 	}// End inserisciRistorante()
-
-	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
-	public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
+	
+	public void modificaRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -1155,48 +1220,52 @@ public class SaveMySQL {
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-
+			
 			// Creo stringa sql
+			String sql = "UPDATE Ristoranti SET " +
+					"IDFCatCucina = '" + ristorante.getIDFCatCucina() + "', " +
+					"Nome = '" + ristorante.getNome() + "', " +
+					"CoordinataLat = '" + ristorante.getCoordinataLat() + "', " +
+					"CoordinataLon = '" + ristorante.getCoordinataLon() + "', " +
+					"Indirizzo = '" + ristorante.getIndirizzo() + "', " +
+					"Telefono = '" + ristorante.getTelefono() + "', " +
+					"Email = '" + ristorante.getEmail() + "', " +
+					"Comune = '" + ristorante.getComune() + "', " +
+					"Descrizione = '" + ristorante.getDescrizione() + "', " +
+					"SerScegliTavolo = ";
+					if(ristorante.getSerScegliTavolo()) sql += "'1', ";
+					else sql += "'0', ";
+					sql += "SerClimatizzazione = ";
+					if(ristorante.getSerClimatizzazione()) sql += "'1', ";
+					else sql += "'0', ";
+					sql += "SerAnimali = ";
+					if(ristorante.getSerAnimali()) sql += "'1', ";
+					else sql += "'0', ";
+					sql += "SerWifi = ";
+					if(ristorante.getSerWifi()) sql += "'1', ";
+					else sql += "'0', ";
+					sql += "SerDisabili = ";
+					if(ristorante.getSerDisabili()) sql += "'1', ";
+					else sql += "'0', ";
+					sql += "SerParcheggio = ";
+					if(ristorante.getSerParcheggio()) sql += "'1'";
+					else sql += "'0'";
+					sql += " WHERE IDFCliente = '" + ristorante.getIDFCliente() + "'";
+					 
+			// Committo sul server
+			stmt.executeUpdate(sql);
 
-			String sql = "SELECT * FROM Ristoranti INNER JOIN CategoriaCucina ON Ristoranti.IDFCatCucina = CategoriaCucina.IDCatCucina";
-
-			// Eseguo query
-			ResultSet resultList = stmt.executeQuery(sql);
-
-			// Estraggo dati
-			ArrayList<RistorantiBean> ristorante = new ArrayList<RistorantiBean>();
-
-			while(resultList.next()){
-				// Scorro tutte le righe del risultato
-
-				RistorantiBean ristoset = new RistorantiBean();
-
-				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
-				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
-				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
-				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
-				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
-				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
-				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
-				ristoset.setTelefono(resultList.getString("Telefono"));
-				ristoset.setEmail(resultList.getString("Email"));
-				ristoset.setComune(resultList.getString("Comune"));
-				ristoset.setDescrizione(resultList.getString("Descrizione"));
-				ristoset.setSerClimatizzazione(resultList.getBoolean("SerClimatizzazione"));
-				ristoset.setSerAnimali(resultList.getBoolean("serAnimali"));
-				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
-				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
-				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
-				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
-				ristoset.setUrl(resultList.getString("URL"));
-
-				ristorante.add(ristoset);// Aggiungo al vettore
+			System.out.println("MySQL modificaRistorante() confirmed");
+		}
+		catch (SQLException e) {
+			// Se ricevo un errore faccio il rollback
+			System.out.println("MySQL modificaRistorante() failed");
+			if(conn != null) {
+				conn.rollback();
 			}
-
-			return (ArrayList<RistorantiBean>) ristorante;
-		}catch (SQLException e) {
-			System.out.println("MySQL InformazioneRistorante() failed");
 			throw new Exception(e.getMessage());
 		}
 		finally {
@@ -1208,7 +1277,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// END InformazioniRistorante()
+	}// End modificaRistorante()
 
 	public RistorantiBean selectRistorante(int id) throws Exception{
 
@@ -1268,7 +1337,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End selectRistorante()
-
+	
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
 	public ArrayList<ClientiBean> InformazioniClienti(String ordine) throws Exception{
 
