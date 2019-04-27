@@ -681,21 +681,20 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "UPDATE Clienti SET " +
+			String sql = "UPDATE Clienti SET " 
 					+ "Email = '" + cliente.getEmail()
 					+ ", PassHash = '" + cliente.getPassHash()
 					+ "',Nome = '" + cliente.getNome()
 					+ "',Cognome = '" + cliente.getCognome()
 					+ "',Indirizzo = '" + cliente.getIndirizzo()
 					+ "',Comune = '" + cliente.getComune()
-					+ "',NotificaEmail = '" +
+					+ "',NotificaEmail = '";
 					if(cliente.getNotificaEmail()) sql += "1',";
-					else sql += "0',";
-					+ "',Geolocalizzazione = '" +
+					else sql += "0',"
+					+ "',Geolocalizzazione = '" ;
 					if(cliente.getGeolocalizzazione()) sql += "1',";
-					else sql += "0',";
+					else sql += "0',"
 					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
-
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
