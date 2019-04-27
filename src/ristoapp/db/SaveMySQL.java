@@ -616,18 +616,17 @@ public class SaveMySQL {
 
 		Statement stmt = null;
 		Connection conn = null;
-
+		
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			// Disattivo auto commit al database: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-
 			// Creo stringa sql
 			Date data = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
+			
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
 					cliente.getIDCliente() + "','" +
 					cliente.getEmail() + "','" +
@@ -641,8 +640,8 @@ public class SaveMySQL {
 					if (cliente.getNotificaEmail()) sql += "1','";
 					else sql += "0','";
 					if (cliente.getGeolocalizzazione()) sql += "1','";
-					else sql += "0',";
-			sql = sql + cliente.getCodicePass() + ",'"+ formato.format(data) +"')";
+					else sql += "0','";
+			sql = sql + cliente.getCodicePass() + "','"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);

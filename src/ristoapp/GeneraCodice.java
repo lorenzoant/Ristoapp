@@ -11,7 +11,7 @@ public class GeneraCodice {
 			codice = codice + (char)(array[i]+'0');//concateno il numero con i precedenti
 			//System.out.println(codice);
 		}
-		System.out.println(Integer.parseInt(codice));
+		//System.out.println(Integer.parseInt(codice));
 		return Integer.parseInt(codice);//restituisco il numero di 4 cifre
 	}
 }
