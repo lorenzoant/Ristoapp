@@ -37,49 +37,64 @@
 					</tr>
 				</thead>
 				<tbody>
-				<%
-				ArrayList<QueryIntroitiBean> informazioni = new ArrayList <QueryIntroitiBean>(); //lista delle info
-				SaveMySQL prendiinfo = new SaveMySQL(); //per chiamare la funzione
-				String[] tempo = {"totale", "oggi", "mese", "anno"};
-				for(int i = 0; i < 4; i++){
-					informazioni = prendiinfo.mostraIntroiti(tempo[i], dateFormat.format(date)); //prendo le info degli introiti
-					%>
-					<tr><td colspan="4" style="text-align:center; font-weight: bold;"><%=tempo[i] %></td></tr>
 					<%
-					for(QueryIntroitiBean lista:informazioni){
-						int IDRistorante = lista.getIDRistorante();
-						String NomeRistorante = lista.getNome();
-						String ComuneRistorante = lista.getComune();
-						double Stelle = lista.getStelle();
-						double Ricavi = lista.getRicavi();
-						if(request.getParameter("ristorante") == null){%>
-							<tr>
-								<td><%=NomeRistorante%></td>
-								<td><%=ComuneRistorante%></td>
-								<td>
-								<%while(Stelle > 0){%>
-									&#9733;
-									<%
-									Stelle = Stelle - 1;
-								}%>
-								</td>
-								<td>&euro; <%=Ricavi%></td>
-							</tr>
-						<%}
-						else{//nel caso siamo nell'area "lista ristoranti"
-							if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
+					ArrayList<QueryIntroitiBean> informazioni = new ArrayList <QueryIntroitiBean>(); //lista delle info
+					SaveMySQL prendiinfo = new SaveMySQL(); //per chiamare la funzione
+					String[] tempo = {"totale", "oggi", "mese", "anno"};
+					int[] TotaleRicavi = {0, 0, 0, 0};
+					for(int i = 0; i < 4; i++){
+						informazioni = prendiinfo.mostraIntroiti(tempo[i], dateFormat.format(date)); //prendo le info degli introiti
+						%>
+						<tr><td colspan="4" style="text-align:center; font-size: 16px;"><%=tempo[i] %></td></tr>
+						<%
+						for(QueryIntroitiBean lista:informazioni){
+							int IDRistorante = lista.getIDRistorante();
+							String NomeRistorante = lista.getNome();
+							String ComuneRistorante = lista.getComune();
+							double Stelle = lista.getStelle();
+							double Ricavi = lista.getRicavi();
+							TotaleRicavi[i] += Ricavi;
+							if(request.getParameter("ristorante") == null){%>
 								<tr>
 									<td><%=NomeRistorante%></td>
 									<td><%=ComuneRistorante%></td>
-									<td><%=Stelle%>&#9733;</td>
+									<td>
+									<%while(Stelle > 0){%>
+										&#9733;
+										<%
+										Stelle = Stelle - 1;
+									}%>
+									</td>
 									<td>&euro; <%=Ricavi%></td>
 								</tr>
 							<%}
-						}
-					} 
-				}%>
+							else{//nel caso siamo nell'area "lista ristoranti"
+								if(Integer.parseInt(request.getParameter("ristorante")) == IDRistorante){%>
+									<tr>
+										<td><%=NomeRistorante%></td>
+										<td><%=ComuneRistorante%></td>
+										<td><%=Stelle%>&#9733;</td>
+										<td>&euro; <%=Ricavi%></td>
+									</tr>
+								<%}
+							}
+						} 
+					}%>
 				</tbody>
 			</table>
+			<% if(request.getParameter("ristorante") == null){%>
+				<br/>
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp centratabella" style="width:80%;">
+					<tr>
+						<td style="text-align:center; font-size: 16px;">Totale Ricavi</td>
+					</tr>
+					<%for(int i = 0; i < 4; i++){%>
+						<tr>
+							<td style="text-align:center;"><%=tempo[i] %> = &euro; <%=TotaleRicavi[i] %></td>
+						</tr>
+					<%}%>
+				</table>
+			<%} %>
 		</div>
 	</body>
 </html>
