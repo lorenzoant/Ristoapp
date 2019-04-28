@@ -8,6 +8,21 @@
 	<meta charset="ISO-8859-1">
 	<title>Modifica account</title>
 	<%@include file="graphicspuntoacca.jsp"%>
+	
+	<% 
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome();
+  	%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
+	
+	
 </head>
 <body class="text-center">
 
@@ -23,8 +38,7 @@
 		</table>
 	</div>
 	
-	
-	<% if(request.getSession() != null && request.getSession().getAttribute("CLIENTEDAMODIFICARE") != null){
+<% if(request.getSession() != null && request.getSession().getAttribute("CLIENTEDAMODIFICARE") != null){
 		
 		ClientiBean c = (ClientiBean)request.getSession().getAttribute("CLIENTEDAMODIFICARE");
 	%>
@@ -92,3 +106,4 @@
 	
 </body>
 </html>
+
