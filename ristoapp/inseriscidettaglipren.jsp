@@ -68,10 +68,10 @@
 	</form>
 	
 	<!-- Nel caso il cliente non voglia ordinare i piatti online, può farlo solo se mangia al ristorante -->
-	<%if(Integer.parseInt(request.getSession().getAttribute("TipoPren").toString())!=3){ %>
-	<form action="nuovaprenotazioneservlet" name="dettaglipren" method="POST">
+	<%if(Integer.parseInt(request.getSession().getAttribute("TipoPren").toString())==3){ %>
+	<form action="nuovaprenotazioneservlet" name="nodettagli" method="POST">
 			<input name="whatsend" value="nodettagli" type="hidden"><br>
-		
+			
 			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Non ordinare ora"/><br><br>
 	</form>
 	<%} %>

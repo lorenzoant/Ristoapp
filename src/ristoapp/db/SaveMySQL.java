@@ -67,6 +67,7 @@ public class SaveMySQL {
 		Connection conn = null;
 		//Creo un resultset per prendere l'id alla fine
 		ResultSet rs = null;
+		int id=0;
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
@@ -85,10 +86,11 @@ public class SaveMySQL {
 						prenotazione.getNumeroPersone() + "');";
 
 			// Committo sul server
-			rs= stmt.getGeneratedKeys();
-			stmt.executeUpdate(sql);
 			
-
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			rs= stmt.getGeneratedKeys();
+			if(rs.next())
+			id= rs.getInt(1);
 			System.out.println("MySQL nuovaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
@@ -108,10 +110,8 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-		if(rs.next())
-			return rs.getInt(1);
-		else
-			return 0;
+			System.out.println("il tuo id è "+ id);
+			return id;
 	}//End nuovaPrenotazione()
 
 

@@ -3,6 +3,8 @@ package ristoapp.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,11 +49,15 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			prenotazione.setIDFRistorante(1/*idristorante*/);
 			int IDPren = 0;
 			SaveMySQL db = new SaveMySQL();
+			
 			try {
 				IDPren=db.nuovaPrenotazione(prenotazione);
-			} catch (Exception e) {
+			} 
+			catch (Exception e) {
 				System.out.println("Errore in scrittura sul databass");
 				e.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 			}
 			
 			request.getSession().removeAttribute("IDPREN");
@@ -76,12 +82,19 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 			}
 			
 			
 		}
 		//TODO: Prevedi nodettagli
+		if(whatsend.equalsIgnoreCase("nodettagli")) {
+			System.out.println("Reindirizzamento");
+			ServletContext sc = request.getSession().getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/prenotazionecompletata.jsp");
 			
+		}	
 			
 			
 	}
