@@ -110,7 +110,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			System.out.println("il tuo id è "+ id);
+			System.out.println("il tuo id ï¿½ "+ id);
 			return id;
 	}//End nuovaPrenotazione()
 
@@ -635,8 +635,9 @@ public class SaveMySQL {
 					cliente.getCognome() + "','" +
 					cliente.getLivAutorizzazioni() + "','" +
 					cliente.getIndirizzo() + "','" +
-					cliente.getComune() + "','" +
-					cliente.getLingua() + "','";
+					cliente.getComune() + "'," +
+					cliente.getLivAutorizzazioni() + ",'" ;
+					//cliente.getLingua() + "','";
 					if (cliente.getNotificaEmail()) sql += "1','";
 					else sql += "0','";
 					if (cliente.getGeolocalizzazione()) sql += "1','";
@@ -682,7 +683,6 @@ public class SaveMySQL {
 			// Creo stringa sql
 			String sql = "UPDATE Clienti SET " 
 					+ "Email = '" + cliente.getEmail()
-					+ ", PassHash = '" + cliente.getPassHash()
 					+ "',Nome = '" + cliente.getNome()
 					+ "',Cognome = '" + cliente.getCognome()
 					+ "',Indirizzo = '" + cliente.getIndirizzo()
@@ -694,6 +694,8 @@ public class SaveMySQL {
 					if(cliente.getGeolocalizzazione()) sql += "1',";
 					else sql += "0',"
 					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
+					
+			System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 

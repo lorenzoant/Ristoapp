@@ -29,51 +29,17 @@ public class ModificaAccountServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String whatsend = request.getParameter("whatsend");
-
-	 if(whatsend.equalsIgnoreCase("modificaaccount")) {
-			
-			// Lettura campi da request e manipolazione prima di inserirli nel database
-			ClientiBean utenteLoggato = null;
-			try {
-				// Identifico l'utente
-				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-				}
-
-			catch (Exception e) {
-				// Nessun ristoratore loggato
-				System.out.println("ModificaAccountServlet: user not logged");
-				ServletContext sc = request.getSession().getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
-				rd.forward(request, response);
-				return;
-			}
-				
-					ClientiBean cliente = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-					request.getSession().removeAttribute("CLIENTEDAMODIFICARE");
-					request.getSession().setAttribute("CLIENTEDAMODIFICARE", cliente);
-					
-					// Reindirizzo a modifica piatto
-					response.sendRedirect("modificaaccount.jsp");
-					return;
-				}
-		
-		
-		
-		else if(whatsend.equalsIgnoreCase("aggiornacliente")) { // Aggiorno sul database con le nuove informazioni ricevute
-			
+						
 			// Prendo alcune info essenziali dal vecchio piatto prima della modifica
 			//ClientiBean vecchiocliente = (ClientiBean)request.getSession().getAttribute("CLIENTEDAMODIFICARE");
-			
+			ClientiBean utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			// Lettura campi da request e manipolazione prima di inserirli nel database
 			String Email = request.getParameter("Email");
-			String PassHash = request.getParameter("PassHash");
 			String Nome = request.getParameter("Nome");
 			String Cognome = request.getParameter("Cognome");
 			String Indirizzo = request.getParameter("Indirizzo");
 			String Comune = request.getParameter("Comune");
-			String Lingua = request.getParameter("Lingua");
+			//String Lingua = request.getParameter("Lingua");
 			
 			Boolean NotificaEmail = true; 
 			if(request.getParameter("NotificaEmail") == null) NotificaEmail = false;
@@ -84,19 +50,15 @@ public class ModificaAccountServlet extends HttpServlet {
 			
 			// Salvataggio dei valori nel Bean
 			ClientiBean cliente = new ClientiBean();
-			GeneraCodice codice = new GeneraCodice();
-			
+			cliente.setIDCliente(utenteLoggato.getIDCliente());
 			cliente.setEmail(Email);
-			cliente.setPassHash(PassHash);
-			//cliente.setPassHash(encrypt.sha1(PassHash));
 			cliente.setCognome(Cognome);
 			cliente.setNome(Nome);
 			cliente.setIndirizzo(Indirizzo);
 			cliente.setComune(Comune);
-			cliente.setLingua(Lingua);
+			//cliente.setLingua(Lingua);
 			cliente.setNotificaEmail(NotificaEmail);
 			cliente.setGeolocalizzazione(Geolocalizzazione);
-			cliente.setCodicePass(codice.Genera());
 			
 			// Aggiorno il piatto nel database
 			SaveMySQL saveOnDb = new SaveMySQL();
@@ -119,5 +81,3 @@ public class ModificaAccountServlet extends HttpServlet {
 			
 		}	
 	}
-
-}
