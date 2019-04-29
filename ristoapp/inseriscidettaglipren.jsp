@@ -6,7 +6,24 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width">
 <title>Dettagli Prenotazione</title>
+<%@include file="graphicspuntoacca.jsp"%>
+
+<div class="mdl-layout__header">
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>RistoApp - Prenotazione</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
+			</div>
 
 <style type="text/css">
 	.antemprima{
@@ -53,7 +70,7 @@
 							<%} %>
 						</td>
 						<td>
-							<input name=<%=id%> type="number" max="15">
+							<input name=<%=id%> type="number" max="15" placeholder="Inserisci numero piatti">
 						</td>
 					</tr>
 					<%

@@ -65,6 +65,13 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				categoria = 0;
 			}
 			
+			int posti = 0;
+			try {
+				posti = Integer.parseInt(request.getParameter("posti"));
+			}catch (Exception e){
+				posti = 0;
+			}
+			
 			boolean climatizzazione = true;
 			if(request.getParameter("ser-climatizzazione") == null) climatizzazione = false;
 			
@@ -89,12 +96,14 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			ristorante.setEmail(request.getParameter("email"));
 			ristorante.setComune(request.getParameter("comuni"));
 			ristorante.setDescrizione(request.getParameter("descrizione"));
+			ristorante.setUrl(request.getParameter("url"));
 			ristorante.setSerClimatizzazione(climatizzazione);
 			ristorante.setSerAnimali(animali);
 			ristorante.setSerWifi(wifi);
 			ristorante.setSerDisabili(disabili);
 			ristorante.setSerParcheggio(parcheggio);
 			ristorante.setIDFCatCucina(categoria);
+			ristorante.setNumeroPosti(posti);
 			ristorante.setIDFCliente(utenteLoggato.getIDCliente());
 			ristorante.setCoordinataLat(0);
 			ristorante.setCoordinataLon(0);
@@ -121,7 +130,7 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				
 			ClientiBean utenteLoggato = null;
 			
-			/*utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			
 			if (utenteLoggato == null) {
 				System.out.println("ModificaRistoranteServlet: user not logged");
@@ -129,16 +138,65 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
 				return;
-			}*/
+			}
+				
+			int categoria = 0;
+			try {
+				categoria = Integer.parseInt(request.getParameter("categoria"));
+			}catch (Exception e){
+				categoria = 0;
+			}
 			
+			int posti = 0;
+			try {
+				posti = Integer.parseInt(request.getParameter("posti"));
+			}catch (Exception e){
+				posti = 0;
+			}
+			
+			boolean climatizzazione = true;
+			if(request.getParameter("ser-climatizzazione") == null) climatizzazione = false;
+			
+			boolean animali = true;
+			if(request.getParameter("ser-animali") == null) animali = false;
+			
+			boolean wifi = true;
+			if(request.getParameter("ser-wifi") == null) wifi = false;
+		
+			boolean disabili = true;
+			if(request.getParameter("ser-disabili") == null) disabili = false;
+			
+			boolean parcheggio = true;
+			if(request.getParameter("ser-parcheggio") == null) parcheggio = false;
+			
+			//salvataggio valori nel bean
+			RistorantiBean ristorante = new RistorantiBean();
+			
+			ristorante.setNome(request.getParameter("nome_ristorante"));
+			ristorante.setIndirizzo(request.getParameter("indirizzo"));
+			ristorante.setTelefono(request.getParameter("telefono"));
+			ristorante.setEmail(request.getParameter("email"));
+			ristorante.setComune(request.getParameter("comuni"));
+			ristorante.setDescrizione(request.getParameter("descrizione"));
+			ristorante.setUrl(request.getParameter("url"));
+			ristorante.setSerClimatizzazione(climatizzazione);
+			ristorante.setSerAnimali(animali);
+			ristorante.setSerWifi(wifi);
+			ristorante.setSerDisabili(disabili);
+			ristorante.setSerParcheggio(parcheggio);
+			ristorante.setIDFCatCucina(categoria);
+			ristorante.setNumeroPosti(posti);
+			ristorante.setIDFCliente(utenteLoggato.getIDCliente());
+			ristorante.setCoordinataLat(0);
+			ristorante.setCoordinataLon(0);
+			ristorante.setSerScegliTavolo(false);
+			
+			// Salvo nel database il piatto creato
 			SaveMySQL saveOnDb = new SaveMySQL();
 			
-			RistorantiBean ristorante = new RistorantiBean();
-				
 			try {
 				// Provo ad aggiungere il ristorante nel database
-				//ristorante = saveOnDb.selectRistorante(utenteLoggato.getIDCliente());
-				ristorante = saveOnDb.selectRistorante(2);
+				saveOnDb.modificaRistorante(ristorante);
 				response.sendRedirect("ilmioristorante.jsp");
 			} 
 			catch (Exception e) {
@@ -149,17 +207,33 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 				rd.forward(request, response);
 			}
+			
 		}else if (whatsend.equalsIgnoreCase("selectristorante")) {
-		
+			
+			ClientiBean utenteLoggato = null;
+			
+			utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			
+			if (utenteLoggato == null) {
+				System.out.println("ModificaRistoranteServlet: user not logged");
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+				return;
+			}
+			
 			SaveMySQL saveOnDb = new SaveMySQL();
 			
 			RistorantiBean ristorante = new RistorantiBean();
 				
 			try {
 				// Provo ad aggiungere il ristorante nel database
-				//ristorante = saveOnDb.selectRistorante(utenteLoggato.getIDCliente());
-				ristorante = saveOnDb.selectRistorante(2);
-				response.sendRedirect("ilmioristorante.jsp");
+				//******************dovrei passare l'ID del ristorante nel caso di + ristoranti per cliente********************
+				ristorante = saveOnDb.getInfoRistoID(2);
+				
+				request.getSession().removeAttribute("MODIFICARISTORANTE");
+				request.getSession().setAttribute("MODIFICARISTORANTE", ristorante);
+				response.sendRedirect("modificaristorante.jsp");
 			} 
 			catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico
