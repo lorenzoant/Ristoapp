@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +20,7 @@ import ristoapp.bean.CarteBean;
 import ristoapp.bean.QueryIntroitiBean;
 import ristoapp.bean.QueryPiattiPrenotatiBean;
 import ristoapp.bean.QueryStatisticheBean;
-import java.util.*;
+
 
 public class SaveMySQL {
 
@@ -535,7 +535,7 @@ public class SaveMySQL {
 				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
 				prenotazione.setData(resultList.getString("Data"));
 				prenotazione.setOra(resultList.getString("Ora"));
-				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
+				prenotazione.setStatoPagamento(resultList.getInt("StatoPagamento"));
 				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
 				prenotazioniList.add(prenotazione);// Aggiungo al vettore
 			}
@@ -578,6 +578,7 @@ public class SaveMySQL {
 
 			// Estraggo dati
 			ArrayList<QueryPiattiPrenotatiBean> prenotazioniList = new ArrayList<QueryPiattiPrenotatiBean>();
+			
 			while(resultList.next()){
 				// Scorro tutte le righe del risultato
 				QueryPiattiPrenotatiBean p = new QueryPiattiPrenotatiBean();
@@ -919,7 +920,7 @@ public class SaveMySQL {
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
 				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
-				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				prenota.setStatoPagamento(result.getInt("StatoPagamento"));
 				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 
@@ -1538,57 +1539,7 @@ public class SaveMySQL {
 		}
 	}// END ottieniStatistiche()
 
-	//PER DISPONILIBTA' DEL RISTORANTE
-/*	public int disp( int IDRistorante) throws Exception{
 
-
-		Statement stmt = null;
-		Connection conn = null;
-
-		try {
-			// Creo la connessione al database
-			conn = getDBConnection();
-			stmt = conn.createStatement();
-
-			Date today = new Date();
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			String today_str = df.format(today);
-
-
-			// Creo stringa sql
-			String sql = "SELECT SUM(NumeroPersone) AS Numero "
-					+ "FROM Prenotazioni"
-					+ " WHERE Data =' " + today_str+ "' &&  IDFRistorante= '" + IDRistorante +"'";
-
-			ResultSet resultList = stmt.executeQuery(sql);
-			int ris = 0;
-
-			while(resultList.next()){// Scorro tutte le righe del risultato
-				ris = resultList.getInt("Numero");
-			}
-
-			return ris; //restituisco la somma totale delle prenotazioni di un dato ristorante nel giorno in cui guardo
-
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL Disp() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
-			throw new Exception(e.getMessage());
-		}
-		finally {
-			// Chiudo la connessione
-			if(stmt != null) {
-				stmt.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-		}
-	}// End disponibilita()
-	*/
 	//QUANTE STELLE HA IL RISTORANTE
 	public int stelle_risto(int IDRistorante) throws Exception{
 		
@@ -1637,7 +1588,7 @@ public class SaveMySQL {
 		
 	}
 	
-	public RistorantiBean getInfoRistoID(int IDRistorante) throws Exception{ // Vellons
+	public ArrayList<RistorantiBean> getInfoRistoID(int IDRistorante) throws Exception{ // Vellons
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -1650,35 +1601,33 @@ public class SaveMySQL {
 			// Creo stringa sql
 			String sql = "SELECT * FROM Ristoranti WHERE IDRistorante = " + IDRistorante  + ";";
 			ResultSet result = stmt.executeQuery(sql);
-			RistorantiBean risto = new RistorantiBean();
-
-			if(result.next()) { // Prelevo i dati dalla prima riga del risultato
-				risto.setIDRistorante(result.getInt("IDRistorante"));
-				risto.setIDFCatCucina(result.getInt("IDFCatCucina"));
-				risto.setIDFCliente(result.getInt("IDFCliente"));
-				risto.setNome(result.getString("Nome"));
-				risto.setCoordinataLat(result.getInt("CoordinataLat"));
-				risto.setCoordinataLon(result.getDouble("CoordinataLon"));
-				risto.setIndirizzo(result.getString("Indirizzo"));
-				risto.setTelefono(result.getString("Telefono"));
-				risto.setEmail(result.getString("Email"));
-				risto.setComune(result.getString("Comune"));
-				risto.setDescrizione(result.getString("Descrizione"));
-				risto.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
-				risto.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
-				risto.setSerAnimali(result.getBoolean("SerAnimali"));
-				risto.setSerWifi(result.getBoolean("SerWifi"));
-				risto.setSerDisabili(result.getBoolean("SerDisabili"));
-				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
-
-				
-				return risto;
+			ArrayList<RistorantiBean> risto = new ArrayList<RistorantiBean>();
+			
+			while(result.next()){
+				// Scorro tutte le righe del risultato
+				RistorantiBean p = new RistorantiBean();
+				p.setIDRistorante(result.getInt("IDRistorante"));
+				p.setIDFCatCucina(result.getInt("IDFCatCucina"));
+				p.setIDFCliente(result.getInt("IDFCliente"));
+				p.setNome(result.getString("Nome"));
+				p.setCoordinataLat(result.getInt("CoordinataLat"));
+				p.setCoordinataLon(result.getDouble("CoordinataLon"));
+				p.setIndirizzo(result.getString("Indirizzo"));
+				p.setTelefono(result.getString("Telefono"));
+				p.setEmail(result.getString("Email"));
+				p.setComune(result.getString("Comune"));
+				p.setDescrizione(result.getString("Descrizione"));
+				p.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
+				p.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
+				p.setSerAnimali(result.getBoolean("SerAnimali"));
+				p.setSerWifi(result.getBoolean("SerWifi"));
+				p.setSerDisabili(result.getBoolean("SerDisabili"));
+				p.setSerParcheggio(result.getBoolean("SerParcheggio"));
+				risto.add(p);// Aggiungo al vettore
 			}
-			else {
-				// Restituisco oggetto vuoto
-				return risto;
-			}
-
+			System.out.println("MySQL prelevaDettagliPrenotazioneConPiatti() confirmed");
+			return (ArrayList<RistorantiBean>)risto;
+			
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL getInfoRistoID() failed");
@@ -1694,4 +1643,5 @@ public class SaveMySQL {
 			}
 		}
 	}
+
 }

@@ -1,11 +1,19 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ristoapp.bean.QueryPiattiPrenotatiBean;
+import ristoapp.bean.RistorantiBean;
+import ristoapp.db.SaveMySQL;
 
 /**
  * Servlet implementation class BachecaServlet
@@ -36,13 +44,37 @@ public class BachecaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String whatsend = request.getParameter("whatsend");
-		String ID = request.getParameter("IDRisto");
-		System.out.println("ciao");
-		if(whatsend.equalsIgnoreCase("scheda")) { 
-			System.out.println("ciao");
-			request.getSession().removeAttribute("RISTO");
-			request.getSession().setAttribute("RISTO", ID);
-			response.sendRedirect("scheda.jsp");
+		int ID = Integer.parseInt(request.getParameter("IDRisto"));
+		
+	
+		
+		if(whatsend.equalsIgnoreCase("scheda")) { // Scarico le informazioni sulla prenotazione
+			int ID1 = Integer.parseInt(request.getParameter("IDRistorante"));
+			RistorantiBean risto = new RistorantiBean();
+			risto.setIDRistorante(ID);
+			
+			SaveMySQL db = new SaveMySQL();
+			
+			try {
+			//ArrayList<InfoRistoranteID> p =d
+			//	ArrayList<QueryPiattiPrenotatiBean> p = db.prelevaDettagliPrenotazioneConPiatti(prenotazione);
+				
+				// Salvo in sessione per aprire nella JSP
+				request.getSession().removeAttribute("DETRISTO");
+				request.getSession().setAttribute("DETRISTO", p);
+				
+				// Reindirizzo alla pagina di visualizzazione
+				response.sendRedirect("visualizzadettagliprenotazione.jsp");
+				return;
+			} catch (Exception e) {
+				// Problema nel database, reindirizzo alla pagine di errore generico
+				e.printStackTrace();
+				
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}	
+			
 		}
 
 		

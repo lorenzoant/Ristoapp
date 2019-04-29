@@ -77,13 +77,14 @@
 	  	
 	  	<div style="overflow-x: auto;">
 	  	<!-- Expandable Textfield -->
-			<form action="#">
+			<form action="BachecaServlet">
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
 			    <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
 			      <i class="material-icons">search</i>
 			    </label>
 			    <div class="mdl-textfield__expandable-holder">
 			      <input class="mdl-textfield__input" type="text" id="sample6">
+			      <input type="hidden" name="ricerca" value="ricerca">
 			      <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
 			    </div>
 			  </div>
@@ -141,7 +142,8 @@
 					</td>
 	
 					<td>
-						<form action="SchedaRisto" name="SchedaRisto" method="post">
+						<form action="BachecaServlet" name="scheda" method="post">
+						
 						<input type="hidden" name="whatsend" value="scheda"></input>
 						<input type="hidden" name="IDRisto" value="<%=IDRistorante%>"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="dettaglio"/>

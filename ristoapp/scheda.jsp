@@ -16,13 +16,13 @@
 	<%@include file="graphicspuntoacca.jsp"%>
 	<%
 	System.out.println("ciao");
-	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null && request.getSession().getAttribute("RISTO") != null ){	
+	if(request.getSession().getAttribute("RISTO") != null ){	
 			ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			RistorantiBean SRisto = (RistorantiBean)request.getSession().getAttribute("RISTO");
 			
 			String nomeLoggato = cli.getNome(); //nome del profilo
 			int ID = SRisto.getIDRistorante(); //id del ristorante
-			System.out.println("ciao");
+			System.out.println(ID);
 			String name = SRisto.getNome();
 				if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
 					response.sendRedirect("login.jsp");
