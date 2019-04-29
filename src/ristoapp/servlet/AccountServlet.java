@@ -46,7 +46,18 @@ public class AccountServlet extends HttpServlet {
 			String Cognome = request.getParameter("Cognome");
 			String Indirizzo = request.getParameter("Indirizzo");
 			String Comune = request.getParameter("Comune");
-			String Lingua = request.getParameter("Lingua");
+			//String Lingua = request.getParameter("Lingua");
+			
+			
+			int livello = 0;
+			try {
+				livello = Integer.parseInt(request.getParameter("livello"));
+			}catch (Exception e){
+				livello = 0;
+			}
+			
+			
+			
 			
 			Boolean NotificaEmail = true; 
 			if(request.getParameter("NotificaEmail") == null) NotificaEmail = false;
@@ -73,9 +84,10 @@ public class AccountServlet extends HttpServlet {
 				cliente.setNome(Nome);
 				cliente.setIndirizzo(Indirizzo);
 				cliente.setComune(Comune);
-				cliente.setLingua(Lingua);
+				//cliente.setLingua(Lingua);
 				cliente.setNotificaEmail(NotificaEmail);
 				cliente.setGeolocalizzazione(Geolocalizzazione);
+				cliente.setLivAutorizzazioni(livello);
 				cliente.setCodicePass(codice.Genera());
 				
 				//Salvo in sessione

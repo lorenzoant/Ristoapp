@@ -86,7 +86,7 @@ public class SaveMySQL {
 						prenotazione.getNumeroPersone() + "');";
 
 			// Committo sul server
-			
+
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			rs= stmt.getGeneratedKeys();
 			if(rs.next())
@@ -110,7 +110,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			System.out.println("il tuo id è "+ id);
+			System.out.println("il tuo id ï¿½ "+ id);
 			return id;
 	}//End nuovaPrenotazione()
 
@@ -578,7 +578,7 @@ public class SaveMySQL {
 
 			// Estraggo dati
 			ArrayList<QueryPiattiPrenotatiBean> prenotazioniList = new ArrayList<QueryPiattiPrenotatiBean>();
-			
+
 			while(resultList.next()){
 				// Scorro tutte le righe del risultato
 				QueryPiattiPrenotatiBean p = new QueryPiattiPrenotatiBean();
@@ -617,7 +617,7 @@ public class SaveMySQL {
 
 		Statement stmt = null;
 		Connection conn = null;
-		
+
 		try {
 			// Creo la connessione al database
 			conn = getDBConnection();
@@ -627,7 +627,7 @@ public class SaveMySQL {
 			// Creo stringa sql
 			Date data = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-			
+
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
 					cliente.getIDCliente() + "','" +
 					cliente.getEmail() + "','" +
@@ -636,8 +636,9 @@ public class SaveMySQL {
 					cliente.getCognome() + "','" +
 					cliente.getLivAutorizzazioni() + "','" +
 					cliente.getIndirizzo() + "','" +
-					cliente.getComune() + "','" +
-					cliente.getLingua() + "','";
+					cliente.getComune() + "'," +
+					cliente.getLivAutorizzazioni() + ",'" ;
+					//cliente.getLingua() + "','";
 					if (cliente.getNotificaEmail()) sql += "1','";
 					else sql += "0','";
 					if (cliente.getGeolocalizzazione()) sql += "1','";
@@ -681,9 +682,8 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "UPDATE Clienti SET " 
+			String sql = "UPDATE Clienti SET "
 					+ "Email = '" + cliente.getEmail()
-					+ ", PassHash = '" + cliente.getPassHash()
 					+ "',Nome = '" + cliente.getNome()
 					+ "',Cognome = '" + cliente.getCognome()
 					+ "',Indirizzo = '" + cliente.getIndirizzo()
@@ -695,6 +695,8 @@ public class SaveMySQL {
 					if(cliente.getGeolocalizzazione()) sql += "1',";
 					else sql += "0',"
 					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
+
+			System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
@@ -1077,7 +1079,7 @@ public class SaveMySQL {
 		}
 	}//End aggiungiCarta()
 
-	
+
 
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEL RISTORANTE DAL DATABASE /ARRAYLIST
 	public ArrayList<RistorantiBean> InformazioniRistorante() throws Exception{
@@ -1142,7 +1144,7 @@ public class SaveMySQL {
 			}
 		}
 	}// END InformazioniRistorante()
-	
+
 	public void inserisciRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
@@ -1156,7 +1158,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" +
+			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio, NumeroPosti, URL) VALUES ('" +
 					ristorante.getIDFCatCucina() + "','" +
 					ristorante.getIDFCliente() + "','" +
 					ristorante.getNome() +  "','" +
@@ -1177,9 +1179,10 @@ public class SaveMySQL {
 					else sql += "0','";
 					if(ristorante.getSerDisabili()) sql += "1','";
 					else sql += "0','";
-					if(ristorante.getSerParcheggio()) sql += "1');";
-					else sql += "0');";
-
+					if(ristorante.getSerParcheggio()) sql += "1'";
+					else sql += "0'";
+					sql += "'" + ristorante.getNumeroPosti() + "', '" +
+					ristorante.getUrl() + "');";
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -1211,7 +1214,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End inserisciRistorante()
-	
+
 	public void modificaRistorante(RistorantiBean ristorante) throws Exception{
 
 		Statement stmt = null;
@@ -1223,7 +1226,7 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			// Creo stringa sql
 			String sql = "UPDATE Ristoranti SET " +
 					"IDFCatCucina = '" + ristorante.getIDFCatCucina() + "', " +
@@ -1253,8 +1256,10 @@ public class SaveMySQL {
 					sql += "SerParcheggio = ";
 					if(ristorante.getSerParcheggio()) sql += "'1'";
 					else sql += "'0'";
+					sql += "NumeroPosti = '" + ristorante.getNumeroPosti() + "', " +
+					"URL = '" + ristorante.getUrl() + "'";
 					sql += " WHERE IDFCliente = '" + ristorante.getIDFCliente() + "'";
-					 
+
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
@@ -1279,65 +1284,6 @@ public class SaveMySQL {
 		}
 	}// End modificaRistorante()
 
-	public RistorantiBean selectRistorante(int id) throws Exception{
-
-		Statement stmt = null;
-		Connection conn = null;
-
-		try {
-			// Creo la connessione al database
-			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement();
-
-			// Creo stringa sql
-			String sql = "SELECT * FROM Ristoranti INNER JOIN Clienti  ON Ristoranti.IDFCliente = Clienti.IDCliente WHERE Clienti.IDCliente = '" + id + "';";
-			ResultSet result = stmt.executeQuery(sql);
-
-			RistorantiBean ristorante = new RistorantiBean();
-
-			if(result.next()) {
-				ristorante.setIDFCatCucina(result.getInt("IDFCatCucina"));
-				ristorante.setIDFCliente(result.getInt("IDFCliente"));
-				ristorante.setNome(result.getString("Nome"));
-				ristorante.setCoordinataLat(result.getInt("CoordinataLat"));
-				ristorante.setCoordinataLon(result.getInt("CoordinataLon"));
-				ristorante.setIndirizzo(result.getString("Indirizzo"));
-				ristorante.setTelefono(result.getString("Telefono"));
-				ristorante.setEmail(result.getString("Email"));
-				ristorante.setComune(result.getString("Comune"));
-				ristorante.setDescrizione(result.getString("Descrizione"));
-				ristorante.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
-				ristorante.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
-				ristorante.setSerAnimali(result.getBoolean("SerAnimali"));
-				ristorante.setSerWifi(result.getBoolean("SerWifi"));
-				ristorante.setSerDisabili(result.getBoolean("SerDisabili"));
-				ristorante.setSerParcheggio(result.getBoolean("SerParcheggio"));
-			}
-			System.out.println("MySQL selectRistorante() confirmed");
-
-			return ristorante;
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL selectRistorante() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
-			throw new Exception(e.getMessage());
-		}
-		finally {
-			// Chiudo la connessione
-			if(stmt != null) {
-				stmt.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-		}
-	}// End selectRistorante()
-	
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
 	public ArrayList<ClientiBean> InformazioniClienti(String ordine) throws Exception{
 
@@ -1542,7 +1488,7 @@ public class SaveMySQL {
 
 	//QUANTE STELLE HA IL RISTORANTE
 	public int stelle_risto(int IDRistorante) throws Exception{
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -1552,12 +1498,12 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 					// Creo stringa sql
-	
-			
+
+
 			String sql = "SELECT AVG(Stelle) AS Media "
 					+ "FROM RecensioniRistoranti"
 					+ " WHERE  IDFRistorante= '" + IDRistorante +"'";
-			
+
 			ResultSet resultList = stmt.executeQuery(sql);
 			double ris = 0;
 
@@ -1565,7 +1511,7 @@ public class SaveMySQL {
 				ris = resultList.getInt("Media");
 			}
 			System.out.println(ris);
-			return (int) ris; 
+			return (int) ris;
 
 		}
 		catch (SQLException e) {
@@ -1585,9 +1531,9 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-		
+
 	}
-	
+
 	public ArrayList<RistorantiBean> getInfoRistoID(int IDRistorante) throws Exception{ // Vellons
 
 		Statement stmt = null;
@@ -1602,7 +1548,7 @@ public class SaveMySQL {
 			String sql = "SELECT * FROM Ristoranti WHERE IDRistorante = " + IDRistorante  + ";";
 			ResultSet result = stmt.executeQuery(sql);
 			ArrayList<RistorantiBean> risto = new ArrayList<RistorantiBean>();
-			
+
 			while(result.next()){
 				// Scorro tutte le righe del risultato
 				RistorantiBean p = new RistorantiBean();
@@ -1627,7 +1573,7 @@ public class SaveMySQL {
 			}
 			System.out.println("MySQL prelevaDettagliPrenotazioneConPiatti() confirmed");
 			return (ArrayList<RistorantiBean>)risto;
-			
+
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL getInfoRistoID() failed");

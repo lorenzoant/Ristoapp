@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import =  "ristoapp.bean.ClientiBean"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="ristoapp.bean.ClientiBean"%>
+<%@page import="java.sql.*"%>
+<%@page import="ristoapp.db.SaveMySQL"%>
+    
+<!DOCTYPE html>
+<html>
 <head>
 		<meta charset="ISO-8859-1">
 		<title>Nuovo Account</title>
@@ -75,17 +76,54 @@
 					</tr>
 					<tr>
 			  			<td>
-					  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							    <input class="mdl-textfield__input" type="text" id="comune" name="Comune">
-							    <label class="mdl-textfield__label" for="comune">Comune</label>
-					  		</div>
+					  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
+								<select class="mdl-textfield__input" name = "comuni">
+									<option value="null"> </option>
+										<% 
+					
+										Connection conn = null;
+										ResultSet rs = null;
+										
+										try{
+											// Stabilisco la connessione con il database
+											conn = SaveMySQL.getDBConnection();
+											
+										    PreparedStatement pst = conn.prepareStatement("SELECT * FROM Comuni;");
+										    rs=pst.executeQuery();
+										    
+										     while(rs.next()){ // Scorro le righe
+										          String name = rs.getString("Nome");
+										%>
+										<option value="<%=name%>"><%=name%></option>
+										<%
+										     }
+										}
+										catch(Exception e){    
+											System.out.println(e.getMessage());
+										}
+										%>
+										</select>
+					        			<label class="mdl-textfield__label" for="nome">Comuni</label>
+					        </div>
 				  		</td>
 					</tr>
-					<tr>
+					<!-- tr>
 			  			<td>
 					  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							    <input class="mdl-textfield__input" type="text" id="lingua" name="Lingua">
 							    <label class="mdl-textfield__label" for="lingua">Lingua</label>
+					  		</div>
+				  		</td>
+					</tr> -->
+					<tr>
+			  			<td>
+			  			
+			  			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
+						    <select class="mdl-textfield__input" id="livello" name="livello">
+								<option value="0">Cliente</option>
+								<option value="1">Ristoratore</option>
+							</select>
+							<label class="mdl-textfield__label" for="livello">Tipo account</label>
 					  		</div>
 				  		</td>
 					</tr>

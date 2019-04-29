@@ -31,6 +31,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String whatsend = request.getParameter("whatsend");
 		
+		//Creo la prenotazione del cliente
 		if(whatsend.equalsIgnoreCase("creaprenotazione")) {
 			String data = request.getParameter("data");
 			String ora = request.getParameter("ora");
@@ -58,6 +59,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 				e.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
 			}
 			
 			request.getSession().removeAttribute("IDPREN");
@@ -67,6 +69,9 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			
 			response.sendRedirect("inseriscidettaglipren.jsp");
 		}
+		
+		
+		//Qui inserisco i dettagli della prenotazione, cioè i piatti che vengo ordinati in inseriscidettaglipren.jsp
 		if(whatsend.equalsIgnoreCase("dettaglipren")) {
 			ArrayList<PiattiBean> rs;
 			SaveMySQL db= new SaveMySQL();
@@ -78,21 +83,24 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 					
 					if(rs.get(i).getDisponibile()==true){
 						//TODO: inserire dettaglipren
+						
 					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
-			}
-			
-			
+				rd.forward(request, response);
+			}			
 		}
-		//TODO: Prevedi nodettagli
+		
+		
+		//Nel caso in cui il cliente prenota al ristorante e non vuole ordinare online non aggiungo nessun dettaglio alla prenotazione
 		if(whatsend.equalsIgnoreCase("nodettagli")) {
 			System.out.println("Reindirizzamento");
 			ServletContext sc = request.getSession().getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/prenotazionecompletata.jsp");
+			rd.forward(request, response);
 			
 		}	
 			

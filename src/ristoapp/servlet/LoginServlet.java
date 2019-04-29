@@ -87,7 +87,7 @@ public class LoginServlet extends HttpServlet {
 					if(risto.getIDRistorante() == 0) {
 						// L'utente ha appena completato la registrazione, deve ancora registrare il ristorante
 						request.getSession().removeAttribute("RISTORANTELOGGATO");
-						response.sendRedirect("erroregenerico.jsp");
+						response.sendRedirect("registrazioneristorante.jsp");
 					}
 					else {
 						System.out.println("Interfaccia ristoratore");
