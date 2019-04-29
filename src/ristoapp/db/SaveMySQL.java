@@ -1155,7 +1155,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio) VALUES ('" +
+			String sql = "INSERT INTO Ristoranti(IDFCatCucina, IDFCliente, Nome, CoordinataLat, CoordinataLon, Indirizzo, Telefono, Email, Comune, Descrizione, SerScegliTavolo, SerClimatizzazione, SerAnimali, SerWifi, SerDisabili, SerParcheggio, NumeroPosti, URL) VALUES ('" +
 					ristorante.getIDFCatCucina() + "','" +
 					ristorante.getIDFCliente() + "','" +
 					ristorante.getNome() +  "','" +
@@ -1176,9 +1176,10 @@ public class SaveMySQL {
 					else sql += "0','";
 					if(ristorante.getSerDisabili()) sql += "1','";
 					else sql += "0','";
-					if(ristorante.getSerParcheggio()) sql += "1');";
-					else sql += "0');";
-
+					if(ristorante.getSerParcheggio()) sql += "1'";
+					else sql += "0'";
+					sql += "'" + ristorante.getNumeroPosti() + "', '" +
+					ristorante.getUrl() + "');";
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -1252,6 +1253,8 @@ public class SaveMySQL {
 					sql += "SerParcheggio = ";
 					if(ristorante.getSerParcheggio()) sql += "'1'";
 					else sql += "'0'";
+					sql += "NumeroPosti = '" + ristorante.getNumeroPosti() + "', " +
+					"URL = '" + ristorante.getUrl() + "'";
 					sql += " WHERE IDFCliente = '" + ristorante.getIDFCliente() + "'";
 					 
 			// Committo sul server
@@ -1277,65 +1280,6 @@ public class SaveMySQL {
 			}
 		}
 	}// End modificaRistorante()
-
-	public RistorantiBean selectRistorante(int id) throws Exception{
-
-		Statement stmt = null;
-		Connection conn = null;
-
-		try {
-			// Creo la connessione al database
-			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement();
-
-			// Creo stringa sql
-			String sql = "SELECT * FROM Ristoranti INNER JOIN Clienti  ON Ristoranti.IDFCliente = Clienti.IDCliente WHERE Clienti.IDCliente = '" + id + "';";
-			ResultSet result = stmt.executeQuery(sql);
-
-			RistorantiBean ristorante = new RistorantiBean();
-
-			if(result.next()) {
-				ristorante.setIDFCatCucina(result.getInt("IDFCatCucina"));
-				ristorante.setIDFCliente(result.getInt("IDFCliente"));
-				ristorante.setNome(result.getString("Nome"));
-				ristorante.setCoordinataLat(result.getInt("CoordinataLat"));
-				ristorante.setCoordinataLon(result.getInt("CoordinataLon"));
-				ristorante.setIndirizzo(result.getString("Indirizzo"));
-				ristorante.setTelefono(result.getString("Telefono"));
-				ristorante.setEmail(result.getString("Email"));
-				ristorante.setComune(result.getString("Comune"));
-				ristorante.setDescrizione(result.getString("Descrizione"));
-				ristorante.setSerScegliTavolo(result.getBoolean("SerScegliTavolo"));
-				ristorante.setSerClimatizzazione(result.getBoolean("SerClimatizzazione"));
-				ristorante.setSerAnimali(result.getBoolean("SerAnimali"));
-				ristorante.setSerWifi(result.getBoolean("SerWifi"));
-				ristorante.setSerDisabili(result.getBoolean("SerDisabili"));
-				ristorante.setSerParcheggio(result.getBoolean("SerParcheggio"));
-			}
-			System.out.println("MySQL selectRistorante() confirmed");
-
-			return ristorante;
-		}
-		catch (SQLException e) {
-			// Se ricevo un errore faccio il rollback
-			System.out.println("MySQL selectRistorante() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
-			throw new Exception(e.getMessage());
-		}
-		finally {
-			// Chiudo la connessione
-			if(stmt != null) {
-				stmt.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-		}
-	}// End selectRistorante()
 	
 	//FUNZIONE PER PRENDERE TUTTI I DATI DEi CLIENTI DAL DATABASE /ARRAYLIST
 	public ArrayList<ClientiBean> InformazioniClienti(String ordine) throws Exception{
@@ -1670,7 +1614,8 @@ public class SaveMySQL {
 				risto.setSerWifi(result.getBoolean("SerWifi"));
 				risto.setSerDisabili(result.getBoolean("SerDisabili"));
 				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
-
+				risto.setNumeroPosti(result.getInt("NumeroPosti"));
+				risto.setUrl(result.getString("URL"));
 				
 				return risto;
 			}
