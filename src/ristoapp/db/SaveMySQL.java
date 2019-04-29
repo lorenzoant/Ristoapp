@@ -535,7 +535,7 @@ public class SaveMySQL {
 				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
 				prenotazione.setData(resultList.getString("Data"));
 				prenotazione.setOra(resultList.getString("Ora"));
-				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
+				prenotazione.setStatoPagamento(resultList.getInt("StatoPagamento"));
 				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
 				prenotazioniList.add(prenotazione);// Aggiungo al vettore
 			}
@@ -919,7 +919,7 @@ public class SaveMySQL {
 				prenota.setIDFCliente(result.getInt("IDFCliente"));
 				prenota.setData(result.getString("Data"));
 				//prenota.setOra(result.getTime("Ora"));
-				prenota.setStatoPagamento(result.getBoolean("StatoPagamento"));
+				prenota.setStatoPagamento(result.getInt("StatoPagamento"));
 				prenota.setNumeroPersone(result.getString("NumeroPersone"));
 
 
