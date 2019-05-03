@@ -62,7 +62,7 @@
 				<a class="mdl-navigation__link" href="profilo.jsp">Profilo di <%=nomeLoggato%></a>
 		        <a class="mdl-navigation__link" href="mappa.jsp">About </a>
 		        <a class="mdl-navigation__link" href="">Contatti </a>
-		        <a class="mdl-navigation__link" href="">Mappa </a>
+		        <a class="mdl-navigation__link" href="mappa.jsp">Mappa </a>
 			    <hr>
 			    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 		  	</nav>

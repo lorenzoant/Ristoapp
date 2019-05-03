@@ -1,38 +1,29 @@
+<!DOCTYPE html>
 <html>
-<head>
-<script src="jquery-2.1.4.js"></script>
-<link rel="stylesheet" type="text/css" href="styles.css">
-<style>
-      #map {
-        height: 500px;
-      }
-</style>
-</head>
-<body>
-<div id="navbar"><span>Google Maps - Javascript API</span></div>
-<div id="wrapper">
-<div id="map"></div>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 9
-        });
-		
-	var marker = new google.maps.Marker({
-    position: {lat: -34.397, lng: 150.644},
-    map: map,
-    title: 'Hello World!',
-	icon: 'pin.png',
-	animation: google.maps.Animation.BOUNCE,
-	draggable: true
-  });
-	}
-	  
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7J1zsErb9_7jxNu5KU5kIENFObAQEbl0&sensor=false">
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"
-    async defer></script>
-</div>
-</body>
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(48.209331, 16.381302),
+          zoom: 4
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"/>
+  </body>
 </html>
