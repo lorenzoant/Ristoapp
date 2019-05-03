@@ -1,46 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
 <html>
 <head>
-			<meta name="viewport" content="width=device-width">
-			<title>Mappa </title>
-
-			<%@include file="graphicspuntoacca.jsp"%>
-
-			<div class="mdl-layout__header">
-				<center>
-						<table>
-							<tr>
-								<td>
-									<h2>RistoApp - Mappa</h2>
-								</td>
-								<td>
-									<img class="logo" src="MEDIA/logo.png"/>
-								</td>
-							</tr>
-						</table>
-				</center>
-			</div>
-
-		</head>
+<script src="jquery-2.1.4.js"></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+      #map {
+        height: 500px;
+      }
+</style>
+</head>
 <body>
-<div>
-			<!-- API GOOGLE DA METTERE LATO A DESTRA -->
-			
-			 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
-			<script>
-				 var map;
-					function initialize() {
-  						 var mapOptions = {
-   						 zoom: 8,
-   						 center: new google.maps.LatLng(-34.397, 150.644)
- 						 };
-  						 map = new google.maps.Map(document.getElementById('map-canvas'),
-     				     mapOptions);
-					}
-					google.maps.event.addDomListener(window, 'load', initialize);
-			</script>
-		</div>
+<div id="navbar"><span>Google Maps - Javascript API</span></div>
+<div id="wrapper">
+<div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 9
+        });
+		
+	var marker = new google.maps.Marker({
+    position: {lat: -34.397, lng: 150.644},
+    map: map,
+    title: 'Hello World!',
+	icon: 'pin.png',
+	animation: google.maps.Animation.BOUNCE,
+	draggable: true
+  });
+	}
+	  
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"
+    async defer></script>
+</div>
 </body>
 </html>

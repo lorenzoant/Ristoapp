@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ristoapp.bean.QueryPiattiPrenotatiBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
 
@@ -49,22 +48,20 @@ public class BachecaServlet extends HttpServlet {
 	
 		
 		if(whatsend.equalsIgnoreCase("scheda")) { // Scarico le informazioni sulla prenotazione
-			int ID1 = Integer.parseInt(request.getParameter("IDRistorante"));
-			RistorantiBean risto = new RistorantiBean();
-			risto.setIDRistorante(ID);
+			
 			
 			SaveMySQL db = new SaveMySQL();
 			
 			try {
-			//ArrayList<InfoRistoranteID> p =d
-			//	ArrayList<QueryPiattiPrenotatiBean> p = db.prelevaDettagliPrenotazioneConPiatti(prenotazione);
+				ArrayList<RistorantiBean> p = db.getInfoRistoID(ID);
+	
 				
 				// Salvo in sessione per aprire nella JSP
 				request.getSession().removeAttribute("DETRISTO");
 				request.getSession().setAttribute("DETRISTO", p);
 				
 				// Reindirizzo alla pagina di visualizzazione
-				response.sendRedirect("visualizzadettagliprenotazione.jsp");
+				response.sendRedirect("scheda.jsp");
 				return;
 			} catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico

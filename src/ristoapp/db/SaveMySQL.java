@@ -1569,9 +1569,10 @@ public class SaveMySQL {
 				p.setSerWifi(result.getBoolean("SerWifi"));
 				p.setSerDisabili(result.getBoolean("SerDisabili"));
 				p.setSerParcheggio(result.getBoolean("SerParcheggio"));
+	
 				risto.add(p);// Aggiungo al vettore
 			}
-			System.out.println("MySQL prelevaDettagliPrenotazioneConPiatti() confirmed");
+			System.out.println("MySQL ristoid() confirmed");
 			return (ArrayList<RistorantiBean>)risto;
 
 		}
