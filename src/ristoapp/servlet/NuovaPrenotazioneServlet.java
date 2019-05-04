@@ -75,7 +75,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 		//Qui inserisco i dettagli della prenotazione, cioè i piatti che vengo ordinati in inseriscidettaglipren.jsp
 		if(whatsend.equalsIgnoreCase("dettaglipren")) {
 			ArrayList<PiattiBean> rs;
-			ArrayList<PrenotazioniDettagliBean>piatti;
+			ArrayList<PrenotazioniDettagliBean> piatti = null;
 			SaveMySQL db= new SaveMySQL();
 			//int risto= Integer.parseInt(request.getSession().getAttribute("idristorante").toString());
 			int risto=1;
@@ -90,11 +90,14 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 							PrenotazioniDettagliBean piatto= new PrenotazioniDettagliBean();
 							piatto.setIDFOrdine(Integer.parseInt(request.getSession().getAttribute("IDPREN").toString()));
 							piatto.setIDFPiatto(piattoid);
-							piatto.setPrezzo(prezzo);
-							//TODO: prendi prezzo e fai caricamentos
-						}
+							piatto.setPrezzo(db.prezzopiatto(piattoid));
+							piatto.setQuantita(Integer.parseInt(request.getParameter(Integer.toString(piattoid))));
+							piatto.setSconto(0);//TODO:modificare per ottenere sconti
+							piatti.add(piatto);
+						}//TODO: fai caricamento
 					}
 				}
+				db.inserisciDettagli(piatti);
 			} catch (Exception e) {
 				e.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
