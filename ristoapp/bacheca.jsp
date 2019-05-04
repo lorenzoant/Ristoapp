@@ -30,7 +30,7 @@
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 		nomeLoggato = cli.getNome(); //nome del profilo
 		
-  		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
+  		if(cli.getGeolocalizzazione() != true){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}%>
 	<%}
