@@ -61,6 +61,7 @@ public class SaveMySQL {
 	}// End getDBConnection()
 
 
+	
 
 	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
 		Statement stmt = null;
@@ -110,12 +111,12 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			System.out.println("il tuo id ï¿½ "+ id);
+			System.out.println("il tuo id è "+ id);
 			return id;
 	}//End nuovaPrenotazione()
 
 
-	public void inserisciDettagli(PrenotazioniDettagliBean dettagli) throws Exception{
+	public void inserisciDettagli(ArrayList<PrenotazioniDettagliBean> dettagli) throws Exception{
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -125,16 +126,20 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-
+			
+			for(int i=0; i<dettagli.size(); i++) {
+			
 			String sql = "INSERT INTO PrenotazioniDettagli (IDFOrdine, IDFPiatto, Prezzo, Sconto, Quantita) VALUES ('" +
-						dettagli.getIDFOrdine() + "','" +
-						dettagli.getIDFPiatto() + "','" +
-						dettagli.getPrezzo() + "','" +
-						dettagli.getSconto() + "','" +
-						dettagli.getQuantita() + "');";
+						dettagli.get(i).getIDFOrdine() + "','" +
+						dettagli.get(i).getIDFPiatto() + "','" +
+						dettagli.get(i).getPrezzo() + "','" +
+						dettagli.get(i).getSconto() + "','" +
+						dettagli.get(i).getQuantita() + "');";
 
-			// Committo sul server
-			stmt.executeUpdate(sql);
+				// Committo sul server
+				stmt.executeUpdate(sql);
+			}
+			
 
 			System.out.println("MySQL inserisciDettagli() confirmed");
 		}
@@ -156,6 +161,43 @@ public class SaveMySQL {
 			}
 		}
 	}//End inserisciDettagli()
+	
+	public double prezzopiatto(int piatto) throws Exception{  // TAZZA
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT Prezzo FROM Piatti WHERE IDPiatto = " + piatto + ";";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			resultList.next();
+
+			System.out.println("MySQL prelevaPiattRistorante() confirmed");
+			return resultList.getDouble("Prezzo");
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL prelevaPiattRistorante() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End prezzopiatto()
 
 
 	public ArrayList<PiattiBean> prelevaPiattRistorante(int risto) throws Exception{  // Vellons
