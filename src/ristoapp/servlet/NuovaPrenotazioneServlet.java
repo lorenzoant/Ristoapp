@@ -32,6 +32,17 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String whatsend = request.getParameter("whatsend");
 		
+		
+		//Ricevo l'id del ristorante
+		if(whatsend.equalsIgnoreCase("prenota")) {
+			String idristo = request.getParameter("idristorante");
+			
+			request.getSession().removeAttribute("IDRISTO");
+			request.getSession().setAttribute("IDRISTO", idristo);
+			
+			response.sendRedirect("nuovaprenotazione.jsp");
+		}
+		
 		//Creo la prenotazione del cliente
 		if(whatsend.equalsIgnoreCase("creaprenotazione")) {
 			String data = request.getParameter("data");
@@ -39,16 +50,15 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			String posti = request.getParameter("posti");
 			int categoria = Integer.parseInt(request.getParameter("categoria"));
 			
-			//ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI");
+			ClientiBean cliente= (ClientiBean) request.getSession().getAttribute("CREDENZIALI"); //Ricavo l'idutente
 			PrenotazioniBean prenotazione= new PrenotazioniBean();
-			prenotazione.setIDFCliente(1/*cliente.getIDCliente()*/);
+			prenotazione.setIDFCliente(cliente.getIDCliente());
 			prenotazione.setData(data);
 			prenotazione.setOra(ora);
 			prenotazione.setNumeroPersone(posti);
 			prenotazione.setIDFCatPrenotazione(categoria);
 			prenotazione.setStatoPagamento(0);
-			int ID = Integer.parseInt(request.getParameter("idristorante"));
-			//int idristorante=  (int) request.getSession().getAttribute("idristorante");
+			int ID = Integer.parseInt(request.getSession().getAttribute("idristorante").toString()); //Ricavo l'idristorante
 			prenotazione.setIDFRistorante(ID);
 			int IDPren = 0;
 			SaveMySQL db = new SaveMySQL();

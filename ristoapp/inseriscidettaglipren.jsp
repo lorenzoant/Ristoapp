@@ -1,7 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="ristoapp.bean.PiattiBean"%>
+    pageEncoding="ISO-8859-1" import="ristoapp.bean.PiattiBean" import="ristoapp.bean.ClientiBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +31,22 @@
 		height: 100px;
 	}
 </style>
+
+	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
+	
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome(); //nome del profilo
+		
+  		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
+  			response.sendRedirect("login.jsp");
+  		}%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
 </head>
 <body>
 <center>

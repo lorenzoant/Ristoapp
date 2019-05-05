@@ -161,6 +161,7 @@
 				<td>
 					<form action="NuovaPrenotazione" name="scheda" method="post">
 						<input type="hidden" name="idristorante" value="<%=ris.getIDRistorante()%>"></input>
+						<input type="hidden" name="whatsend" value="prenota"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="prenota"/>
 					</form>
 				
