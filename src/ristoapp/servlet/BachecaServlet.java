@@ -54,7 +54,7 @@ public class BachecaServlet extends HttpServlet {
 			
 			try {
 				ArrayList<RistorantiBean> p = db.getInfoRistoID(ID);
-	
+				
 				
 				// Salvo in sessione per aprire nella JSP
 				request.getSession().removeAttribute("DETRISTO");

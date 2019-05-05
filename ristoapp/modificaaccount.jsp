@@ -29,7 +29,7 @@
 	<div class="mdl-layout__header">		
 		<table style="width:100%">
 			<tr>
-				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+				<td align="left"><a href="profilo.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
 					<h2 style="display: inline;vertical-align:middle">Modifica account</h2>
 					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
