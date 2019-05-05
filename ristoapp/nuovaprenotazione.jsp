@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="ristoapp.bean.ClientiBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +23,22 @@
 						</table>
 				</center>
 			</div>
+			
+	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
+	
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome(); //nome del profilo
+		
+  		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
+  			response.sendRedirect("login.jsp");
+  		}%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
 </head>
 <body class="text-center">
 <center>
