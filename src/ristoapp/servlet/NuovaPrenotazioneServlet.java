@@ -76,7 +76,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 		//Qui inserisco i dettagli della prenotazione, cioè i piatti che vengo ordinati in inseriscidettaglipren.jsp
 		if(whatsend.equalsIgnoreCase("dettaglipren")) {
 			ArrayList<PiattiBean> rs;
-			ArrayList<PrenotazioniDettagliBean> piatti = null;
+			ArrayList<PrenotazioniDettagliBean> piatti = new ArrayList<PrenotazioniDettagliBean>();
 			SaveMySQL db= new SaveMySQL();
 			//int risto= Integer.parseInt(request.getSession().getAttribute("idristorante").toString());
 			int risto=1;
@@ -87,7 +87,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 					if(rs.get(i).getDisponibile()==true){
 						//cerco i risultati e li invio al databass
 						int piattoid = rs.get(i).getIDPiatto();
-						if(request.getParameter(Integer.toString(piattoid)) != null) {
+						if(request.getParameter(Integer.toString(piattoid)) != "") {
 							PrenotazioniDettagliBean piatto= new PrenotazioniDettagliBean();
 							piatto.setIDFOrdine(Integer.parseInt(request.getSession().getAttribute("IDPREN").toString()));
 							piatto.setIDFPiatto(piattoid);
@@ -95,10 +95,13 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 							piatto.setQuantita(Integer.parseInt(request.getParameter(Integer.toString(piattoid))));
 							piatto.setSconto(0);//TODO:modificare per ottenere sconti
 							piatti.add(piatto);
-						}//TODO: fai caricamento
+						}
 					}
 				}
 				db.inserisciDettagli(piatti);
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/prenotazionecompletataconpiatti.jsp");
+				rd.forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
@@ -110,7 +113,6 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 		
 		//Nel caso in cui il cliente prenota al ristorante e non vuole ordinare online non aggiungo nessun dettaglio alla prenotazione
 		if(whatsend.equalsIgnoreCase("nodettagli")) {
-			System.out.println("Reindirizzamento");
 			ServletContext sc = request.getSession().getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/prenotazionecompletata.jsp");
 			rd.forward(request, response);
