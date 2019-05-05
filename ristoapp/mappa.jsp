@@ -1,33 +1,37 @@
 	<%@page import="ristoapp.bean.ClientiBean"%>
-	<%@page import="java.util.concurrent.TimeUnit" %>
-	
-	
+	<%@page import="ristoapp.bean.RistorantiBean"%>
+	<%@page import="java.util.concurrent.TimeUnit" %> 
+	<%@page import="ristoapp.db.SaveMySQL" %>
+	<%@page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <meta charset="ISO-8859-1">
-	<title>Mappa</title>
-	<%@include file="graphicspuntoacca.jsp"%>
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 80% }
+    <title>Mappa</title>
+    <%@include file="graphicspuntoacca.jsp"%>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
     </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7J1zsErb9_7jxNu5KU5kIENFObAQEbl0&sensor=false">
-    </script>
-   
   </head>
-  <body onload="initialize()">
-  
-	<div class="mdl-layout mdl-js-layout">
+  <body>
+  <div class="mdl-layout mdl-js-layout">
 	    <header class="custom-header mdl-layout__header mdl-layout__header">
 			<div>
 				<table style="width:100%">
 					<tr>
-						<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+						<td align="left"><a href="bacheca.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 						<td align="center" style="width:100%">
 							<h2 style="display: inline;vertical-align:middle">Mappa</h2>
 							<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
@@ -35,19 +39,52 @@
 					</tr>
 				</table>
 			</div>
-		</header> 
+		</header>
+    <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 45.4642700, lng: 9.1895100},
+          zoom: 12
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 		
-		<script>
-		 function initialize() {
-		        var mapOptions = {
-		          center: new google.maps.LatLng(45.9441565, 8.5571177),
-		          zoom: 8
-		        };
-		        map = new google.maps.Map(document.getElementById("demo"),
-		            mapOptions);
-		      }
-		      google.maps.event.addDomListener(window, 'load', initialize);
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('You.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+	  
     </script>
-   <div id="demo"></div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JYM6YP2B7egPqgDN7t7RvaK4QMTyS9w&callback=initMap">
+    </script>
   </body>
 </html>

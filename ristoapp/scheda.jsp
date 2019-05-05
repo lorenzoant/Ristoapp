@@ -13,6 +13,7 @@
 		String nomeLoggato = "";
 		if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 			ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			
 			nomeLoggato = cli.getNome();
 	  		if(cli.getLivAutorizzazioni() != 0){
 	  			// L'utente non è un cliente
@@ -29,7 +30,7 @@
 	<div class="mdl-layout__header">		
 		<table style="width:100%">
 			<tr>
-				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+				<td align="left"><a href="bacheca.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
 					<h2 style="display: inline;vertical-align:middle">Dettaglio Ristorante </h2>
 					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
@@ -57,7 +58,6 @@
 				<th>Telefono</th>
 				<th>Posta elettronica</th>
 				<th>Comune</th>
-				<th>&#8364;</th>
 				<th>&#127777;</th>
 				<th>&#128021;</th>
 				<th>&#127760;</th>
@@ -71,7 +71,12 @@
 		
 		<% 
 		
+		RistorantiBean ris = new RistorantiBean();
+		
+		
 		for(RistorantiBean p:dettRist){
+			int id = p.getIDRistorante();
+			ris.setIDRistorante(id);
 			int cat = p.getIDFCatCucina();
 			boolean tavolo = p.getSerScegliTavolo();
 			boolean wifi = p.getSerWifi();
@@ -104,11 +109,7 @@
 				<td><%=tel%></td>
 				<td><%=p.getEmail()%></td>
 				<td><%=p.getComune()%></td>
-				<% if(tavolo == true){%>
-					<td>&#10004;</td>
-				<%}else if(tavolo == false){ %>
-					<td>&#10008;</td>
-				<%} %>	
+			
 				<% if(clima == true){%>
 					<td>&#10004;</td>
 				<%}else if(clima == false){ %>
@@ -139,18 +140,17 @@
 				
 				
 			</tr>
-		<%}%>
+			
+
+		
 		</tbody>
 		<thead>
 			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<!-- FARE IL FORM 
-				<th>Totale</th>-->
+			
 			</tr>
+			<%
+			
+		}%>
 		</thead>
 		<tbody>
 			<tr>
@@ -158,8 +158,14 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
-
+				<td>
+					<form action="NuovaPrenotazione" name="scheda" method="post">
+						<input type="hidden" name="idristorante" value="<%=ris.getIDRistorante()%>"></input>
+						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="prenota"/>
+					</form>
+				
+				</td>
+				
 			</tr>
 		</tbody>
 		</table>

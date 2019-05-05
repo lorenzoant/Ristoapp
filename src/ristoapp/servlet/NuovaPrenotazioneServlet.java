@@ -47,8 +47,9 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			prenotazione.setNumeroPersone(posti);
 			prenotazione.setIDFCatPrenotazione(categoria);
 			prenotazione.setStatoPagamento(0);
+			int ID = Integer.parseInt(request.getParameter("idristorante"));
 			//int idristorante=  (int) request.getSession().getAttribute("idristorante");
-			prenotazione.setIDFRistorante(1/*idristorante*/);
+			prenotazione.setIDFRistorante(ID);
 			int IDPren = 0;
 			SaveMySQL db = new SaveMySQL();
 			

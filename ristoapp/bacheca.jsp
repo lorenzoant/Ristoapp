@@ -24,13 +24,15 @@
 	<% 
 	
 	// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
+
+	
 	
 	String nomeLoggato = "";
 	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 		nomeLoggato = cli.getNome(); //nome del profilo
 		
-  		if(cli.getGeolocalizzazione() != true){// L'utente non è un cliente
+  		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}%>
 	<%}
@@ -107,21 +109,8 @@
 					 int IDRistorante = lista.getIDRistorante();
 					 String NomeCatCucina = lista.getNomeCatCucina();
 					 String Nome = lista.getNome(); //nome ristorante
-					// String Indirizzo = lista.getIndirizzo();
-					// String Telefono = lista.getTelefono();
-					// String Email = lista.getEmail();
 					 String Comune = lista.getComune();
-					// String Descrizione = lista.getDescrizione();
-					// Boolean SerClimatizzazione = lista.getSerClimatizzazione();
-					// Boolean SerAnimali = lista.getSerAnimali();
-					// Boolean SerWifi = lista.getSerWifi();
-					// Boolean SerDisabili = lista.getSerDisabili();
-					// Boolean SerParcheggio = lista.getSerParcheggio();
 					 String url = lista.getUrl();
-					
-					// String disp = "";
-				//	 int np = lista.getNumeroPosti(); //numero posti massimo di un ristorante
-					// int n = save.disp(IDRistorante);
 					 int stelle = save.stelle_risto(IDRistorante);
 				
 					
