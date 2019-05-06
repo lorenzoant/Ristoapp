@@ -41,8 +41,8 @@
 	
 		<%
 				
-				ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-				ArrayList<PrenotazioniBean> prenotazioni = cli.getPrenotazioni();
+				ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");  
+				ArrayList<PrenotazioniBean> prenotazioni = cli.getPrenotazioni();//TODO: controlla qui, la funzione non va
 				for(PrenotazioniBean p:prenotazioni){
 					
 					// Scritta per pagato
