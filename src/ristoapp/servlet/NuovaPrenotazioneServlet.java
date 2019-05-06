@@ -55,7 +55,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			prenotazione.setOra(ora);
 			prenotazione.setNumeroPersone(posti);
 			prenotazione.setIDFCatPrenotazione(categoria);
-			prenotazione.setStatoPagamento(0);
+			prenotazione.setStatoPagamento(false);
 			int ID = Integer.parseInt(request.getSession().getAttribute("IDRISTO").toString()); //Ricavo l'idristorante
 			prenotazione.setIDFRistorante(ID);
 			int IDPren = 0;

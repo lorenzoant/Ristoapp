@@ -118,7 +118,7 @@
 				   questa cards è quella che fa al caso tuo.
 				  </div>
 				  <div class="mdl-card__actions mdl-card--border">
-				    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="modificaprenotazione.jsp">
+				    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="listaprenotazioni.jsp">
 				      Modifica
 				    </a>
 				  </div>

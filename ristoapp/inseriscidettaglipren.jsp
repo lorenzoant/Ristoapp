@@ -50,10 +50,14 @@
 </head>
 <body>
 <center>
-	<div  style="margin-bottom: 30px;">Seleziona i piatti che vuoi ordinare</div>
 	<form action="nuovaprenotazioneservlet" name="dettaglipren" method="POST">
-	<table>
+	<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 	
+		<thead>
+				<center>
+					<h3>Seleziona i piatti che vuoi ordinare</h3>
+				</center>
+		</thead>
 		<% 
 			ArrayList<PiattiBean> rs;
 			SaveMySQL db= new SaveMySQL();
@@ -72,21 +76,34 @@
 					%>
 					<tr>
 						<td>
-							<%=Nome%>
+							<center>
+								<%=Nome%>
+							</center>
 						</td>
 						<td>
+							<center>
 							<%=Descrizione%>
+							</center>
 						</td>
 						<td>
+							<center>
 							<%=Prezzo%>
+							</center>
 						</td>
 						<td>
+							<center>
 							<%if(url!=""){ %>
 							<img class="antemprima"	alt="Immagine del piatto" src="<%=url%>">
 							<%} %>
+							</center>
 						</td>
 						<td>
-							<input name=<%=id%> type="number" max="15" placeholder="Inserisci numero piatti">
+							<center>
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" name=<%=id%> type="number" max="15">
+									<label class="mdl-textfield__label" for=<%=id%>>Inserisci numero piatti</label>
+								</div>
+							</center>
 						</td>
 					</tr>
 					<%
