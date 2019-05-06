@@ -57,7 +57,7 @@
 			<h4 style="text-align:center;">Menu</h4><hr>
 				<nav class="mdl-navigation">
 					<a class="mdl-navigation__link" href="profilo.jsp">Profilo di <%=nomeLoggato%></a>
-			        <a class="mdl-navigation__link" href="mappa.jsp">About </a>
+			        <a class="mdl-navigation__link" href="about.jsp">About </a>
 			        <a class="mdl-navigation__link" href="contatti.jsp">Contatti </a>
 			        <a class="mdl-navigation__link" href="mappa.jsp">Mappa </a>
 				    <hr>
