@@ -1,3 +1,4 @@
+<%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%@page import="ristoapp.bean.PrenotazioniBean"%>
@@ -40,9 +41,9 @@
 		<tbody>
 	
 		<%
-				
+				SaveMySQL db= new SaveMySQL();	
 				ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");  
-				ArrayList<PrenotazioniBean> prenotazioni = cli.getPrenotazioni();//TODO: controlla qui, la funzione non va
+				ArrayList<PrenotazioniBean> prenotazioni = db.prelevaPrenotazioniCliente(cli);
 				for(PrenotazioniBean p:prenotazioni){
 					
 					// Scritta per pagato

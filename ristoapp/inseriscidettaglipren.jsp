@@ -10,21 +10,6 @@
 <title>Dettagli Prenotazione</title>
 <%@include file="graphicspuntoacca.jsp"%>
 
-<div class="mdl-layout__header">
-				<center>
-						<table>
-							<tr>
-								<td>
-									<h2>RistoApp - Prenotazione</h2>
-								</td>
-								<td>
-									<img class="logo" src="MEDIA/logo.png"/>
-								</td>
-							</tr>
-						</table>
-				</center>
-			</div>
-
 <style type="text/css">
 	.antemprima{
 		width: auto;
@@ -49,6 +34,20 @@
 	}%>
 </head>
 <body>
+<div class="mdl-layout__header">
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>RistoApp - Prenotazione</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
+			</div>
 <center>
 	<form action="nuovaprenotazioneservlet" name="dettaglipren" method="POST">
 	<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">

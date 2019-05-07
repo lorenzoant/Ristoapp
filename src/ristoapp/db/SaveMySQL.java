@@ -61,6 +61,55 @@ public class SaveMySQL {
 	}// End getDBConnection()
 
 
+	public ArrayList<PrenotazioniBean> prelevaPrenotazioniCliente(ClientiBean cliente) throws Exception{ // Tazza
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "SELECT * FROM Prenotazioni WHERE IDFCliente = " + cliente.getIDCliente() + " ORDER BY Data DESC;";
+
+			// Eseguo query
+			ResultSet resultList = stmt.executeQuery(sql);
+
+			// Estraggo dati
+			ArrayList<PrenotazioniBean> prenotazioniList = new ArrayList<PrenotazioniBean>();
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+				PrenotazioniBean prenotazione = new PrenotazioniBean();
+				prenotazione.setIDPrenotazione(resultList.getInt("IDPrenotazione"));
+				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
+				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
+				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
+				prenotazione.setData(resultList.getString("Data"));
+				prenotazione.setOra(resultList.getString("Ora"));
+				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
+				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
+				prenotazioniList.add(prenotazione);// Aggiungo al vettore
+			}
+
+			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() confirmed");
+			return (ArrayList<PrenotazioniBean>)prenotazioniList;
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End prelevaPrenotazioniCliente()
 	
 
 	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
@@ -75,6 +124,11 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
+			
+			int bol = 0;
+			
+			if(prenotazione.getStatoPagamento())
+				bol=1;
 
 			String sql = "INSERT INTO Prenotazioni (IDPrenotazione, IDFRistorante, IDFCatPrenotazione, IDFCliente, Data, Ora, StatoPagamento, NumeroPersone) VALUES ('" +
 						prenotazione.getIDPrenotazione() + "','" +
@@ -83,7 +137,7 @@ public class SaveMySQL {
 						prenotazione.getIDFCliente() + "','" +
 						prenotazione.getData() + "','" +
 						prenotazione.getOra() + "','" +
-						prenotazione.getStatoPagamento() + "','" +
+						bol + "','" +
 						prenotazione.getNumeroPersone() + "');";
 
 			// Committo sul server
