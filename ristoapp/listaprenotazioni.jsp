@@ -39,12 +39,11 @@
 	
 	<div class="mdl-layout__header">
 				<center>
-						<table>
+						<table style="width:100%">
 							<tr>
-								<td>
-									<h2>Le tue prenotazioni</h2>
-								</td>
-								<td>
+							<td align="left"><a href="profilo.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+								<td align="center" style="width:100%">
+									<h2 style="display: inline;vertical-align:middle">Le tue prenotazioni</h2>
 									<img class="logo" src="MEDIA/logo.png"/>
 								</td>
 							</tr>
