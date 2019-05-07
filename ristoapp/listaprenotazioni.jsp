@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<%@include file="graphicspuntoacca.jsp"%>
 <title>Lista prenotazioni</title>
 
 	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
@@ -78,6 +79,9 @@
 							<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
 							</form>
 						</td>
+						<td>
+							<!-- se la prenotazione non è stata pagata permetto al cliente di essere rimandato alla schermata di pagamento -->
+							<a href="pagamento.jsp?idpren=<%= p.getIDPrenotazione() %>"><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Paga ora"/></a>
 						</tr>
 					<%}%>
 		</tbody>
