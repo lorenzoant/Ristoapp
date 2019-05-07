@@ -5,9 +5,8 @@
 <html>
 
 <head>
-
 	<meta charset="ISO-8859-1">
-	<title>Sezione pagamento</title>
+	<title>Aggiungi Carta</title>
 <%@include file="graphicspuntoacca.jsp"%>	
 </head>
 
