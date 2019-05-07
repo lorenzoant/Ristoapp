@@ -165,7 +165,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			System.out.println("il tuo id è "+ id);
+			System.out.println("il tuo id ï¿½ "+ id);
 			return id;
 	}//End nuovaPrenotazione()
 
@@ -1059,7 +1059,7 @@ public class SaveMySQL {
 
 			// Creo stringa sql
 			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = 'true'," +
+					"StatoPagamento = '1'," +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
@@ -1111,7 +1111,7 @@ public class SaveMySQL {
 				//carta.setIDFCliente(resultList.getInt("IDFCliete"));
 				carta.setPAN(resultList.getInt("PAN"));
 				carta.setCVV(resultList.getInt("CVV"));
-				carta.setDataScadenza(resultList.getDate("DataScadenza"));
+				carta.setDataScadenza(resultList.getString("DataScadenza"));
 				carteList.add(carta);// Aggiungo al vettore
 			}
 
@@ -1144,9 +1144,10 @@ public class SaveMySQL {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
-			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, PAN, CVV, DataScadenza) VALUES ('" +
+			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, NomeCarta, PAN, CVV, DataScadenza) VALUES ('" +
 						carta.getIDFCatCarta() + "','" +
 						carta.getIDFCliente() + "','" +
+						carta.getNomeCarta() + "','" +
 						carta.getPAN() + "','" +
 						carta.getCVV() + "','" +
 						carta.getDataScadenza() + "');";
