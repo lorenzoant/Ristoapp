@@ -22,14 +22,39 @@
   		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}}%>
+  		
+  	<style type="text/css">
+  		td, th{
+  			text-align:center !important; 
+  		}
+  		.container{
+  			margin-top: 50px;
+  			margin-left: auto;
+  			margin-right: auto;
+  		}
+  	</style>
 
 </head>
 <body>
 	
-	
+	<div class="mdl-layout__header">
+				<center>
+						<table>
+							<tr>
+								<td>
+									<h2>Le tue prenotazioni</h2>
+								</td>
+								<td>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
+	</div>
+			
 	<!-- PAGE CONTENT -->
 	  	<div style="overflow-x: auto;">
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp container">
 		<thead>
 			<tr>
 				<th>Data</th>
