@@ -60,31 +60,76 @@
       <a href="#fixed-tab-3" class="mdl-layout__tab">Compagnia</a>
     </div>
   </header>
+  
  
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
       <div class="page-content">
-      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-		  <thead>
-		    <tr>
-		      <th class="mdl-data-table__cell--non-numeric">Storia del team</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		     
-		    </tr>
-		    
-		  </tbody>
-</table>
+      <center>
+      <div style="margin:100px"  >
+     	<h1 style="color:orange">Storia</h1> 
+      <br><br>
+    fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      </div>
+     
+	</center>
       
 	</div>
     </section>
     <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-      <div class="page-content"><!-- Your content goes here --></div>
+      <div class="page-content">
+      <center>
+      <div style="margin:100px"  >
+     	<h1 style="color:orange">Team</h1> 
+      <br><br>
+    fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      </div>
+     
+	</center></div>
     </section>
     <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-      <div class="page-content"><!-- Your content goes here --></div>
+      <div class="page-content">
+      <center>
+      <div style="margin:100px"  >
+     	<h1 style="color:orange">Compagnia</h1> 
+      <br><br>
+    fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      </div>
+     
+	</center></div>
     </section>
   </main>
 </div>
