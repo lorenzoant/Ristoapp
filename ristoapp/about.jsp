@@ -1,16 +1,6 @@
 <%@page import="ristoapp.bean.ClientiBean"%>
-<%@page import="java.util.ArrayList" %>
-<%@page import="ristoapp.bean.RistorantiBean" %>
-<%@page import="ristoapp.db.SaveMySQL" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
-<%//riprendo la session da Login per avere i dati del cliente
-
-		ArrayList<RistorantiBean> rist = new ArrayList <RistorantiBean>(); //oggetto ristorante list
-		SaveMySQL save = new SaveMySQL(); //oggeto save
-		rist = save.InformazioniRistorante(); //prendo tutti i ritoranti
-				
-%>
     
 <!DOCTYPE html>
 
@@ -55,15 +45,15 @@
   
     <!-- Tabs -->
     <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Storia</a>
-      <a href="#fixed-tab-2" class="mdl-layout__tab">Team</a>
+      <a href="#fixed-tab-1" class="mdl-layout__tab ">Storia</a>
+      <a href="#fixed-tab-2" class="mdl-layout__tab is-active">Team</a>
       <a href="#fixed-tab-3" class="mdl-layout__tab">Compagnia</a>
     </div>
   </header>
   
  
   <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+    <section class="mdl-layout__tab-panel " id="fixed-tab-1">
       <div class="page-content">
       <center>
       <div style="margin:100px"  >
@@ -87,24 +77,19 @@
       
 	</div>
     </section>
-    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-2">
       <div class="page-content">
       <center>
       <div style="margin:100px"  >
      	<h1 style="color:orange">Team</h1> 
       <br><br>
-    fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
-      fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
+      <img class="team"  src="MEDIA/tini.png"/>
+      <img class="team"  src="MEDIA/vellone.png"/>
+      <img class="team"  src="MEDIA/io.png"/>
+      <img class="team"  src="MEDIA/friggi.jpg"/>
+      <img class="team"  src="MEDIA/said.png"/>
+      <img class="team"  src="MEDIA/tazza.jpeg"/>
+       <img class="team" src="MEDIA/xia.png"/>
       </div>
      
 	</center></div>

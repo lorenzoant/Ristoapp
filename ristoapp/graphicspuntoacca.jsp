@@ -11,6 +11,7 @@
 	body,h1,h2,h3,h4,h5 {font-family: Bahnschrift SemiBold SemiConden, ristofont, sans-serif}
 	.occhio{width: 25px; height: 20px;}
 	.indietro{width: 70px; height: 70px;}
+	.team{width:250px; height:250px; border-radius:100%;}
 	.indietro:hover{opacity: .5;}	
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
