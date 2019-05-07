@@ -1,3 +1,4 @@
+<%@page import="ristoapp.bean.RistorantiBean"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -8,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Lista prenotazioni</title>
 
 	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 	
@@ -34,7 +35,7 @@
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>Codice cliente</th>
+				<th>Nome Ristorante</th>
 				<th>Tipo prenotazione</th>
 			</tr>
 		</thead>
@@ -44,7 +45,11 @@
 				SaveMySQL db= new SaveMySQL();	
 				ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");  
 				ArrayList<PrenotazioniBean> prenotazioni = db.prelevaPrenotazioniCliente(cli);
+				
 				for(PrenotazioniBean p:prenotazioni){
+					
+					//Rivavo il nome del ristorante in modo strano
+					ArrayList<RistorantiBean> risto = db.getInfoRistoID(p.getIDFRistorante());
 					
 					// Scritta per pagato
 					String pagatoOut;
@@ -64,7 +69,7 @@
 						<td><%=p.getOra()%></td>
 						<td><%=p.getNumeroPersone()%></td>
 						<td><%=pagatoOut%></td>
-						<td><%=p.getIDFCliente()%></td>
+						<td><%=risto.get(0).getNome()%></td>
 						<td><%=catPren%></td>
 						<td>
 							<form action="dettaglioPrenCliente" name="visualizzaDettPrenotazione" method="post">
