@@ -43,7 +43,7 @@
 	
 		ArrayList<RistorantiBean> dettRist = (ArrayList<RistorantiBean>) request.getSession().getAttribute("DETRISTO");
 	%>
-	<div class="page centratabella">
+	<div >
 	
 		<h3>Dettaglio di  &#10077; <%=dettRist.get(0).getNome()%> &#10078;</h3>
 		
@@ -159,12 +159,13 @@
 				<td></td>
 				<td></td>
 				<td>
+				<center>
 					<form action="nuovaprenotazioneservlet" name="scheda" method="post">
 						<input type="hidden" name="idristorante" value="<%=ris.getIDRistorante()%>"></input>
 						<input type="hidden" name="whatsend" value="prenota"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="prenota"/>
 					</form>
-				
+				</center>
 				</td>
 				
 			</tr>
