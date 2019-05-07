@@ -15,7 +15,7 @@
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
-    .logo{width: 100px;}
+    .logo{width: 80px;}
     .centratabella{width: 50%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
     @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
 </style>
