@@ -72,7 +72,7 @@
 			</div><br>
 
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-								<select class="mdl-textfield__input" name = "comuni">
+								<select class="mdl-textfield__input" name = "comune">
 									<option value="null"> </option>
 										<% 
 					
@@ -86,11 +86,17 @@
 										    PreparedStatement pst = conn.prepareStatement("SELECT * FROM Comuni;");
 										    rs=pst.executeQuery();
 										    
-										     while(rs.next()){ // Scorro le righe
+										    while(rs.next()){ // Scorro le righe
 										          String name = rs.getString("Nome");
+												  if (name.equalsIgnoreCase(c.getComune())){
+										%>
+										<option value="<%=name%>" selected><%=name%></option>
+										<%
+												  }else{
 										%>
 										<option value="<%=name%>"><%=name%></option>
 										<%
+												  }
 										     }
 										}
 										catch(Exception e){    

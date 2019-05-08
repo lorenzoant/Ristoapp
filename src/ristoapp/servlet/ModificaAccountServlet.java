@@ -35,27 +35,27 @@ public class ModificaAccountServlet extends HttpServlet {
 			ClientiBean utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			// Lettura campi da request e manipolazione prima di inserirli nel database
 			String Email = request.getParameter("Email");
-			String Nome = request.getParameter("Nome");
-			String Cognome = request.getParameter("Cognome");
+			String Nome = request.getParameter("nome");
+			String Cognome = request.getParameter("cognome");
 			String Indirizzo = request.getParameter("Indirizzo");
-			String Comune = request.getParameter("Comune");
+			String Comune = request.getParameter("comune");
 			//String Lingua = request.getParameter("Lingua");
 			
-			Boolean NotificaEmail = true; 
+			boolean NotificaEmail = true; 
 			if(request.getParameter("NotificaEmail") == null) NotificaEmail = false;
 			
-			Boolean  Geolocalizzazione = true; 
+			boolean  Geolocalizzazione = true; 
 			if(request.getParameter("Geolocalizzazione") == null) Geolocalizzazione = false;
 			
 			
 			// Salvataggio dei valori nel Bean
 			ClientiBean cliente = new ClientiBean();
 			cliente.setIDCliente(utenteLoggato.getIDCliente());
-			cliente.setEmail(Email);
-			cliente.setCognome(Cognome);
-			cliente.setNome(Nome);
-			cliente.setIndirizzo(Indirizzo);
-			cliente.setComune(Comune);
+			cliente.setEmail(request.getParameter("Email"));
+			cliente.setCognome(request.getParameter("cognome"));
+			cliente.setNome(request.getParameter("nome"));
+			cliente.setIndirizzo(request.getParameter("Indirizzo"));
+			cliente.setComune(request.getParameter("comune"));
 			//cliente.setLingua(Lingua);
 			cliente.setNotificaEmail(NotificaEmail);
 			cliente.setGeolocalizzazione(Geolocalizzazione);
@@ -67,7 +67,7 @@ public class ModificaAccountServlet extends HttpServlet {
 				// Provo ad aggiornare nel database
 				saveOnDb.modificaCliente(cliente);
 				request.getSession().removeAttribute("CLIENTEDAMODIFICARE");
-				
+				response.sendRedirect("bacheca.jsp");
 				//response.sendRedirect("ilmioristorantecaricamento.jsp"); // Richiamo servlet per prelevare le informazioni sul ristorante
 			} 
 			catch (Exception e) {

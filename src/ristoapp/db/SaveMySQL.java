@@ -786,11 +786,11 @@ public class SaveMySQL {
 					+ "',Comune = '" + cliente.getComune()
 					+ "',NotificaEmail = '";
 					if(cliente.getNotificaEmail()) sql += "1',";
-					else sql += "0',"
-					+ "',Geolocalizzazione = '" ;
-					if(cliente.getGeolocalizzazione()) sql += "1',";
-					else sql += "0',"
-					+ "'WHERE IDCliente = " + cliente.getIDCliente() + ";";
+					else sql += "0',";
+					sql += "Geolocalizzazione = '" ;
+					if(cliente.getGeolocalizzazione()) sql += "1'";
+					else sql += "0'"
+					+ " WHERE IDCliente = '" + cliente.getIDCliente() + "';";
 
 			System.out.println(sql);
 			// Committo sul server
