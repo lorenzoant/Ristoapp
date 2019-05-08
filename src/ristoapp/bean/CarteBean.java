@@ -10,9 +10,10 @@ public class CarteBean implements java.io.Serializable{
 	private int IDCarta;
 	private int IDFCatCarta;
 	private int IDFCliente;
+	private String NomeCarta;
 	private int PAN;
 	private int CVV;
-	private Date DataScadenza;
+	private String DataScadenza;
 	
 	//per collegarlo alle altre tabelle
 	
@@ -47,10 +48,16 @@ public class CarteBean implements java.io.Serializable{
 	public void setCVV(int cVV) {
 		CVV = cVV;
 	}
-	public Date getDataScadenza() {
+	public String getDataScadenza() {
 		return DataScadenza;
 	}
-	public void setDataScadenza(Date dataScadenza) {
+	public void setDataScadenza(String dataScadenza) {
 		DataScadenza = dataScadenza;
+	}
+	public String getNomeCarta() {
+		return NomeCarta;
+	}
+	public void setNomeCarta(String nomeCarta) {
+		NomeCarta = nomeCarta;
 	}
 }	

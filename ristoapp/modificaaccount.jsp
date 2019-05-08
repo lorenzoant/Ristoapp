@@ -121,7 +121,7 @@
 	  		
 	  	
 			<input name="whatsend" value="aggiornacliente" type="hidden"/>
-			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="window.location='bacheca.jsp';">Annulla modifiche</button>
+			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="window.location='login.jsp';">Annulla modifiche</button>
 			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="window.location='recuperopassword.jsp';">Modifica Password</button>
 			<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="window.location='login.jsp';">Salva ed esci</button>
 		</form>

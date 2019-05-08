@@ -9,20 +9,19 @@
 
 			<%@include file="graphicspuntoacca.jsp"%>
 
-			<div class="mdl-layout__header">
+	<div class="mdl-layout__header">
 				<center>
-						<table>
+						<table style="width:100%">
 							<tr>
-								<td>
-									<h2>RistoApp - Prenotazione</h2>
-								</td>
-								<td>
+							<td align="left"><a href="bacheca.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+								<td align="center" style="width:100%">
+									<h2 style="display: inline;vertical-align:middle">Prenotazione</h2>
 									<img class="logo" src="MEDIA/logo.png"/>
 								</td>
 							</tr>
 						</table>
 				</center>
-			</div>
+	</div>
 			
 	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 	

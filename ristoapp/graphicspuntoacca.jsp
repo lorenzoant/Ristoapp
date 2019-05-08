@@ -11,12 +11,13 @@
 	body,h1,h2,h3,h4,h5 {font-family: Bahnschrift SemiBold SemiConden, ristofont, sans-serif}
 	.occhio{width: 25px; height: 20px;}
 	.indietro{width: 70px; height: 70px;}
+	.team{width:250px; height:250px; border-radius:100%;}
 	.indietro:hover{opacity: .5;}	
 	.text-center {text-align: center;}
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
-    .logo{width: 100px;}
-    .centratabella{width: 50%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
+    .logo{width: 80px;}
+    .centratabella{width: 60%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
     @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
 </style>
 <link rel="icon" href="MEDIA/icona.ico"> <!-- icona in cima -->

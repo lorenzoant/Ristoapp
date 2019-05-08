@@ -10,6 +10,10 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
@@ -165,7 +169,7 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-			System.out.println("il tuo id è "+ id);
+			System.out.println("il tuo id ï¿½ "+ id);
 			return id;
 	}//End nuovaPrenotazione()
 
@@ -605,7 +609,6 @@ public class SaveMySQL {
 
 	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueDate(RistorantiBean risto) throws Exception{ // Vellons
 
-		// TODO: aggiungere le due date per settimana corrente nella query (Vellons)
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -613,10 +616,20 @@ public class SaveMySQL {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-
-			// Creo stringa sql
-			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + ";";
-
+			
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");	
+			Date today = Calendar.getInstance().getTime(); // Oggi
+			Date range1 = Calendar.getInstance().getTime();
+			Date range2 = Calendar.getInstance().getTime(); 
+			range1.setTime(today.getTime() - (long)7*1000*60*60*24); // Andando nel passato
+			range2.setTime(today.getTime() + (long)30*1000*60*60*24); // Andando nel futuro
+			
+			String range1_str = df.format(range1);
+			String range2_str = df.format(range2);
+			
+			// Creo stringa sql per prenotazioni ultima settimana
+			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + " AND Data BETWEEN ' " + range1_str + "' AND '" + range2_str + "' ORDER BY Data DESC;";
+			System.out.println(sql);
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
 
@@ -1059,7 +1072,7 @@ public class SaveMySQL {
 
 			// Creo stringa sql
 			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = 'true'," +
+					"StatoPagamento = '1'," +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
@@ -1111,7 +1124,7 @@ public class SaveMySQL {
 				//carta.setIDFCliente(resultList.getInt("IDFCliete"));
 				carta.setPAN(resultList.getInt("PAN"));
 				carta.setCVV(resultList.getInt("CVV"));
-				carta.setDataScadenza(resultList.getDate("DataScadenza"));
+				carta.setDataScadenza(resultList.getString("DataScadenza"));
 				carteList.add(carta);// Aggiungo al vettore
 			}
 
@@ -1144,9 +1157,10 @@ public class SaveMySQL {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 
-			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, PAN, CVV, DataScadenza) VALUES ('" +
+			String sql = "INSERT INTO Carte (IDFCatCarta, IDFCliente, NomeCarta, PAN, CVV, DataScadenza) VALUES ('" +
 						carta.getIDFCatCarta() + "','" +
 						carta.getIDFCliente() + "','" +
+						carta.getNomeCarta() + "','" +
 						carta.getPAN() + "','" +
 						carta.getCVV() + "','" +
 						carta.getDataScadenza() + "');";

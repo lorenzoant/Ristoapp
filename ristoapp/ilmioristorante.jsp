@@ -51,7 +51,7 @@
 			<nav class="mdl-navigation">
 				<a class="mdl-navigation__link" href="ilmioristorantecaricamento.jsp">Riaggiorna</a>
 		        <a class="mdl-navigation__link" href="aggiungipiatto.jsp">Aggiungi piatto</a>
-		        <a class="mdl-navigation__link" href="">Modifica ristorante [Albertini]</a>
+		        <a class="mdl-navigation__link" href="modificaristorante.jsp">Modifica ristorante</a>
 		        <a class="mdl-navigation__link" href="modificaaccount.jsp">Modifica account</a>
 			    <hr>
 			    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
@@ -126,8 +126,18 @@
 		<br>
 		
 		
+		<%
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");	
+		Date today = Calendar.getInstance().getTime(); // Oggi
+		Date range1 = Calendar.getInstance().getTime();
+		Date range2 = Calendar.getInstance().getTime(); 
+		range1.setTime(today.getTime() - (long)7*1000*60*60*24); // Andando nel passato
+		range2.setTime(today.getTime() + (long)30*1000*60*60*24); // Andando nel futuro
 		
-		<h3>Tutte le prenotazioni</h3>
+		String range1_str = df.format(range1);
+		String range2_str = df.format(range2);
+		%>
+		<h3>Prenotazioni dal <%=range1_str%> al <%=range2_str%></h3>
 		<!--h3>Prenotazioni di questa settimana [Da mettere le date nella query]</h3-->
 		<div style="overflow-x: auto;">
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">

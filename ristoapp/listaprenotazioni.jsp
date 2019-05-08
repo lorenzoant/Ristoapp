@@ -1,3 +1,4 @@
+<%@page import="ristoapp.bean.RistorantiBean"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -8,7 +9,8 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<%@include file="graphicspuntoacca.jsp"%>
+<title>Lista prenotazioni</title>
 
 	<%// Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 	
@@ -20,21 +22,45 @@
   		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}}%>
+  		
+  	<style type="text/css">
+  		td, th{
+  			text-align:center !important; 
+  		}
+  		.container{
+  			margin-top: 50px;
+  			margin-left: auto;
+  			margin-right: auto;
+  		}
+  	</style>
 
 </head>
 <body>
 	
-	
+	<div class="mdl-layout__header">
+				<center>
+						<table style="width:100%">
+							<tr>
+							<td align="left"><a href="profilo.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+								<td align="center" style="width:100%">
+									<h2 style="display: inline;vertical-align:middle">Le tue prenotazioni</h2>
+									<img class="logo" src="MEDIA/logo.png"/>
+								</td>
+							</tr>
+						</table>
+				</center>
+	</div>
+			
 	<!-- PAGE CONTENT -->
 	  	<div style="overflow-x: auto;">
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp container">
 		<thead>
 			<tr>
 				<th>Data</th>
 				<th>Ora</th>
 				<th>Persone</th>
 				<th>Stato pagamento</th>
-				<th>Codice cliente</th>
+				<th>Nome Ristorante</th>
 				<th>Tipo prenotazione</th>
 			</tr>
 		</thead>
@@ -44,7 +70,11 @@
 				SaveMySQL db= new SaveMySQL();	
 				ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");  
 				ArrayList<PrenotazioniBean> prenotazioni = db.prelevaPrenotazioniCliente(cli);
+				
 				for(PrenotazioniBean p:prenotazioni){
+					
+					//Rivavo il nome del ristorante in modo strano
+					ArrayList<RistorantiBean> risto = db.getInfoRistoID(p.getIDFRistorante());
 					
 					// Scritta per pagato
 					String pagatoOut;
@@ -64,7 +94,7 @@
 						<td><%=p.getOra()%></td>
 						<td><%=p.getNumeroPersone()%></td>
 						<td><%=pagatoOut%></td>
-						<td><%=p.getIDFCliente()%></td>
+						<td><%=risto.get(0).getNome()%></td>
 						<td><%=catPren%></td>
 						<td>
 							<form action="dettaglioPrenCliente" name="visualizzaDettPrenotazione" method="post">
@@ -73,6 +103,9 @@
 							<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
 							</form>
 						</td>
+						<td>
+							<!-- se la prenotazione non è stata pagata permetto al cliente di essere rimandato alla schermata di pagamento -->
+							<a href="pagamento.jsp?idpren=<%= p.getIDPrenotazione() %>"><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Paga ora"/></a>
 						</tr>
 					<%}%>
 		</tbody>
