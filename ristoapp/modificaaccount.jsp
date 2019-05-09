@@ -57,7 +57,7 @@
 	  		</div><br>
 	
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="email" id="email" name="Email" value="<%=c.getEmail()%>" required>
+			    <input class="mdl-textfield__input" type="email" id="email" name="email" value="<%=c.getEmail()%>" required>
 			    <label class="mdl-textfield__label" for="email">Email</label>
 			</div><br>
 
@@ -67,7 +67,7 @@
 			</div><br>-->
 
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="indirizzo" name="Indirizzo" value="<%=c.getIndirizzo()%>">
+			    <input class="mdl-textfield__input" type="text" id="indirizzo" name="indirizzo" value="<%=c.getIndirizzo()%>">
 			    <label class="mdl-textfield__label" for="indirizzo">Indirizzo</label>
 			</div><br>
 
