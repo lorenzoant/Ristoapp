@@ -97,11 +97,9 @@
 						<td><%=risto.get(0).getNome()%></td>
 						<td><%=catPren%></td>
 						<td>
-							<form action="dettaglioPrenCliente" name="visualizzaDettPrenotazione" method="post">
-							<input type="hidden" name="idPrenotazione" value="<%=p.getIDPrenotazione()%>"></input>
-							<input type="hidden" name="whatsend" value="visualizzaDettPrenotazione"></input>
-							<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/>
-							</form>
+							
+							<a href="dettaglipren.jsp?idpren=<%= p.getIDPrenotazione() %>"><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Dettagli"/></a>
+							
 						</td>
 						<td>
 							<!-- se la prenotazione non è stata pagata permetto al cliente di essere rimandato alla schermata di pagamento -->
