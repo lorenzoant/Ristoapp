@@ -33,14 +33,14 @@ public class AggiungiCartaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String whatsend = request.getParameter("whatsend");
-		if(whatsend.equalsIgnoreCase("aggiunginuovacarta")) { // Aggiungo piatto al database
+		if(whatsend.equalsIgnoreCase("aggiunginuovacarta")) { // Aggiungo carta al database
 			ClientiBean utenteLoggato = null;
 			try {
-				// Identifico l'utente e il suo ristorante
+				// Identifico l'utente
 				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			}
 			catch (Exception e) {
-				// Nessun ristoratore loggato
+				// Utente non loggato
 				System.out.println("aggiunginuovacarta: user not logged");
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
