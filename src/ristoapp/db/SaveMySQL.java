@@ -75,16 +75,14 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "SELECT * FROM Prenotazioni WHERE IDPren = " + idpren + " ORDER BY Data DESC;";
+			String sql = "SELECT * FROM Prenotazioni WHERE IDPrenotazione = " + idpren + " ORDER BY Data DESC;";
 
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
+			PrenotazioniBean prenotazione = new PrenotazioniBean();
 
+			if((resultList.next())) {
 			// Estraggo dati
-			ArrayList<PrenotazioniBean> prenotazioniList = new ArrayList<PrenotazioniBean>();
-			while(resultList.next()){
-				// Scorro tutte le righe del risultato
-				PrenotazioniBean prenotazione = new PrenotazioniBean();
 				prenotazione.setIDPrenotazione(resultList.getInt("IDPrenotazione"));
 				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
 				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
@@ -93,11 +91,11 @@ public class SaveMySQL {
 				prenotazione.setOra(resultList.getString("Ora"));
 				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
 				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
-				prenotazioniList.add(prenotazione);// Aggiungo al vettore
-			}
 
 			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() confirmed");
-			return (ArrayList<PrenotazioniBean>)prenotazioniList;
+			
+			}
+			return prenotazione;
 		}
 		catch (SQLException e) {
 			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");

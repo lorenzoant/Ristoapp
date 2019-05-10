@@ -26,11 +26,18 @@
 			// L'utente non  loggato
 			response.sendRedirect("login.jsp");
 		}%>
+		
+		<style type="text/css">
+			td, th{
+  			text-align:center !important; 
+  		}
+		</style>
+		
 </head>
 <body class="text-center">
 
 	<div class="mdl-layout__header">		
-		<table style="width:100%">
+		<table style="width:100%;">
 			<tr>
 				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
@@ -42,22 +49,27 @@
 	</div>
 		
 	<% 
-		int idpren= request.getParameter("idpren");
+		int idpren= Integer.parseInt( request.getParameter("idpren") );
 		SaveMySQL db = new SaveMySQL();
 		
 		ArrayList<QueryPiattiPrenotatiBean> dettagli = new ArrayList<QueryPiattiPrenotatiBean>();
 		dettagli = db.prelevaDettagliPrenotazioneConPiatti(idpren);
 		PrenotazioniBean pren = new PrenotazioniBean();
-		pren = db.
-		
+		pren = db.prelevaPrenotazione(idpren);		
 	%>
 	
 	<div class="page centratabella">
 	
-		<h3>Dettagli prenotazione n° <%= piattiPrenotati.get(0).getIDFOrdine() %></h3>
+		<h3>Prenotazione n° <%= pren.getIDPrenotazione() %></h3>
+		
+		<h4>Hai prenotato per le ore: <%=pren.getOra() %> del giorno <%=pren.getData() %></h4>
+		
+		<%if(pren.getIDFCatPrenotazione()== 3) {%>
+			<h4>La tua prenotazione comprende <%=pren.getNumeroPersone() %> posti a sedere</h4>
+		<%} %>
 		
 		<div style="overflow-x: auto;">
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" style=" margin-left: auto; margin-right: auto;">
 		<thead>
 			<tr>
 				<th>Foto</th>
@@ -72,12 +84,12 @@
 		
 		<% 
 		float prezzoFinale, totale = 0;
-		for(QueryPiattiPrenotatiBean p:piattiPrenotati){
+		for(QueryPiattiPrenotatiBean p:dettagli){
 			prezzoFinale = p.getPrezzo()*p.getQuantita()*((100-p.getSconto())/100);
 			totale += prezzoFinale;
 		%>
 			<tr>
-				<td><img style="float:left" height='70px' src='<%=p.getUrl()%>'/></td>
+				<td><img style="margin-left: auto" height='70px' src='<%=p.getUrl()%>'/></td>
 				<td><%=p.getNome()%></td>
 				<td><%=p.getQuantita()%></td>
 				<td><%=p.getPrezzo()%></td>
@@ -110,9 +122,6 @@
 		</div>
 	</div>
 	
-	<% }else{%>
-		Abbiamo riscontrato un problema, perfavore riprova più tardi...
-	<%}%>
 
 </body>
 </html>
