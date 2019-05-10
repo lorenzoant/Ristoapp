@@ -119,6 +119,14 @@
 			</tr>
 		</tbody>
 		</table>
+		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
+		<%if (!pren.getStatoPagamento()){ %>
+			<a href="pagamento.jsp"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
+			<a href="modificaordine.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Modifica ordine"/></a>
+
+		<%}else{ %>
+			<input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Gli ordini già pagati non possono essere modificati"/>
+		<%} %>
 		</div>
 	</div>
 	
