@@ -850,10 +850,9 @@ public class SaveMySQL {
 					else sql += "0',";
 					sql += "Geolocalizzazione = '" ;
 					if(cliente.getGeolocalizzazione()) sql += "1'";
-					else sql += "0'"
-					+ " WHERE IDCliente = '" + cliente.getIDCliente() + "';";
+					else sql += "0'";
+					sql += " WHERE IDCliente = '" + cliente.getIDCliente() + "';";
 
-			System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 

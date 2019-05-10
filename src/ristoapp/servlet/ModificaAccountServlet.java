@@ -34,10 +34,10 @@ public class ModificaAccountServlet extends HttpServlet {
 			//ClientiBean vecchiocliente = (ClientiBean)request.getSession().getAttribute("CLIENTEDAMODIFICARE");
 			ClientiBean utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			// Lettura campi da request e manipolazione prima di inserirli nel database
-			String Email = request.getParameter("Email");
+			String Email = request.getParameter("email");
 			String Nome = request.getParameter("nome");
 			String Cognome = request.getParameter("cognome");
-			String Indirizzo = request.getParameter("Indirizzo");
+			String Indirizzo = request.getParameter("indirizzo");
 			String Comune = request.getParameter("comune");
 			//String Lingua = request.getParameter("Lingua");
 			
@@ -50,13 +50,15 @@ public class ModificaAccountServlet extends HttpServlet {
 			
 			// Salvataggio dei valori nel Bean
 			ClientiBean cliente = new ClientiBean();
+			cliente.setLivAutorizzazioni(utenteLoggato.getLivAutorizzazioni());
+			cliente.setPuntiFedelta(utenteLoggato.getPuntiFedelta());
 			cliente.setIDCliente(utenteLoggato.getIDCliente());
-			cliente.setEmail(request.getParameter("Email"));
+			cliente.setEmail(request.getParameter("email"));
 			cliente.setCognome(request.getParameter("cognome"));
 			cliente.setNome(request.getParameter("nome"));
-			cliente.setIndirizzo(request.getParameter("Indirizzo"));
+			cliente.setIndirizzo(request.getParameter("indirizzo"));
 			cliente.setComune(request.getParameter("comune"));
-			//cliente.setLingua(Lingua);
+			cliente.setLingua(utenteLoggato.getLingua());
 			cliente.setNotificaEmail(NotificaEmail);
 			cliente.setGeolocalizzazione(Geolocalizzazione);
 			
@@ -66,7 +68,8 @@ public class ModificaAccountServlet extends HttpServlet {
 			try {
 				// Provo ad aggiornare nel database
 				saveOnDb.modificaCliente(cliente);
-				request.getSession().removeAttribute("CLIENTEDAMODIFICARE");
+				request.getSession().removeAttribute("CREDENZIALI");
+				request.getSession().setAttribute("CREDENZIALI",  cliente);
 				response.sendRedirect("bacheca.jsp");
 				//response.sendRedirect("ilmioristorantecaricamento.jsp"); // Richiamo servlet per prelevare le informazioni sul ristorante
 			} 

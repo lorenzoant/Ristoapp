@@ -92,20 +92,19 @@ public class AccountServlet extends HttpServlet {
 				
 				//Salvo in sessione
 				
-				request.getSession().removeAttribute("Cliente");
-				request.getSession().setAttribute("Cliente",cliente);
+				//request.getSession().removeAttribute("Cliente");
+				//request.getSession().setAttribute("Cliente",cliente);
 				
-				ClientiBean cb = new  ClientiBean();
-				cb = (ClientiBean) request.getSession().getAttribute("Cliente");
+				//ClientiBean cb = new  ClientiBean();
+				//cb = (ClientiBean) request.getSession().getAttribute("Cliente");
 				
 				//Salvo in db
 				
 				SaveMySQL saveOnDb = new SaveMySQL();
 				try {
-					saveOnDb.inserisciCliente(cb);
+					saveOnDb.inserisciCliente(cliente);
 					response.sendRedirect("login.jsp");
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					sc = request.getSession().getServletContext();																								
 					rd = sc.getRequestDispatcher("account.jsp");																																		
