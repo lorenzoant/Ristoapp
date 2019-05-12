@@ -118,7 +118,6 @@
 		streetName += " " + document.getElementById("indirizzo").value;
 		//var streetNumber = document.getElementById("streetNumber").value;
 		var streetNumber = "";
-		alert("streetName");
 		if(streetName == '') return; // Non ho il nome della via -> esco
 		
 		let url = 'https://nominatim.openstreetmap.org/search?q=' + streetNumber + ' ' + streetName + '&format=json';
@@ -141,8 +140,6 @@
 			document.getElementById("lat").value = '';
 			document.getElementById("lon").value = '';
 		  }
-		  else{
-			  alert("1");
 			  document.getElementById("lat").value = out[0].lat;
 			  document.getElementById("lon").value = out[0].lon;
 			  myMap();
