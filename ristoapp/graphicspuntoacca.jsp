@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="MEDIA/icona.ico"> <!-- icona in cima -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-red.min.css" /> 
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -18,9 +19,16 @@
     .page{margin: 15px;}
     .logo{width: 80px;}
     .centratabella{width: 60%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
-    @media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}
+    /*@media screen and (max-width:1024px){.mdl-layout__header{display:inline-block}*/
+	
+	.mappa{width:50%;height:300px;background: yellow; border: 2px solid grey;margin-top: 35px; margin-bottom: 35px}
+	.obbligatoria{margin-left: 250px; margin-right: 250px;}
+	@media only screen and (max-width: 600px) {
+		.mappa{width: 100%;}
+		.separatore{width: 100%;}
+		.obbligatoria{margin-left: 0; margin-right: 0;}
+	}
 </style>
-<link rel="icon" href="MEDIA/icona.ico"> <!-- icona in cima -->
 <!--
 ESEMPI:
 

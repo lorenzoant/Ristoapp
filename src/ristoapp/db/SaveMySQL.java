@@ -564,7 +564,7 @@ public class SaveMySQL {
 				risto.setIDFCatCucina(result.getInt("IDFCatCucina"));
 				risto.setIDFCliente(result.getInt("IDFCliente"));
 				risto.setNome(result.getString("Nome"));
-				risto.setCoordinataLat(result.getInt("CoordinataLat"));
+				risto.setCoordinataLat(result.getDouble("CoordinataLat"));
 				risto.setCoordinataLon(result.getDouble("CoordinataLon"));
 				risto.setIndirizzo(result.getString("Indirizzo"));
 				risto.setTelefono(result.getString("Telefono"));
@@ -577,6 +577,8 @@ public class SaveMySQL {
 				risto.setSerWifi(result.getBoolean("SerWifi"));
 				risto.setSerDisabili(result.getBoolean("SerDisabili"));
 				risto.setSerParcheggio(result.getBoolean("SerParcheggio"));
+				risto.setUrl(result.getString("URL"));
+				risto.setNumeroPosti(result.getInt("NumeroPosti"));
 
 				System.out.println("MySQL getInfoRistoranteDalProprietario() confirmed");
 				return risto;
@@ -1336,11 +1338,11 @@ public class SaveMySQL {
 					else sql += "0','";
 					if(ristorante.getSerDisabili()) sql += "1','";
 					else sql += "0','";
-					if(ristorante.getSerParcheggio()) sql += "1'";
-					else sql += "0'";
+					if(ristorante.getSerParcheggio()) sql += "1', ";
+					else sql += "0', ";
 					sql += "'" + ristorante.getNumeroPosti() + "', '" +
 					ristorante.getUrl() + "');";
-
+					System.out.println(sql);
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
@@ -1356,6 +1358,8 @@ public class SaveMySQL {
 		catch (SQLException e) {
 			// Se ricevo un errore faccio il rollback
 			System.out.println("MySQL inserisciRistorante() failed");
+			System.out.println(e);
+			
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -1411,11 +1415,11 @@ public class SaveMySQL {
 					if(ristorante.getSerDisabili()) sql += "'1', ";
 					else sql += "'0', ";
 					sql += "SerParcheggio = ";
-					if(ristorante.getSerParcheggio()) sql += "'1'";
-					else sql += "'0'";
+					if(ristorante.getSerParcheggio()) sql += "'1', ";
+					else sql += "'0', ";
 					sql += "NumeroPosti = '" + ristorante.getNumeroPosti() + "', " +
 					"URL = '" + ristorante.getUrl() + "'";
-					sql += " WHERE IDFCliente = '" + ristorante.getIDFCliente() + "'";
+					sql += " WHERE IDFCliente = '" + ristorante.getIDFCliente() + "';";
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
