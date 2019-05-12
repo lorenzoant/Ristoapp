@@ -140,6 +140,7 @@
 			document.getElementById("lat").value = '';
 			document.getElementById("lon").value = '';
 		  }
+		  else{
 			  document.getElementById("lat").value = out[0].lat;
 			  document.getElementById("lon").value = out[0].lon;
 			  myMap();
@@ -167,9 +168,18 @@
 			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		
 	}
+	
+	function imaggineprofilo(){
+		alert();
+		var link = document.getElementById("url").value;
+		if(link != ""){
+			document.getElementById("foto").src = link;
+		}
+	
+	}
 	</script>
 </head>
-<body class="text-center" onload="getStreetLatLon();">
+<body class="text-center" onload="getStreetLatLon(); imaggineprofilo();">
 	
 	<div class="mdl-layout__header">		
 		<table style="width:100%">
@@ -286,11 +296,11 @@
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" id="lat" type="text" name="latitudine" value="<%= CoordinataLat %>"/>
-				<label class="mdl-textfield__label" for="Indirizzo"></label>
+				<label class="mdl-textfield__label" for="lat"></label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" id="lon" type="text" name="longitudine" value="<%= CoordinataLon %>"/>
-				<label class="mdl-textfield__label" for="Indirizzo"></label>
+				<label class="mdl-textfield__label" for="lon"></label>
 			</div>
 	       
 		   <div id="map" class="mappa" style=""></div>
@@ -302,12 +312,16 @@
 			</div>	
 	 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="url" name="url"  value=<%= url %>>
+			    <input class="mdl-textfield__input" type="text" id="url" name="url"  value="<%= url %>" onfocusout="imaggineprofilo();">
 			    <label class="mdl-textfield__label" for="url">URL http foto</label>
-	  		</div><br>
+	  		</div>
+	  		
+	  		<img style="width: 150px; height: 150px;" id="foto" src="http://www.gifanimate.com/data/media/92/cuoco-chef-immagine-animata-0019.gif" alt="Foto">
+	  		
+	  		<br>
 			 
 			 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			  	<textarea class="mdl-textfield__input" type="text" rows= "2" id="AreaDescrizione" name="descrizione" value="<%= Descrizione %>"></textarea>
+			  	<textarea class="mdl-textfield__input" type="text" rows= "2" id="AreaDescrizione" name="descrizione"><%= Descrizione %></textarea>
 			    <label class="mdl-textfield__label" for="AreaDescrizione">Descrizione...</label>
 			 </div><br>
 			

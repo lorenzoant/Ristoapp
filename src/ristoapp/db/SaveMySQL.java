@@ -1423,6 +1423,7 @@ public class SaveMySQL {
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
+			System.out.println(sql);
 
 			System.out.println("MySQL modificaRistorante() confirmed");
 		}

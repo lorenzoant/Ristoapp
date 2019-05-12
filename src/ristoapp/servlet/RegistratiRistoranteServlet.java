@@ -86,7 +86,10 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				lon = Double.parseDouble(request.getParameter("longitudine"));
 			}catch (Exception e){
 				lon = 0;
+				System.out.println(e);
 			}
+			
+			System.out.println(lon);
 			
 			boolean climatizzazione = true;
 			if(request.getParameter("ser-climatizzazione") == null) climatizzazione = false;
@@ -171,7 +174,6 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			}
 			
 			double lat = 0;
-			System.out.println(request.getParameter("latitudine"));
 			try {
 				lat = Double.parseDouble(request.getParameter("latitudine"));		
 			}catch (Exception e){
@@ -180,10 +182,9 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			
 			double lon = 0;
 			try {
-				lon = Double.parseDouble(request.getParameter("lotitudine"));
+				lon = Double.parseDouble(request.getParameter("longitudine"));
 			}catch (Exception e){
 				lon = 0;
-				System.out.println(e);
 			}
 			
 			boolean climatizzazione = true;

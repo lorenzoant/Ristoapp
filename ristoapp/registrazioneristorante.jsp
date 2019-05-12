@@ -113,6 +113,14 @@
 			snackbarContainer.MaterialSnackbar.showSnackbar(data);
 		
 	}
+	
+	function imaggineprofilo(){
+		var link = document.getElementById("url").value;
+		if(link != ""){
+			document.getElementById("foto").src = link;
+		}
+	
+	}
 	</script>
 	
 	
@@ -238,9 +246,12 @@
 			</div>	
 				
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" id="url" name="url">
+				<input class="mdl-textfield__input" type="text" id="url" name="url" onfocusout="imaggineprofilo();">
 				<label class="mdl-textfield__label" for="url">URL http foto</label>
 			</div>
+			
+			<img style="width: 150px; height: 150px;" id="foto" src="http://www.gifanimate.com/data/media/92/cuoco-chef-immagine-animata-0019.gif" alt="Foto">
+			
 			<br>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			  <textarea class="mdl-textfield__input" type="text" rows= "2" name="descrizione" id="AreaDescrizione"></textarea>
