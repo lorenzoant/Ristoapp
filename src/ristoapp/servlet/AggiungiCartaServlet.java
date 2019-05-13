@@ -90,7 +90,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 				response.sendRedirect("profilo.jsp");
 			} 
 			catch (Exception e) {
-				System.out.println("Errore in scrittura sul databass");
+				System.out.println("Errore in scrittura sul database");
 				e.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
