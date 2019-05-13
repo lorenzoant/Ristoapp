@@ -18,7 +18,7 @@
     .g-recaptcha {display: inline-block;}
     .page{margin: 15px;}
     .logo{width: 80px;}
-    .centratabella{width: 60%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
+    .centratabella{width: 100%;margin-left: auto;margin-right: auto;} /*per evitare di mettere il tag center*/
     @media screen and (max-width:2048px){.mdl-layout__header{display:inline-block;}
     	
 	.mappa{width:50%;height:300px;background: yellow; border: 2px solid grey;margin-top: 35px; margin-bottom: 35px; dispay: block;}

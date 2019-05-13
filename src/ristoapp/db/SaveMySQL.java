@@ -675,7 +675,7 @@ public class SaveMySQL {
 			
 			// Creo stringa sql per prenotazioni ultima settimana
 			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + " AND Data BETWEEN ' " + range1_str + "' AND '" + range2_str + "' ORDER BY Data DESC;";
-			System.out.println(sql);
+			//System.out.println(sql);
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
 
@@ -725,7 +725,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "SELECT * FROM PrenotazioniDettagli INNER JOIN Piatti ON IDFPiatto = IDPiatto"
+			String sql = "SELECT * FROM Prenotazioni INNER JOIN PrenotazioniDettagli ON IDPrenotazione = IDFOrdine INNER JOIN Piatti ON IDFPiatto = IDPiatto"
 					+ " WHERE IDFOrdine = " + idPrenotazione + ";";
 
 			// Eseguo query
@@ -739,6 +739,10 @@ public class SaveMySQL {
 				QueryPiattiPrenotatiBean p = new QueryPiattiPrenotatiBean();
 				p.setIDPrenotazioneDett(resultList.getInt("IDPrenotazioneDett"));
 				p.setIDFOrdine(resultList.getInt("IDFOrdine"));
+				p.setData(resultList.getString("Data"));
+				p.setOra(resultList.getString("Ora"));
+				p.setNumeroPersone(resultList.getInt("NumeroPersone"));
+				p.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
 				p.setIDFPiatto(resultList.getInt("IDFPiatto"));
 				p.setPrezzo(resultList.getFloat("Prezzo"));
 				p.setSconto(resultList.getInt("Sconto"));

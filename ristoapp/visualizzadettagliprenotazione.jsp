@@ -23,6 +23,11 @@
 			// L'utente non  loggato
 			response.sendRedirect("login.jsp");
 		}%>
+		<style type="text/css">
+			td, th{
+  			text-align:center !important; 
+  		}
+		</style>
 </head>
 <body class="text-center">
 
@@ -43,12 +48,18 @@
 		ArrayList<QueryPiattiPrenotatiBean> piattiPrenotati = (ArrayList<QueryPiattiPrenotatiBean>)request.getSession().getAttribute("DETTAGLIPRENOTAZIONECONPIATTO");
 	%>
 	
-	<div class="page centratabella">
+	<div class="page">
 	
 		<h3>Dettagli prenotazione n° <%= piattiPrenotati.get(0).getIDFOrdine() %></h3>
 		
+		<h4>Arrivo previsto ore <%=piattiPrenotati.get(0).getOra() %> del giorno <%=piattiPrenotati.get(0).getData() %></h4>
+		
+		<%if(piattiPrenotati.get(0).getIDFCatPrenotazione()== 3) {%>
+			<h4>La prenotazione comprende <span style="color:green"><%=piattiPrenotati.get(0).getNumeroPersone()%></span> posti a sedere.</h4>
+		<%} %>
+		
 		<div style="overflow-x: auto;">
-		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" style="margin-left: auto; margin-right: auto;">
 		<thead>
 			<tr>
 				<th>Foto</th>

@@ -9,6 +9,10 @@ public class QueryPiattiPrenotatiBean {
 	private float Prezzo;
 	private int Sconto;
 	private int Quantita;
+	private String Data;
+	private String Ora;
+	private int NumeroPersone;
+	private int IDFCatPrenotazione;
 	
 	//Da tabelle Piatti
 	private int IDFCatPiatto;
@@ -69,6 +73,30 @@ public class QueryPiattiPrenotatiBean {
 	}
 	public void setUrl(String url) {
 		Url = url;
+	}
+	public String getData() {
+		return Data;
+	}
+	public void setData(String data) {
+		Data = data;
+	}
+	public String getOra() {
+		return Ora;
+	}
+	public void setOra(String ora) {
+		Ora = ora;
+	}
+	public int getNumeroPersone() {
+		return NumeroPersone;
+	}
+	public void setNumeroPersone(int numeroPersone) {
+		NumeroPersone = numeroPersone;
+	}
+	public int getIDFCatPrenotazione() {
+		return IDFCatPrenotazione;
+	}
+	public void setIDFCatPrenotazione(int iDFCatPrenotazione) {
+		IDFCatPrenotazione = iDFCatPrenotazione;
 	}
 
 }
