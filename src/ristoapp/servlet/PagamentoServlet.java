@@ -58,6 +58,7 @@ public class PagamentoServlet extends HttpServlet {
 			
 			try {
 				db.setPagamento(prenotazione);
+				System.out.println("Pagamento registrato con successo!");
 				response.sendRedirect("profilo.jsp");
 			} 
 			catch (Exception e) {
