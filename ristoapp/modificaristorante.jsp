@@ -157,7 +157,6 @@
 	}
 	
 	function imaggineprofilo(){
-		alert();
 		var link = document.getElementById("url").value;
 		if(link != ""){
 			document.getElementById("foto").src = link;
