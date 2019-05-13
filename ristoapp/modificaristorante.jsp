@@ -156,19 +156,6 @@
 	
 	}
 	
-	function informativa(){
-		
-		var snackbarContainer = document.querySelector('#demo-toast-example');
-			snackbarContainer.style.backgroundColor = '#' +
-			Math.floor(Math.random() * 0xFFFFFF).toString(16);
-			var data = {
-			message: 'È obbligatorio accettare per poter completare la registrazione',
-			timeout: 3000,
-			};
-			snackbarContainer.MaterialSnackbar.showSnackbar(data);
-		
-	}
-	
 	function imaggineprofilo(){
 		alert();
 		var link = document.getElementById("url").value;

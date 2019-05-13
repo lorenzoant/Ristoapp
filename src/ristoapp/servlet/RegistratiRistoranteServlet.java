@@ -231,6 +231,12 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 				// Provo ad aggiungere il ristorante nel database
 				saveOnDb.modificaRistorante(ristorante);
 				
+				RistorantiBean old = new RistorantiBean();
+				old = (RistorantiBean) request.getSession().getAttribute("RISTORANTELOGGATO");	
+
+				ristorante.setRistorantePiatti(saveOnDb.prelevaPiattRistorante(old)); // Prelevo piatti del ristorante	
+				ristorante.setPrenotazioni(saveOnDb.prelevaPrenotazioniRistoranteTraDueDate(old)); // Prelevo prenotazioni del ristorante
+				
 	  			request.getSession().removeAttribute("RISTORANTELOGGATO");
 	  			request.getSession().setAttribute("RISTORANTELOGGATO", ristorante);
 	  			System.out.println(" -> Info ristorante aggiornate");
