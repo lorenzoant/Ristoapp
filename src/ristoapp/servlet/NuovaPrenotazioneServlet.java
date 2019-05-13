@@ -126,7 +126,34 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			rd.forward(request, response);
 			
 		}	
+		
+		
+		//Quando un utente vuole cancellare una prenotazione
+		if(whatsend.equalsIgnoreCase("elimina")) {
 			
+			SaveMySQL db= new SaveMySQL();
+			
+			try {
+				db.eliminaPrenotazione(Integer.parseInt(request.getParameter("idpren")));
+			} catch (NumberFormatException e) {
+				
+				e.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
+			
+			ServletContext sc = request.getSession().getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/listaprenotazioni.jsp");
+			rd.forward(request, response);
+			
+		}	
 			
 	}
 }

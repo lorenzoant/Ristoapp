@@ -160,7 +160,7 @@ public class SaveMySQL {
 	}// End prelevaPrenotazioniCliente()
 	
 
-	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
+	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {// Tazza
 		Statement stmt = null;
 		Connection conn = null;
 		//Creo un resultset per prendere l'id alla fine
@@ -218,7 +218,7 @@ public class SaveMySQL {
 	}//End nuovaPrenotazione()
 
 
-	public void inserisciDettagli(ArrayList<PrenotazioniDettagliBean> dettagli) throws Exception{
+	public void inserisciDettagli(ArrayList<PrenotazioniDettagliBean> dettagli) throws Exception{// Tazza
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -399,7 +399,45 @@ public class SaveMySQL {
 		}
 	}// End modificaPrenotazione()
 
+	public void eliminaPrenotazione(int idpren) throws Exception{//Tazza
 
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			// Disattivo auto commit al databse: decido da codice quando committare
+			conn.setAutoCommit(false);
+			stmt = conn.createStatement();
+
+			// Creo stringa sql
+			String sql = "DELETE FROM Prenotazioni" +
+					"WHERE IDPrenotazione = '" + idpren + "'";
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+
+			System.out.println("MySQL eliminaPrenotazione() confirmed");
+		}
+		catch (SQLException e) {
+			System.out.println("MySQL eliminaPrenotazione() failed");
+			if(conn != null) {
+				conn.rollback();
+			}
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// End eliminaPrenotazione()
+	
 	public void eliminaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
 
 		Statement stmt = null;

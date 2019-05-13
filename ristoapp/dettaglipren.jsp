@@ -33,6 +33,15 @@
   		}
 		</style>
 		
+		<script type="text/javascript">
+			function conferma() {
+				//funzione per richiedere la conferma per eliminare la prenotazione
+				if (confirm('Sei sicuro di voler eliminare questa prenotazione?')) {
+					document.getElementById("elimina").submit();
+				}
+			}
+		</script>
+		
 </head>
 <body class="text-center">
 
@@ -122,10 +131,17 @@
 		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
 		<%if (!pren.getStatoPagamento()){ %>
 			<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
-			<a href="modificaordine.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Modifica ordine"/></a>
+			
+		<form action="nuovaprenotazioneservlet" id="elimina" method="POST">	
+		
+			<input name="idpren" value="<%=idpren %>" type="hidden">
+			<input name="whatsend" value="elimina" type="hidden">
+			<input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Elimina ordine"/>
+			
+		</form>
 
 		<%}else{ %>
-			<input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Gli ordini già pagati non possono essere modificati"/>
+			<input style="margin-top: 20px" type = "button" onclick="conferma()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Gli ordini già pagati non possono essere eliminati"/>
 		<%} %>
 		</div>
 	</div>
