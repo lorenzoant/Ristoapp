@@ -60,8 +60,7 @@
 		<% 
 			ArrayList<PiattiBean> rs;
 			SaveMySQL db= new SaveMySQL();
-			//int risto= Integer.parseInt(request.getSession().getAttribute("idristorante").toString());
-			int risto=1;
+			int risto= Integer.parseInt(request.getSession().getAttribute("IDRISTO").toString());
 			rs=  db.prelevaPiattRistorante(risto);
 			
 			for(int i=0; i<rs.size(); i++){

@@ -39,7 +39,7 @@
 	<div class="mdl-layout__header">		
 		<table style="width:100%;">
 			<tr>
-				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+				<td align="left"><a href="listaprenotazioni.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
 					<h2 style="display: inline;vertical-align:middle">Dettagli prenotazine</h2>
 					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
@@ -121,7 +121,7 @@
 		</table>
 		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
 		<%if (!pren.getStatoPagamento()){ %>
-			<a href="pagamento.jsp"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
+			<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
 			<a href="modificaordine.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Modifica ordine"/></a>
 
 		<%}else{ %>
