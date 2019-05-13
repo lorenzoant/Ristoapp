@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.CarteBean;
+import ristoapp.bean.PrenotazioniBean;
+import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
 
 
@@ -31,6 +33,41 @@ public class PagamentoServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		String whatsend = request.getParameter("whatsend");
+		if(whatsend.equalsIgnoreCase("paga")) { // Aggiorno lo stato del pagamento
+			ClientiBean utenteLoggato = null;
+			try {
+				// Identifico l'utente
+				utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+			}
+			catch (Exception e) {
+				// Utente non loggato
+				System.out.println("paga: user not logged");
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+				return;
+			}				
+			
+			PrenotazioniBean prenotazione= new PrenotazioniBean();
+
+			prenotazione.setIDFCliente(utenteLoggato.getIDCliente());
+
+			SaveMySQL db = new SaveMySQL();
+			
+			try {
+				db.setPagamento(prenotazione);
+				response.sendRedirect("profilo.jsp");
+			} 
+			catch (Exception e) {
+				System.out.println("Errore in scrittura sul database");
+				e.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
+			
+		}
 	}
 }
