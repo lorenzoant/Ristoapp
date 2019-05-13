@@ -60,7 +60,7 @@
 	  		
 		
 		<input name="whatsend" value="paga" type="hidden"/>
-		<input type="hidden" name="idpren" value="<%=idpren%>"></input>	
+		<input type="hidden" name="idpren" value="<%=request.getParameter("idpren")%>"></input>	
 		<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Procedi al pagamento</button>
 </form>
 </div>	
