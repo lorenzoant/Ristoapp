@@ -1,7 +1,6 @@
 package ristoapp.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ristoapp.GeneraCodice;
 import ristoapp.bean.ClientiBean;
 import ristoapp.db.SaveMySQL;
 
@@ -34,13 +32,7 @@ public class ModificaAccountServlet extends HttpServlet {
 			//ClientiBean vecchiocliente = (ClientiBean)request.getSession().getAttribute("CLIENTEDAMODIFICARE");
 			ClientiBean utenteLoggato = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 			// Lettura campi da request e manipolazione prima di inserirli nel database
-			String Email = request.getParameter("email");
-			String Nome = request.getParameter("nome");
-			String Cognome = request.getParameter("cognome");
-			String Indirizzo = request.getParameter("indirizzo");
-			String Comune = request.getParameter("comune");
-			//String Lingua = request.getParameter("Lingua");
-			
+	
 			boolean NotificaEmail = true; 
 			if(request.getParameter("NotificaEmail") == null) NotificaEmail = false;
 			

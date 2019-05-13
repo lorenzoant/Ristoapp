@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
-import ristoapp.JSONReader;
-import org.json.JSONObject;
+
 
 /**
  * Servlet implementation class RegistratiRistoranteServlet

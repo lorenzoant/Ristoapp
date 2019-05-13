@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ristoapp.bean.ClientiBean;
-import ristoapp.bean.CarteBean;
 import ristoapp.bean.PrenotazioniBean;
-import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
 
 
@@ -29,7 +27,8 @@ public class PagamentoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Se l'utente ha usato GET probabilmente non è loggato -> login
-		response.sendRedirect("login.jsp");
+		//response.sendRedirect("login.jsp");
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,6 +52,7 @@ public class PagamentoServlet extends HttpServlet {
 			PrenotazioniBean prenotazione= new PrenotazioniBean();
 
 			prenotazione.setIDFCliente(utenteLoggato.getIDCliente());
+			prenotazione.setIDPrenotazione(Integer.parseInt(request.getParameter("idpren")));
 
 			SaveMySQL db = new SaveMySQL();
 			

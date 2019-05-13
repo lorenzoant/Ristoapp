@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
@@ -1118,11 +1116,12 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = '1'," +
+			String sql = "UPDATE Prenotazioni SET " +
+					"StatoPagamento = '1' " +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 
 			System.out.println("MySQL setPagamento() confirmed");
