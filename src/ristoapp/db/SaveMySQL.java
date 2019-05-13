@@ -768,7 +768,7 @@ public class SaveMySQL {
 	}// End prelevaDettagliPrenotazioneConPiatti()
 
 
-	public void inserisciCliente(ClientiBean cliente) throws Exception{
+	public int inserisciCliente(ClientiBean cliente) throws Exception{
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -782,7 +782,21 @@ public class SaveMySQL {
 			// Creo stringa sql
 			Date data = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
+			String sql1 = "SELECT Email FROM Clienti";
+			ResultSet ricerca = stmt.executeQuery(sql1);
+			
+			int esito = 0;
+			while(ricerca.next()){
+				
+				System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
+				if(cliente.getEmail().equals(ricerca.getString("Email"))){
+					
+					esito = 1;
+					
+				}
+				
+			}
+			if(esito == 0){
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
 					cliente.getIDCliente() + "','" +
 					cliente.getEmail() + "','" +
@@ -801,10 +815,15 @@ public class SaveMySQL {
 			sql = sql + cliente.getCodicePass() + "','"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
+			
 			stmt.executeUpdate(sql);
 
 			System.out.println("MySQL inserisciCliente() confirmed");
+			}
+			return esito;
 		}
+			
+		
 		catch (SQLException e) {
 			System.out.println("MySQL inserisciCliente() failed");
 			if(conn != null) {
