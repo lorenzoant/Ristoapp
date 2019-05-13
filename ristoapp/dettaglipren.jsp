@@ -136,7 +136,7 @@
 		
 			<input name="idpren" value="<%=idpren %>" type="hidden">
 			<input name="whatsend" value="elimina" type="hidden">
-			<input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Elimina ordine"/>
+			<input style="margin-top: 20px" type = "button" onclick="conferma()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Elimina ordine"/>
 			
 		</form>
 

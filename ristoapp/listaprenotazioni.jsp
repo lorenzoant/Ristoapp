@@ -33,6 +33,7 @@
   			margin-right: auto;
   		}
   	</style>
+  	
 
 </head>
 <body>
@@ -50,7 +51,8 @@
 						</table>
 				</center>
 	</div>
-			
+	
+
 	<!-- PAGE CONTENT -->
 	  	<div style="overflow-x: auto;">
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp container">

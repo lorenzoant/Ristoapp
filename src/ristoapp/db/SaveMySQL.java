@@ -412,12 +412,19 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "DELETE FROM Prenotazioni" +
-					"WHERE IDPrenotazione = '" + idpren + "'";
+			String sql = "DELETE FROM Prenotazioni " +
+					"WHERE IDPrenotazione = " + idpren;
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
+			// Creo stringa sql
+			sql = "DELETE FROM PrenotazioniDettagli " +
+					"WHERE IDFOrdine = " + idpren;
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+						
 			System.out.println("MySQL eliminaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
@@ -451,8 +458,15 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "DELETE FROM Prenotazioni" +
-					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
+			String sql = "DELETE FROM Prenotazioni " +
+					"WHERE IDPrenotazione = " + prenotazione.getIDPrenotazione();
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			// Creo stringa sql
+			sql = "DELETE FROM PrenotazioniDettagli " +
+					"WHERE IDFOrdine = " + prenotazione.getIDPrenotazione();
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
