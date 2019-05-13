@@ -160,6 +160,8 @@
 		var link = document.getElementById("url").value;
 		if(link != ""){
 			document.getElementById("foto").src = link;
+		}else{
+			document.getElementById("foto").src = "http://www.gifanimate.com/data/media/92/cuoco-chef-immagine-animata-0019.gif";
 		}
 	
 	}
@@ -186,12 +188,12 @@
 		<form action = "registratiristoranteservlet" name = "account" method ="post">
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" value="<%= Nome %>"/>
+				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" value="<%= Nome %>" required/>
 				<label class="mdl-textfield__label" for="NomeRisto">Nome Ristorante</label>
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<select class="mdl-textfield__input" id="categoria" name="categoria">
+				<select class="mdl-textfield__input" id="categoria" name="categoria" required>
 				<option value="" disabled selected></option>
 						<% 
 	
@@ -228,18 +230,18 @@
 			</div><br>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" value="<%= Telefono %>">
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" value="<%= Telefono %>" required>
 				<label class="mdl-textfield__label" for="Telefono">Telefono</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label id="Email" >	 
-				<input class="mdl-textfield__input" type = "text" name = "email" value="<%= Email %>"/>	
+				<input class="mdl-textfield__input" type = "text" name = "email" value="<%= Email %>" required/>	
 				<label class="mdl-textfield__label" for="Email">Email</label>
 			</div><br>		
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<select class="mdl-textfield__input" id="comuni" name="comuni" onfocusout="getStreetLatLon();">
+				<select class="mdl-textfield__input" id="comuni" name="comuni" onfocusout="getStreetLatLon();" required>
 				<option value="" disabled selected></option>
 						<% 
 	
@@ -275,7 +277,7 @@
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name="indirizzo" id="indirizzo" value="<%= Indirizzo %>"  onfocusout="getStreetLatLon();"/>
+				<input class="mdl-textfield__input" type = "text" name="indirizzo" id="indirizzo" value="<%= Indirizzo %>" required onfocusout="getStreetLatLon();"/>
 				<label class="mdl-textfield__label" for="Indirizzo">Indirizzo</label>
 			</div>
 			<br>
@@ -292,13 +294,13 @@
 		   <div id="map" class="mappa" style=""></div>
 		   
 	       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="posti" id="Posti" value="<%= NumeroPosti %>">
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="posti" id="Posti" value="<%= NumeroPosti %>" required>
 				<label class="mdl-textfield__label" for="Posti">Posti</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>	
 	 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="text" id="url" name="url"  value="<%= url %>" onfocusout="imaggineprofilo();">
+			    <input class="mdl-textfield__input" type="text" id="url" name="url"  value="<%= url %>" required onfocusout="imaggineprofilo();">
 			    <label class="mdl-textfield__label" for="url">URL http foto</label>
 	  		</div>
 	  		
@@ -319,12 +321,12 @@
 					<%if (climatizzazione == true){%>
 					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
 					  <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" name="ser-climatizzazione" checked>
-					  <span class="mdl-checkbox__label">Climatizzazione</span>
+					  <span class="mdl-checkbox__label">Ser-Climatizzazione</span>
 					</label>
 					<%}else{ %>
 					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
 					  <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" name="ser-climatizzazione">
-					  <span class="mdl-checkbox__label">Climatizzazione</span>
+					  <span class="mdl-checkbox__label">Ser-Climatizzazione</span>
 					</label>
 					<%} %>
 					</td>
@@ -373,7 +375,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td>
 					<%if (parcheggio == true){%>
 					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
 					  <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input" name="ser-parcheggio" checked>
@@ -385,6 +387,12 @@
 					  <span class="mdl-checkbox__label">Ser-Parcheggio</span>
 					</label>
 					<%} %>
+					</td>
+					<td>
+					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+					  <input type="checkbox" class="mdl-checkbox__input" disabled>
+					  <span class="mdl-checkbox__label">Ser-Tavolo</span>
+					</label>
 					</td>
 				</tr>
 			</table>
