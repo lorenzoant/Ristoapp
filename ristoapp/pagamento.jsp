@@ -25,7 +25,7 @@
 	</div>
 	
 	<div class="page">
-<form action="aggiungicartaservlet" name="pagamento" method="post">
+<form action="pagamentoservlet" name="pagamento" method="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    <select class="mdl-textfield__input" id="categoria" name="categoria" required>
 			<% 
