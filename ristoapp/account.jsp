@@ -2,7 +2,7 @@
 <%@page import="ristoapp.bean.ClientiBean"%>
 <%@page import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,6 +164,24 @@
 							<%
 						}
 					%>
+					
+					
+					
+<%
+						String avviso1 = (String)request.getAttribute("errorMessage1");
+						if(avviso1 == "errore1"){
+							request.getSession().removeAttribute("errorMessage1");
+							%>
+							  
+							  
+							   			<div style="color:red;">E-mail o nome account già esistente</div>
+							   	
+							<%
+						}
+					%>
+					
+					
+					
 
 
 </form>
