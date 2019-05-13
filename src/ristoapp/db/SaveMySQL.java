@@ -82,7 +82,7 @@ public class SaveMySQL {
 			PrenotazioniBean prenotazione = new PrenotazioniBean();
 
 			if((resultList.next())) {
-			// Estraggo dati
+				// Estraggo dati
 				prenotazione.setIDPrenotazione(resultList.getInt("IDPrenotazione"));
 				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
 				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
@@ -91,8 +91,6 @@ public class SaveMySQL {
 				prenotazione.setOra(resultList.getString("Ora"));
 				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
 				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
-
-			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() confirmed");
 			
 			}
 			return prenotazione;
