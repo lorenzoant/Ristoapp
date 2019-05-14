@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ristoapp.InvioEmail;
+import ristoapp.bean.ClientiBean;
+
 /**
  * Servlet implementation class ContattiServlet
  */
@@ -34,11 +37,27 @@ public class ContattiServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String whatsend = request.getParameter("whatsend");
 		
+		String whatsend = request.getParameter("whatsend");
+		System.out.println(whatsend);
 		if(whatsend.equalsIgnoreCase("contattaci")) {
-			String email = request.getParameter("email");
-			String testo = request.getParameter("descrizione");
+			try {
+				ClientiBean cliente = new ClientiBean();
+				
+				String email = cliente.getEmail(); 
+				String testo = request.getParameter("descrizione");
+				System.out.println(email);
+				System.out.println(testo);
+				
+				
+				cliente.setEmail(email);
+				InvioEmail email1 = new InvioEmail();
+				email1.contatti(cliente.getEmail(),testo);//invio l'email all'utente con il codice
+				response.sendRedirect("contatti.jsp");
+			}catch(Exception e) {
+				System.out.println("errore");
+				e.printStackTrace();
+			}
 			
 			
 		}

@@ -12,11 +12,11 @@
 			
 <% // Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 
-	String nomeLoggato = "";
+	String mail = "";
 	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-		nomeLoggato = cli.getNome(); //nome del profilo
-		
+		mail = cli.getEmail(); //nome del profilo
+		cli.setEmail(mail);
   		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}%>
@@ -58,22 +58,22 @@
       
       <form action="ContattiServlet" name="contattiservlet" method="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="email" id="email" name="email">
+			    <input class="mdl-textfield__input" type="email" id="email" name="email" value="<%=mail%>">
 			    <label class="mdl-textfield__label" for="email">La tua email</label>
 			    <br><br>
 	  		</div>
 	  		<center>			
 	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-	  		
+	  			<label class="mdl-textfield__label" for="AreaDescrizione">Testo</label>
 	  			<textarea class="mdl-textfield__input" type="text" rows= "2" id="AreaDescrizione" name="descrizione"></textarea>
-			    <label class="mdl-textfield__label" for="AreaDescrizione">Testo</label>
-			    <br><br>
-			    
 	  		</div>
 	  	</center>
+	  	
 	  		<input name = "whatsend" value = "dietro" type = "hidden"/>
 			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
-			
+		</form>
+		<br>
+		<form action="ContattiServlet" name="contattiservlet" method="post">
 			<input name = "whatsend" value = "contattaci" type = "hidden"/>
 			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "contattaci"/>
 			

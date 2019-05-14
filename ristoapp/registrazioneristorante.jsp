@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.sql.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"pageEncoding="ISO-8859-1" import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
 <%@page import="ristoapp.bean.ClientiBean"%>
     
@@ -333,6 +332,6 @@
 	</div>
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JYM6YP2B7egPqgDN7t7RvaK4QMTyS9w&callback=myMap"></script>
-
+														    
 </body>
 </html>
