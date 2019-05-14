@@ -76,6 +76,8 @@ public class SaveMySQL {
 //			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");	
 //			Date range = df.parse(pren.getData());
 //			
+//			Calendar date1;
+//			
 //			Date ora1 = sdf.parse(pren.getOra());
 //			Date ora2 = sdf.parse(pren.getOra());
 //			
@@ -413,52 +415,6 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPiattRistorante()
-
-
-	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
-
-		Statement stmt = null;
-		Connection conn = null;
-
-		try {
-			// Creo la connessione al database
-			conn = getDBConnection();
-			// Disattivo auto commit al databse: decido da codice quando committare
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement();
-
-			// Creo stringa sql
-			String sql = "UPDATE Prenotazioni SET" +
-					"IDFRistorante = '" + prenotazione.getIDFRistorante()+ "'," +
-					"IDFCatPrenotazione = '" + prenotazione.getIDFCatPrenotazione()+ "'," +
-					//"IDFCliente = '" + prenotazione.getIDFCliente()+ "'," +
-					"Data = '" + prenotazione.getData()+ "'," +
-					"Ora = '" + prenotazione.getOra()+ "'," +
-					"NumeroPersone = '" + prenotazione.getNumeroPersone()+ "'," +
-					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
-
-			// Committo sul server
-			stmt.executeUpdate(sql);
-
-			System.out.println("MySQL modificaPrenotazione() confirmed");
-		}
-		catch (SQLException e) {
-			System.out.println("MySQL modificaPrenotazione() failed");
-			if(conn != null) {
-				conn.rollback();
-			}
-			throw new Exception(e.getMessage());
-		}
-		finally {
-			// Chiudo la connessione
-			if(stmt != null) {
-				stmt.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-		}
-	}// End modificaPrenotazione()
 
 	public void eliminaPrenotazione(int idpren) throws Exception{//Tazza
 
