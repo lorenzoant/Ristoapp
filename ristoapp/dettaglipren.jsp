@@ -28,8 +28,11 @@
 		}%>
 		
 		<style type="text/css">
-			td, th{
+		td, th{
   			text-align:center !important; 
+  		}
+  		span{
+  			color: orange;
   		}
 		</style>
 		
@@ -69,14 +72,14 @@
 	
 	<div class="page centratabella">
 	
-		<h3>Prenotazione n° <%= pren.getIDPrenotazione() %></h3>
+		<h3>Prenotazione n° <span><%= pren.getIDPrenotazione() %></span></h3>
 		
-		<h4>Hai prenotato per le ore: <%=pren.getOra() %> del giorno <%=pren.getData() %></h4>
+		<h4>Hai prenotato per le ore: <span><%=pren.getOra() %></span> del giorno <span><%=pren.getData() %></span></h4>
 		
 		<%if(pren.getIDFCatPrenotazione()== 3) {%>
-			<h4>La tua prenotazione comprende <%=pren.getNumeroPersone() %> posti a sedere</h4>
+			<h4>La tua prenotazione comprende <span><%=pren.getNumeroPersone() %></span> posti a sedere</h4>
 		<%} %>
-		
+		<%if(!dettagli.isEmpty()){ %>
 		<div style="overflow-x: auto;">
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" style=" margin-left: auto; margin-right: auto;">
 		<thead>
@@ -128,6 +131,9 @@
 			</tr>
 		</tbody>
 		</table>
+		<%}else{%>
+		<p>Non hai specifato alcun piatto durante l'ordinazione, potrai ordinare una volta arrivato al ristorante</p>
+		<%} %>
 		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
 		<%if (!pren.getStatoPagamento()){ %>
 			<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
