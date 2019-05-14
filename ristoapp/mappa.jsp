@@ -50,7 +50,7 @@
 			</div>
 		</header>
 		
-		<% 
+		<% //SO QUANTI RISTORANTI CI SONO DA STAMPARE
 
 				Connection conn = null;
 				ResultSet query = null;
@@ -69,21 +69,31 @@
 		%>
 		
 		<%
-				for(RistorantiBean lista:rist){
+				int cont = 0;
+				for(RistorantiBean lista:rist){ //PRENDO IL NOME E LA GEO PER METTERE NELLA MAPPA
+					RistorantiBean risto = new RistorantiBean();
 					
-					String nome = lista.getNome();
-					double longi = lista.getCoordinataLon();
-					double lati = lista.getCoordinataLat();
-				
+					risto.setNome(lista.getNome());
+					risto.setCoordinataLat(lista.getCoordinataLat());
+					risto.setCoordinataLon(lista.getCoordinataLon());
+					cont++;
+			
 			%>
     <div id="map"></div>
     
     
    <script type="text/javascript">
-    var locations = [
-        ['<%=nome%>', <%=lati%>, <%=longi%>]
-    ];
-
+ 
+    var locations = [];
+    for(var i=0; i< <%=query%>; i++) {
+        locations[i] = new Array(3);
+    }
+   
+	locations[<%=cont%>] = [<%=risto.getNome()%>,<%=risto.getCoordinataLat()%>,<%=risto.getCoordinataLon()%>];
+	</script>
+	<%}%
+				
+	<script>
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: new google.maps.LatLng(45.4642700, 9.1895100),
@@ -93,12 +103,13 @@
     var infowindow = new google.maps.InfoWindow();
 
     var marker, i;
-
-    for (i = 0; i < <%=query%>; i++) {  
+    for (i = 0; i < locations.length; i++) {  
 		marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[1][1], locations[1][2]),
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
         map: map
       });
+	marker = new google.maps.Merker({position: new google.maps.LatLng(locations[i][1],locations[i][2]),map:map});
+   
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
