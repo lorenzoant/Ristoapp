@@ -12,6 +12,7 @@ import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
 import ristoapp.bean.PrenotazioniBean;
 import ristoapp.bean.PrenotazioniDettagliBean;
+import ristoapp.bean.RistorantiBean;
 import ristoapp.db.SaveMySQL;
 
 @WebServlet("/nuovaprenotazioneservlet")
@@ -59,8 +60,21 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			int ID = Integer.parseInt(request.getSession().getAttribute("IDRISTO").toString()); //Ricavo l'idristorante
 			prenotazione.setIDFRistorante(ID);
 			int IDPren = 0;
+			int postilib = 0;
 			SaveMySQL db = new SaveMySQL();
 			
+			try {
+				RistorantiBean risto = db.getInfoRistoranteDaID(ID);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}//TODO: controlli per verificare i posti rimanenti
+			
+			
+			
+			if(postilib >= Integer.parseInt(prenotazione.getNumeroPersone())) {
 			try {
 				IDPren=db.nuovaPrenotazione(prenotazione);
 			} 
@@ -78,8 +92,8 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			request.getSession().setAttribute("TipoPren", categoria);
 			
 			response.sendRedirect("inseriscidettaglipren.jsp");
+			}
 		}
-		
 		
 		//Qui inserisco i dettagli della prenotazione, cioè i piatti che vengo ordinati in inseriscidettaglipren.jsp
 		if(whatsend.equalsIgnoreCase("dettaglipren")) {
