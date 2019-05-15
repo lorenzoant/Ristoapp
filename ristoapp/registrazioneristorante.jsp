@@ -11,7 +11,7 @@
 	<%@include file="graphicspuntoacca.jsp"%>
 	<% 
 	// Controllo se chi accede a questa pagina ha l'autorizzazione
-	/*String nomeLoggato = "";
+	String nomeLoggato = "";
 	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
 		nomeLoggato = cli.getNome();
@@ -23,7 +23,7 @@
 	else{
 		// L'utente non  loggato
 		response.sendRedirect("login.jsp");
-	}*/
+	}
 %>
 
 	<script>
@@ -84,10 +84,12 @@
 			
 			document.getElementById("lat").value = '';
 			document.getElementById("lon").value = '';
+			document.getElementById("indirizzo").value = '';
 		  }
 		  else{
 			  document.getElementById("lat").value = out[0].lat;
 			  document.getElementById("lon").value = out[0].lon;
+			 
 			  myMap();
 			  
 		  }
@@ -118,6 +120,8 @@
 		var link = document.getElementById("url").value;
 		if(link != ""){
 			document.getElementById("foto").src = link;
+		}else{
+			document.getElementById("foto").src = "http://www.gifanimate.com/data/media/92/cuoco-chef-immagine-animata-0019.gif";
 		}
 	
 	}
@@ -145,12 +149,12 @@
 		<form action = "registratiristoranteservlet" name = "account" method ="post">
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto"/>
-				<label class="mdl-textfield__label" for="NomeRisto">Nome Ristorante</label>
+				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" required/>
+				<label class="mdl-textfield__label" for="NomeRisto">Nome Ristorante*</label>
 			</div>
 		
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<select class="mdl-textfield__input" id="categoria" name="categoria">
+				<select class="mdl-textfield__input" id="categoria" name="categoria" required>
 				<option value="" disabled selected></option>
 				<% 
 
@@ -177,23 +181,23 @@
 				}
 				%>
 				</select>
-				<label class="mdl-textfield__label" for="categoria">Categoria</label>
+				<label class="mdl-textfield__label" for="categoria">Categoria*</label>
 			</div>
 			
 			<br>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" >
-				<label class="mdl-textfield__label" for="Telefono">Telefono</label>
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" required>
+				<label class="mdl-textfield__label" for="Telefono">Telefono*</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>
 		
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label id="Email" >	 
-				<input class="mdl-textfield__input" type = "text" name = "email"/>	
-				<label class="mdl-textfield__label" for="Email">Email</label>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label id="Email">	 
+				<input class="mdl-textfield__input" type = "text" name = "email" required/>	
+				<label class="mdl-textfield__label" for="Email">Email*</label>
 			</div>
 			<br><br>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<select class="mdl-textfield__input" id="comuni" name="comuni" onfocusout="getStreetLatLon();">
+				<select class="mdl-textfield__input" id="comuni" name="comuni" onfocusout="getStreetLatLon();" required>
 				<option value="" disabled selected></option>
 				<% 
 
@@ -219,29 +223,29 @@
 				}
 				%>
 				</select>
-				<label class="mdl-textfield__label" for="comuni">Comuni</label>
+				<label class="mdl-textfield__label" for="comuni">Comuni*</label>
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name = "indirizzo" id="indirizzo" onfocusout="getStreetLatLon();"/>
-				<label class="mdl-textfield__label" for="Indirizzo">Indirizzo</label>
+				<input class="mdl-textfield__input" type = "text" name = "indirizzo" id="indirizzo" onfocusout="getStreetLatLon();" required/>
+				<label class="mdl-textfield__label" for="Indirizzo">Indirizzo*</label>
 			</div>
 			<br>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" id="lat" type="text" name="latitudine"/>
-				<label class="mdl-textfield__label" for="Indirizzo"></label>
+				<label class="mdl-textfield__label" for="lat"></label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" id="lon" type="text" name="longitudine"/>
-				<label class="mdl-textfield__label" for="Indirizzo"></label>
+				<label class="mdl-textfield__label" for="lon"></label>
 			</div>
 			
 			<div id="map" class="mappa" style=""></div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="posti" id="Posti" >
-				<label class="mdl-textfield__label" for="Posti">Posti</label>
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="posti" id="Posti" required>
+				<label class="mdl-textfield__label" for="Posti">Posti*</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>	
 				
@@ -308,12 +312,8 @@
 			e di aver preso visione dell'informativa su trattamento dei dati personali.</p>
 			<br>
 			<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-			  <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1">
+			  <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" required>
 			  <span class="mdl-radio__label">Acconsento</span>
-			</label>
-			<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-			  <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2" onfocusout="informativa();">
-			  <span class="mdl-radio__label">Non acconsento</span>
 			</label>
 			</div>
 			
