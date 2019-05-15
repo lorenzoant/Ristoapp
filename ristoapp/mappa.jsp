@@ -66,34 +66,29 @@
 				catch(Exception e){    
 					System.out.println(e.getMessage());
 				}
-		%>
-		
-		<%
-				int cont = 0;
+	
+
 				for(RistorantiBean lista:rist){ //PRENDO IL NOME E LA GEO PER METTERE NELLA MAPPA
 					RistorantiBean risto = new RistorantiBean();
 					
 					risto.setNome(lista.getNome());
 					risto.setCoordinataLat(lista.getCoordinataLat());
 					risto.setCoordinataLon(lista.getCoordinataLon());
-					cont++;
 			
-			%>
+					%>
+					<script type="text/javascript">
+				    var locations = [];
+				    for(var i=0; i< <%=query%>; i++) {
+				        locations[i] = [<%=risto.getNome()%>,<%=risto.getCoordinataLat()%>,<%=risto.getCoordinataLon()%>];
+				    }
+					</script>
+			<%	} %>
+			
     <div id="map"></div>
     
     
    <script type="text/javascript">
  
-    var locations = [];
-    for(var i=0; i< <%=query%>; i++) {
-        locations[i] = new Array(3);
-    }
-   
-	locations[<%=cont%>] = [<%=risto.getNome()%>,<%=risto.getCoordinataLat()%>,<%=risto.getCoordinataLon()%>];
-	</script>
-	<%}%
-				
-	<script>
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: new google.maps.LatLng(45.4642700, 9.1895100),
@@ -119,7 +114,7 @@
       })(marker, i));
     }
   </script>
- <%} %>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JYM6YP2B7egPqgDN7t7RvaK4QMTyS9w&callback=initMap">
     </script>
   </body>

@@ -102,8 +102,13 @@ public class AccountServlet extends HttpServlet {
 				SaveMySQL saveOnDb = new SaveMySQL();
 				try {
 					int esito = saveOnDb.inserisciCliente(cliente);
-					if(esito == 0)response.sendRedirect("login.jsp");
-					else request.setAttribute("errorMessage1", "errore1");
+					System.out.println(esito);
+					if(esito == 0) response.sendRedirect("login.jsp");
+					else {
+						request.setAttribute("errorMessage1", "errore1");
+						rd = request.getRequestDispatcher("account.jsp");
+						rd.forward(request, response);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					sc = request.getSession().getServletContext();																								

@@ -61,7 +61,7 @@ public class SaveMySQL {
 		// Ritorno l'oggetto creato
 		return dbConnection;
 	}// End getDBConnection()
-	
+
 	public RistorantiBean getInfoRistoranteDaID(int ID) throws Exception{ // Tazza
 
 		Statement stmt = null;
@@ -121,8 +121,8 @@ public class SaveMySQL {
 			}
 		}
 	}// End getInfoRistoranteDaID()
-	
-	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueOre(RistorantiBean risto, PrenotazioniBean pren) throws Exception{ // Tazza, perchè Vellons non fa mai le cose che mi servono :(
+
+	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueOre(RistorantiBean risto, PrenotazioniBean pren) throws Exception{ // Tazza, perchï¿½ Vellons non fa mai le cose che mi servono :(
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -131,18 +131,18 @@ public class SaveMySQL {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");	
-			
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
 			Date range = df.parse(pren.getData());
-			
+
 			Date ora = sdf.parse(pren.getOra());
-			
+
 			String data_str = df.format(range);
-			
+
 			String ora_str = sdf.format(ora);
-			
+
 			// Creo stringa sql per prenotazioni tra le date
 			String sql = "SELECT * FROM Prenotazioni WHERE `Data` = '"+ data_str +"' AND '"+ ora_str +"' BETWEEN `Ora` - 3600 * 1000 AND `Ora` + 3600 * 1000 ORDER BY Data DESC;";
 
@@ -182,7 +182,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPrenotazioniRistoranteTraDueDate()
-	
+
 	public PrenotazioniBean prelevaPrenotazione(int idpren) throws Exception{ // Tazza
 
 		Statement stmt = null;
@@ -210,7 +210,7 @@ public class SaveMySQL {
 				prenotazione.setOra(resultList.getString("Ora"));
 				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
 				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
-			
+
 			}
 			return prenotazione;
 		}
@@ -279,7 +279,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End prelevaPrenotazioniCliente()
-	
+
 
 	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {// Tazza
 		Statement stmt = null;
@@ -293,9 +293,9 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			int bol = 0;
-			
+
 			if(prenotazione.getStatoPagamento())
 				bol=1;
 
@@ -349,9 +349,9 @@ public class SaveMySQL {
 			// Disattivo auto commit al databse: decido da codice quando committare
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
-			
+
 			for(int i=0; i<dettagli.size(); i++) {
-			
+
 			String sql = "INSERT INTO PrenotazioniDettagli (IDFOrdine, IDFPiatto, Prezzo, Sconto, Quantita) VALUES ('" +
 						dettagli.get(i).getIDFOrdine() + "','" +
 						dettagli.get(i).getIDFPiatto() + "','" +
@@ -362,7 +362,7 @@ public class SaveMySQL {
 				// Committo sul server
 				stmt.executeUpdate(sql);
 			}
-			
+
 
 			System.out.println("MySQL inserisciDettagli() confirmed");
 		}
@@ -384,7 +384,7 @@ public class SaveMySQL {
 			}
 		}
 	}//End inserisciDettagli()
-	
+
 	public double prezzopiatto(int piatto) throws Exception{  // TAZZA
 
 		Statement stmt = null;
@@ -499,7 +499,7 @@ public class SaveMySQL {
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
-						
+
 			System.out.println("MySQL eliminaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
@@ -519,7 +519,7 @@ public class SaveMySQL {
 			}
 		}
 	}// End eliminaPrenotazione()
-	
+
 	public void eliminaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
 
 		Statement stmt = null;
@@ -538,7 +538,7 @@ public class SaveMySQL {
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
-			
+
 			// Creo stringa sql
 			sql = "DELETE FROM PrenotazioniDettagli " +
 					"WHERE IDFOrdine = " + prenotazione.getIDPrenotazione();
@@ -789,17 +789,17 @@ public class SaveMySQL {
 			// Creo la connessione al database
 			conn = getDBConnection();
 			stmt = conn.createStatement();
-			
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");	
+
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = Calendar.getInstance().getTime(); // Oggi
 			Date range1 = Calendar.getInstance().getTime();
-			Date range2 = Calendar.getInstance().getTime(); 
+			Date range2 = Calendar.getInstance().getTime();
 			range1.setTime(today.getTime() - (long)7*1000*60*60*24); // Andando nel passato
 			range2.setTime(today.getTime() + (long)30*1000*60*60*24); // Andando nel futuro
-			
+
 			String range1_str = df.format(range1);
 			String range2_str = df.format(range2);
-			
+
 			// Creo stringa sql per prenotazioni ultima settimana
 			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + " AND Data BETWEEN ' " + range1_str + "' AND '" + range2_str + "' ORDER BY Data DESC;";
 			//System.out.println(sql);
@@ -915,17 +915,17 @@ public class SaveMySQL {
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 			String sql1 = "SELECT Email FROM Clienti";
 			ResultSet ricerca = stmt.executeQuery(sql1);
-			
+
 			int esito = 0;
 			while(ricerca.next()){
-				
-				System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
+
+				//System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
 				if(cliente.getEmail().equals(ricerca.getString("Email"))){
-					
+
 					esito = 1;
-					
+
 				}
-				
+
 			}
 			if(esito == 0){
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
@@ -946,15 +946,15 @@ public class SaveMySQL {
 			sql = sql + cliente.getCodicePass() + "','"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
-			
+
 			stmt.executeUpdate(sql);
 
 			System.out.println("MySQL inserisciCliente() confirmed");
 			}
 			return esito;
 		}
-			
-		
+
+
 		catch (SQLException e) {
 			System.out.println("MySQL inserisciCliente() failed");
 			if(conn != null) {
@@ -1415,6 +1415,7 @@ public class SaveMySQL {
 
 				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
 				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
+				//System.out.println(ristoset.getNomeCatCucina());
 				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
 				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
 				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
@@ -1493,12 +1494,12 @@ public class SaveMySQL {
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
-			sql = "UPDATE Clienti SET " +
+			/*sql = "UPDATE Clienti SET " +
 					"LivAutorizzazioni = '1' " +
-					"WHERE IDCliente = '" + ristorante.getIDFCliente() + "'";
+					"WHERE IDCliente = '" + ristorante.getIDFCliente() + "';";
 
 			// Committo sul server
-			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);*/
 
 			System.out.println("MySQL inserisciRistorante() confirmed");
 		}
@@ -1506,7 +1507,7 @@ public class SaveMySQL {
 			// Se ricevo un errore faccio il rollback
 			System.out.println("MySQL inserisciRistorante() failed");
 			System.out.println(e);
-			
+
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -1879,6 +1880,8 @@ public class SaveMySQL {
 				p.setSerDisabili(result.getBoolean("SerDisabili"));
 				p.setSerParcheggio(result.getBoolean("SerParcheggio"));
 				p.setNumeroPosti(result.getInt("NumeroPosti"));
+				p.setUrl(result.getString("URL"));
+
 				risto.add(p);// Aggiungo al vettore
 			}
 			System.out.println("MySQL ristoid() confirmed");

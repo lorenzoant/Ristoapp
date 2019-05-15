@@ -60,7 +60,7 @@ public class InvioEmail {
             String to = "ristoappstaff@gmail.com";
             String from = "ristoappstaff@gmail.com";
             String subject = "Contatto Cliente";
-            String messageText = "Il cliente scrive:  "+testo+ "     e desidera una risposta a questo indirizzo:"+mail+"";
+            String messageText = " Il cliente scrive: << "+testo+ " >>   e desidera una risposta a questo indirizzo :  " + mail;
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();
@@ -79,6 +79,7 @@ public class InvioEmail {
             InternetAddress[] address = {new InternetAddress(to)};
             msg.setRecipients(Message.RecipientType.TO, address);
             msg.setSubject(subject); msg.setSentDate(new Date());
+    
             msg.setText(messageText);
 
            Transport transport=mailSession.getTransport("smtp");

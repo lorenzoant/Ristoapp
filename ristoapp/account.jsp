@@ -77,7 +77,7 @@
 					<tr>
 			  			<td>
 					  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-								<select class="mdl-textfield__input" name = "comuni">
+								<select class="mdl-textfield__input" name = "Comune" id = "Comune">
 									<option value="null"> </option>
 										<% 
 					
@@ -103,7 +103,7 @@
 										}
 										%>
 										</select>
-					        			<label class="mdl-textfield__label" for="nome">Comuni</label>
+					        			<label class="mdl-textfield__label" for="Comune">Comuni</label>
 					        </div>
 				  		</td>
 					</tr>

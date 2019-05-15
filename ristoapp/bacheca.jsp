@@ -136,6 +136,7 @@
 					
 					 int IDRistorante = lista.getIDRistorante();
 					 String NomeCatCucina = lista.getNomeCatCucina();
+					 
 					 String Nome = lista.getNome(); //nome ristorante
 					 String Comune = lista.getComune();
 					 String url = lista.getUrl();
