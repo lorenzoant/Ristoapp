@@ -78,6 +78,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Modifica ristorante</title>
+	<!-- By Albertini -->
 	<%@include file="graphicspuntoacca.jsp"%>
 	
 	<script>
@@ -139,6 +140,7 @@
 			
 			document.getElementById("lat").value = '';
 			document.getElementById("lon").value = '';
+			document.getElementById("indirizzo").value = '';
 		  }
 		  else{
 			  document.getElementById("lat").value = out[0].lat;
@@ -188,7 +190,7 @@
 		<form action = "registratiristoranteservlet" name = "account" method ="post">
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" value="<%= Nome %>" required/>
+				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" maxlength="30" value="<%= Nome %>" required/>
 				<label class="mdl-textfield__label" for="NomeRisto">Nome Ristorante</label>
 			</div>
 			
@@ -230,13 +232,13 @@
 			</div><br>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" value="<%= Telefono %>" required>
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" maxlength="10" value="<%= Telefono %>" required>
 				<label class="mdl-textfield__label" for="Telefono">Telefono</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label id="Email" >	 
-				<input class="mdl-textfield__input" type = "text" name = "email" value="<%= Email %>" required/>	
+				<input class="mdl-textfield__input" type = "text" name = "email" maxlength="45" value="<%= Email %>" required/>	
 				<label class="mdl-textfield__label" for="Email">Email</label>
 			</div><br>		
 			
@@ -400,7 +402,7 @@
 			
 			<input name="whatsend" value="modificaristorante" type="hidden"/>	
 	
-			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Salva"/><br>
+			<input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Salva modifiche"/><br>
 		</form>
 		
 		<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">

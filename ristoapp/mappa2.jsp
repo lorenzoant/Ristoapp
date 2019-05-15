@@ -1,31 +1,30 @@
-	<%@page import="ristoapp.bean.ClientiBean"%>
-	<%@page import="ristoapp.bean.RistorantiBean"%>
-	<%@page import="java.util.concurrent.TimeUnit" %> 
+	<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="java.sql.*" %>
 	<%@page import="ristoapp.db.SaveMySQL" %>
-	<%@page import="java.util.ArrayList" %>
-
+	<%@page import="ristoapp.bean.ClientiBean"%>
+	
 <!DOCTYPE html>
 <html>
   <head>
+  
     <title>Mappa</title>
+    <!-- By Albertini -->
     <%@include file="graphicspuntoacca.jsp"%>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 80%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <% 
+	// Controllo se chi accede a questa pagina ha l'autorizzazione
+	String nomeLoggato = "";
+	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
+		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
+		nomeLoggato = cli.getNome();
+  	%>
+	<%}
+	else{
+		// L'utente non  loggato
+		response.sendRedirect("login.jsp");
+	}%>
   </head>
-  <body>
+  <body onload="getLocation();">
   <div class="mdl-layout mdl-js-layout">
 	    <header class="custom-header mdl-layout__header mdl-layout__header">
 			<div>
@@ -39,51 +38,105 @@
 					</tr>
 				</table>
 			</div>
+			
+			<% //SO QUANTI RISTORANTI CI SONO DA STAMPARE
+
+				Connection conn = null;
+				ResultSet rs = null;
+				
+				try{
+					// Stabilisco la connessione con il database
+					conn = SaveMySQL.getDBConnection();
+					
+					PreparedStatement pst = conn.prepareStatement("SELECT * FROM Ristoranti;");
+					rs = pst.executeQuery();
+					
+				}
+				catch(Exception e){    
+					System.out.println(e.getMessage());
+				}
+				
+				String nome = "";
+				String lat = "";
+				String lon = "";
+				String comune = "";
+				%>	
+				
+		   <script>  
+				//var x = document.getElementById("map");
+				var latitudine = 0;
+				var longitudine = 0;
+				
+				function getLocation() {
+				  if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				  }
+				}
+
+				function showPosition(position) {
+				  latitudine = position.coords.latitude;
+				  longitudine = position.coords.longitude;
+				  
+				  initMap();
+
+				}
+	
+				function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 13,
+						center: new google.maps.LatLng(latitudine, longitudine),
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+					  });
+				var locations = [['<span style="font-weight: bold">You</span>', latitudine, longitudine],
+				<%
+				while(rs.next()){ // Scorro le righe
+					nome = rs.getString("Nome");
+					lat = rs.getString("CoordinataLat");
+					lon = rs.getString("CoordinataLon");
+					comune = rs.getString("Comune");
+					System.out.println(nome);
+				%>
+				
+					
+					
+					['<span style="font-weight: bold"><%=nome%></span>, <%=comune%>', <%=lat%>, <%=lon%>],
+				  	
+				
+				<%}%>];
+				  
+				    var infowindow = new google.maps.InfoWindow();
+  
+				    var marker, i;
+				    var icons = [];
+					icons[0] = 'MEDIA/point.png';
+			  	
+					for (i = 1; i < locations.length; i++) {  
+						icons[i] = 'MEDIA/pinkball.png';
+					}
+					
+					  for (i = 0; i < locations.length; i++) {  
+						  marker = new google.maps.Marker({
+						  position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+						  map: map,
+						  icon: icons[i],
+						});
+						
+						google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function() {
+						infowindow.setContent(locations[i][0]);
+						infowindow.open(map, marker);
+					  }
+					})(marker, i));
+					  
+					}
+				}
+		  </script>
+ 
 		</header>
-    <div id="map"></div>
-    <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-      var map, infoWindow;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 45.4642700, lng: 9.1895100},
-          zoom: 12
-        });
-        infoWindow = new google.maps.InfoWindow;
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
 		
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('You.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
-	  
-    </script>
+		
+	<div id="map" style="width:100%;height:100%;"></div>
+	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JYM6YP2B7egPqgDN7t7RvaK4QMTyS9w&callback=initMap">
     </script>
   </body>
