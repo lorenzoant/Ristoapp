@@ -136,8 +136,12 @@
 		<%} %>
 		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
 		<%if (!pren.getStatoPagamento()){ %>
-			<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
-			
+			<%if(!dettagli.isEmpty()){ %>
+				<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
+			<%}else{ %>
+				<input style="margin-top: 20px" type = "button" onclick="conferma()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Non c'è bisogno di pagamento"/>
+				
+			<%} %>
 		<form action="nuovaprenotazioneservlet" id="elimina" method="POST">	
 		
 			<input name="idpren" value="<%=idpren %>" type="hidden">

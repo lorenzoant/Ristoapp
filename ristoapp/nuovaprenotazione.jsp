@@ -80,7 +80,7 @@
 		</div><br>
 		
 		<div id="postidiv" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input class="mdl-textfield__input" id="postiinp" name="posti" value="0" type="number" required/>
+		<input class="mdl-textfield__input" id="postiinp" name="posti" value="1" type="number" required/>
 		<label id="postilab" class="mdl-textfield__label" for="posti">Posti</label>
 		</div><br>
 		
