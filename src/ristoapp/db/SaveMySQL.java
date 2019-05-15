@@ -1435,12 +1435,12 @@ public class SaveMySQL {
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
-			sql = "UPDATE Clienti SET " +
+			/*sql = "UPDATE Clienti SET " +
 					"LivAutorizzazioni = '1' " +
-					"WHERE IDCliente = '" + ristorante.getIDFCliente() + "'";
+					"WHERE IDCliente = '" + ristorante.getIDFCliente() + "';";
 
 			// Committo sul server
-			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);*/
 
 			System.out.println("MySQL inserisciRistorante() confirmed");
 		}
