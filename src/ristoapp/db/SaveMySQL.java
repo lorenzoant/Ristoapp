@@ -62,7 +62,7 @@ public class SaveMySQL {
 		return dbConnection;
 	}// End getDBConnection()
 	
-//	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueOre(RistorantiBean risto, PrenotazioniBean pren) throws Exception{ // Tazza, perchè Vellons non fa mai le cose che mi servono :(
+//	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueOre(RistorantiBean risto, PrenotazioniBean pren) throws Exception{ // Tazza, perchï¿½ Vellons non fa mai le cose che mi servono :(
 //
 //		Statement stmt = null;
 //		Connection conn = null;
@@ -861,7 +861,7 @@ public class SaveMySQL {
 			int esito = 0;
 			while(ricerca.next()){
 				
-				System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
+				//System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
 				if(cliente.getEmail().equals(ricerca.getString("Email"))){
 					
 					esito = 1;
