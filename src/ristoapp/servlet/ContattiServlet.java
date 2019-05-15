@@ -44,15 +44,13 @@ public class ContattiServlet extends HttpServlet {
 			try {
 				ClientiBean cliente = new ClientiBean();
 				
-				String email = cliente.getEmail(); 
+				String email = request.getParameter("email");
 				String testo = request.getParameter("descrizione");
 				System.out.println(email);
 				System.out.println(testo);
 				
-				
-				cliente.setEmail(email);
 				InvioEmail email1 = new InvioEmail();
-				email1.contatti(cliente.getEmail(),testo);//invio l'email all'utente con il codice
+				email1.contatti(email,testo);//invio l'email all'utente con il codice
 				response.sendRedirect("contatti.jsp");
 			}catch(Exception e) {
 				System.out.println("errore");

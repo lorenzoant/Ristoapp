@@ -1,5 +1,4 @@
 <%@page import="ristoapp.bean.ClientiBean"%>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
     
 <!DOCTYPE html>
@@ -24,18 +23,14 @@
 	else{
 		// L'utente non  loggato
 		response.sendRedirect("login.jsp");
-	}%>
+	}
+%>
 		</head>
 		<body>
 		
-		
-	<!-- Simple header with fixed tabs. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
-            mdl-layout--fixed-tabs">
-  <header class="mdl-layout__header">
-    
-    
-    <div class="mdl-layout__header-row">
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+ 	          <header class="mdl-layout__header">
+    		<div class="mdl-layout__header-row">
    			 
 		     <td align="center" style="width:80%">
 			<h2 style="display: inline;vertical-align:middle">Contatti</h2>
@@ -55,27 +50,31 @@
     <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
       <div class="page-content">
       <center>
+      <br><br>
       
       <form action="ContattiServlet" name="contattiservlet" method="post">
+      <center>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    <input class="mdl-textfield__input" type="email" id="email" name="email" value="<%=mail%>">
 			    <label class="mdl-textfield__label" for="email">La tua email</label>
-			    <br><br>
-	  		</div>
-	  		<center>			
+		   </div>
+		   <br>
+		
 	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 	  			<label class="mdl-textfield__label" for="AreaDescrizione">Testo</label>
 	  			<textarea class="mdl-textfield__input" type="text" rows= "2" id="AreaDescrizione" name="descrizione"></textarea>
 	  		</div>
-	  	</center>
+	  		<br>
+	  		<input name = "whatsend" value = "contattaci" type = "hidden"/>
+			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "contattaci"/>
 	  	
-	  		<input name = "whatsend" value = "dietro" type = "hidden"/>
-			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
+	  	
+		</center>
 		</form>
 		<br>
 		<form action="ContattiServlet" name="contattiservlet" method="post">
-			<input name = "whatsend" value = "contattaci" type = "hidden"/>
-			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "contattaci"/>
+		<input name = "whatsend" value = "dietro" type = "hidden"/>
+			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
 			
 		</form>
 

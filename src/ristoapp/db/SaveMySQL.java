@@ -1357,6 +1357,7 @@ public class SaveMySQL {
 
 				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
 				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
+				//System.out.println(ristoset.getNomeCatCucina());
 				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
 				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
 				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
@@ -1821,6 +1822,8 @@ public class SaveMySQL {
 				p.setSerDisabili(result.getBoolean("SerDisabili"));
 				p.setSerParcheggio(result.getBoolean("SerParcheggio"));
 				p.setNumeroPosti(result.getInt("NumeroPosti"));
+				p.setUrl(result.getString("URL"));
+				
 				risto.add(p);// Aggiungo al vettore
 			}
 			System.out.println("MySQL ristoid() confirmed");

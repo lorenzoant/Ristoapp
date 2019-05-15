@@ -75,6 +75,7 @@
 		
 		
 		for(RistorantiBean p:dettRist){
+			
 			int id = p.getIDRistorante();
 			ris.setIDRistorante(id);
 			int cat = p.getIDFCatCucina();
@@ -85,13 +86,14 @@
 			boolean dis = p.getSerDisabili();
 			boolean park = p.getSerParcheggio();
 			String tel = p.getTelefono();
+			String url = p.getUrl();
 			
 			
 			
 		%>
 		
 			<tr>
-				<td><img style="float:left" height="70px" width="100px" src='<%=p.getUrl()%>'/></td>
+				<td><img style="float:left" height="70px" width="100px" src=<%=url%>/></td>
 				<td><%=p.getNome()%></td>
 				<% if(cat == 1){%>
 					<td>All you can eat</td>
@@ -101,7 +103,7 @@
 					<td>Ristorante</td>
 				<%}else if(cat == 4){ %> 
 					<td>Cucina locale</td>
-				<%}else if(cat == 4){ %> 
+				<%}else if(cat == 5){ %> 
 					<td>Fast Food</td>
 				<%} %>
 				
@@ -152,25 +154,17 @@
 			
 		}%>
 		</thead>
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>
-				<center>
+
+		</table>
+		<center>
+			<br><br>
 					<form action="nuovaprenotazioneservlet" name="scheda" method="post">
 						<input type="hidden" name="idristorante" value="<%=ris.getIDRistorante()%>"></input>
 						<input type="hidden" name="whatsend" value="prenota"></input>
 						<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="prenota"/>
 					</form>
+					<br><br>
 				</center>
-				</td>
-				
-			</tr>
-		</tbody>
-		</table>
 		</div>
 	</div>
 	
