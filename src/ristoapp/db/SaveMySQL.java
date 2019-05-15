@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 
 import ristoapp.bean.ClientiBean;
 import ristoapp.bean.PiattiBean;
@@ -63,6 +61,69 @@ public class SaveMySQL {
 		// Ritorno l'oggetto creato
 		return dbConnection;
 	}// End getDBConnection()
+	
+//	public ArrayList<PrenotazioniBean> prelevaPrenotazioniRistoranteTraDueOre(RistorantiBean risto, PrenotazioniBean pren) throws Exception{ // Tazza, perch� Vellons non fa mai le cose che mi servono :(
+//
+//		Statement stmt = null;
+//		Connection conn = null;
+//
+//		try {
+//			// Creo la connessione al database
+//			conn = getDBConnection();
+//			stmt = conn.createStatement();
+//			
+//			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+//			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");	
+//			Date range = df.parse(pren.getData());
+//			
+//			Calendar date1;
+//			
+//			Date ora1 = sdf.parse(pren.getOra());
+//			Date ora2 = sdf.parse(pren.getOra());
+//			
+//			ora1 = ora1 - 3600*1000;
+//			
+//			String range_str = df.format(range);
+//			
+//			// Creo stringa sql per prenotazioni tra le date
+//			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + " AND Data = "+ range_str +" AND Ora BETWEEN ' " + range1_str + "' AND '" + range2_str + "' ORDER BY Data DESC;";
+//
+//			// Eseguo query
+//			ResultSet resultList = stmt.executeQuery(sql);
+//
+//			// Estraggo dati
+//			ArrayList<PrenotazioniBean> prenotazioniList = new ArrayList<PrenotazioniBean>();
+//			while(resultList.next()){
+//				// Scorro tutte le righe del risultato
+//				PrenotazioniBean prenotazione = new PrenotazioniBean();
+//				prenotazione.setIDPrenotazione(resultList.getInt("IDPrenotazione"));
+//				prenotazione.setIDFRistorante(resultList.getInt("IDFRistorante"));
+//				prenotazione.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
+//				prenotazione.setIDFCliente(resultList.getInt("IDFCliente"));
+//				prenotazione.setData(resultList.getString("Data"));
+//				prenotazione.setOra(resultList.getString("Ora"));
+//				prenotazione.setStatoPagamento(resultList.getBoolean("StatoPagamento"));
+//				prenotazione.setNumeroPersone(resultList.getString("NumeroPersone"));
+//				prenotazioniList.add(prenotazione);// Aggiungo al vettore
+//			}
+//
+//			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() confirmed");
+//			return (ArrayList<PrenotazioniBean>)prenotazioniList;
+//		}
+//		catch (SQLException e) {
+//			System.out.println("MySQL prelevaPrenotazioniRistoranteTraDueDate() failed");
+//			throw new Exception(e.getMessage());
+//		}
+//		finally {
+//			// Chiudo la connessione
+//			if(stmt != null) {
+//				stmt.close();
+//			}
+//			if(conn != null) {
+//				conn.close();
+//			}
+//		}
+//	}// End prelevaPrenotazioniRistoranteTraDueDate()
 	
 	public PrenotazioniBean prelevaPrenotazione(int idpren) throws Exception{ // Tazza
 
@@ -162,7 +223,7 @@ public class SaveMySQL {
 	}// End prelevaPrenotazioniCliente()
 	
 
-	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {
+	public int nuovaPrenotazione(PrenotazioniBean prenotazione) throws Exception {// Tazza
 		Statement stmt = null;
 		Connection conn = null;
 		//Creo un resultset per prendere l'id alla fine
@@ -220,7 +281,7 @@ public class SaveMySQL {
 	}//End nuovaPrenotazione()
 
 
-	public void inserisciDettagli(ArrayList<PrenotazioniDettagliBean> dettagli) throws Exception{
+	public void inserisciDettagli(ArrayList<PrenotazioniDettagliBean> dettagli) throws Exception{// Tazza
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -355,8 +416,7 @@ public class SaveMySQL {
 		}
 	}// End prelevaPiattRistorante()
 
-
-	public void modificaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
+	public void eliminaPrenotazione(int idpren) throws Exception{//Tazza
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -369,22 +429,23 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "UPDATE Prenotazioni SET" +
-					"IDFRistorante = '" + prenotazione.getIDFRistorante()+ "'," +
-					"IDFCatPrenotazione = '" + prenotazione.getIDFCatPrenotazione()+ "'," +
-					//"IDFCliente = '" + prenotazione.getIDFCliente()+ "'," +
-					"Data = '" + prenotazione.getData()+ "'," +
-					"Ora = '" + prenotazione.getOra()+ "'," +
-					"NumeroPersone = '" + prenotazione.getNumeroPersone()+ "'," +
-					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
+			String sql = "DELETE FROM Prenotazioni " +
+					"WHERE IDPrenotazione = " + idpren;
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
 
-			System.out.println("MySQL modificaPrenotazione() confirmed");
+			// Creo stringa sql
+			sql = "DELETE FROM PrenotazioniDettagli " +
+					"WHERE IDFOrdine = " + idpren;
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+						
+			System.out.println("MySQL eliminaPrenotazione() confirmed");
 		}
 		catch (SQLException e) {
-			System.out.println("MySQL modificaPrenotazione() failed");
+			System.out.println("MySQL eliminaPrenotazione() failed");
 			if(conn != null) {
 				conn.rollback();
 			}
@@ -399,9 +460,8 @@ public class SaveMySQL {
 				conn.close();
 			}
 		}
-	}// End modificaPrenotazione()
-
-
+	}// End eliminaPrenotazione()
+	
 	public void eliminaPrenotazione(PrenotazioniBean prenotazione) throws Exception{
 
 		Statement stmt = null;
@@ -415,8 +475,15 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "DELETE FROM Prenotazioni" +
-					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
+			String sql = "DELETE FROM Prenotazioni " +
+					"WHERE IDPrenotazione = " + prenotazione.getIDPrenotazione();
+
+			// Committo sul server
+			stmt.executeUpdate(sql);
+			
+			// Creo stringa sql
+			sql = "DELETE FROM PrenotazioniDettagli " +
+					"WHERE IDFOrdine = " + prenotazione.getIDPrenotazione();
 
 			// Committo sul server
 			stmt.executeUpdate(sql);
@@ -677,7 +744,7 @@ public class SaveMySQL {
 			
 			// Creo stringa sql per prenotazioni ultima settimana
 			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = " + risto.getIDRistorante() + " AND Data BETWEEN ' " + range1_str + "' AND '" + range2_str + "' ORDER BY Data DESC;";
-			System.out.println(sql);
+			//System.out.println(sql);
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);
 
@@ -727,7 +794,7 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "SELECT * FROM PrenotazioniDettagli INNER JOIN Piatti ON IDFPiatto = IDPiatto"
+			String sql = "SELECT * FROM Prenotazioni INNER JOIN PrenotazioniDettagli ON IDPrenotazione = IDFOrdine INNER JOIN Piatti ON IDFPiatto = IDPiatto"
 					+ " WHERE IDFOrdine = " + idPrenotazione + ";";
 
 			// Eseguo query
@@ -741,6 +808,10 @@ public class SaveMySQL {
 				QueryPiattiPrenotatiBean p = new QueryPiattiPrenotatiBean();
 				p.setIDPrenotazioneDett(resultList.getInt("IDPrenotazioneDett"));
 				p.setIDFOrdine(resultList.getInt("IDFOrdine"));
+				p.setData(resultList.getString("Data"));
+				p.setOra(resultList.getString("Ora"));
+				p.setNumeroPersone(resultList.getInt("NumeroPersone"));
+				p.setIDFCatPrenotazione(resultList.getInt("IDFCatPrenotazione"));
 				p.setIDFPiatto(resultList.getInt("IDFPiatto"));
 				p.setPrezzo(resultList.getFloat("Prezzo"));
 				p.setSconto(resultList.getInt("Sconto"));
@@ -770,7 +841,7 @@ public class SaveMySQL {
 	}// End prelevaDettagliPrenotazioneConPiatti()
 
 
-	public void inserisciCliente(ClientiBean cliente) throws Exception{
+	public int inserisciCliente(ClientiBean cliente) throws Exception{
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -784,7 +855,21 @@ public class SaveMySQL {
 			// Creo stringa sql
 			Date data = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
+			String sql1 = "SELECT Email FROM Clienti";
+			ResultSet ricerca = stmt.executeQuery(sql1);
+			
+			int esito = 0;
+			while(ricerca.next()){
+				
+				//System.out.println(cliente.getEmail() + ricerca.getString("Email") + esito);
+				if(cliente.getEmail().equals(ricerca.getString("Email"))){
+					
+					esito = 1;
+					
+				}
+				
+			}
+			if(esito == 0){
 			String sql = "INSERT INTO Clienti(IDCliente, Email, PassHash, nome, cognome, LivAutorizzazioni, Indirizzo, Comune, Lingua, NotificaEmail, Geolocalizzazione, CodicePass, DataRegistrazione) VALUES('" +
 					cliente.getIDCliente() + "','" +
 					cliente.getEmail() + "','" +
@@ -803,10 +888,15 @@ public class SaveMySQL {
 			sql = sql + cliente.getCodicePass() + "','"+ formato.format(data) +"')";
 			//System.out.println(sql);
 			// Committo sul server
+			
 			stmt.executeUpdate(sql);
 
 			System.out.println("MySQL inserisciCliente() confirmed");
+			}
+			return esito;
 		}
+			
+		
 		catch (SQLException e) {
 			System.out.println("MySQL inserisciCliente() failed");
 			if(conn != null) {
@@ -1118,11 +1208,12 @@ public class SaveMySQL {
 			stmt = conn.createStatement();
 
 			// Creo stringa sql
-			String sql = "UPDATE Prenotazioni SET" +
-					"StatoPagamento = '1'," +
+			String sql = "UPDATE Prenotazioni SET " +
+					"StatoPagamento = '1' " +
 					"WHERE IDPrenotazione = '" + prenotazione.getIDPrenotazione() + "'";
 
 			// Committo sul server
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 
 			System.out.println("MySQL setPagamento() confirmed");

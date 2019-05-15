@@ -2,7 +2,7 @@
 <%@page import="ristoapp.bean.ClientiBean"%>
 <%@page import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +77,7 @@
 					<tr>
 			  			<td>
 					  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	 
-								<select class="mdl-textfield__input" name = "comuni">
+								<select class="mdl-textfield__input" name = "Comune" id = "Comune">
 									<option value="null"> </option>
 										<% 
 					
@@ -103,7 +103,7 @@
 										}
 										%>
 										</select>
-					        			<label class="mdl-textfield__label" for="nome">Comuni</label>
+					        			<label class="mdl-textfield__label" for="Comune">Comuni</label>
 					        </div>
 				  		</td>
 					</tr>
@@ -164,6 +164,24 @@
 							<%
 						}
 					%>
+					
+					
+					
+<%
+						String avviso1 = (String)request.getAttribute("errorMessage1");
+						if(avviso1 == "errore1"){
+							request.getSession().removeAttribute("errorMessage1");
+							%>
+							  
+							  
+							   			<div style="color:red;">E-mail o nome account già esistente</div>
+							   	
+							<%
+						}
+					%>
+					
+					
+					
 
 
 </form>

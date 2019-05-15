@@ -28,10 +28,22 @@
 		}%>
 		
 		<style type="text/css">
-			td, th{
+		td, th{
   			text-align:center !important; 
   		}
+  		span{
+  			color: orange;
+  		}
 		</style>
+		
+		<script type="text/javascript">
+			function conferma() {
+				//funzione per richiedere la conferma per eliminare la prenotazione
+				if (confirm('Sei sicuro di voler eliminare questa prenotazione?')) {
+					document.getElementById("elimina").submit();
+				}
+			}
+		</script>
 		
 </head>
 <body class="text-center">
@@ -39,7 +51,7 @@
 	<div class="mdl-layout__header">		
 		<table style="width:100%;">
 			<tr>
-				<td align="left"><a href="ilmioristorante.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+				<td align="left"><a href="listaprenotazioni.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
 				<td align="center" style="width:100%">
 					<h2 style="display: inline;vertical-align:middle">Dettagli prenotazine</h2>
 					<img class="logo" style="vertical-align:middle" src="MEDIA/logo.png"/>
@@ -60,14 +72,14 @@
 	
 	<div class="page centratabella">
 	
-		<h3>Prenotazione n° <%= pren.getIDPrenotazione() %></h3>
+		<h3>Prenotazione n° <span><%= pren.getIDPrenotazione() %></span></h3>
 		
-		<h4>Hai prenotato per le ore: <%=pren.getOra() %> del giorno <%=pren.getData() %></h4>
+		<h4>Hai prenotato per le ore: <span><%=pren.getOra() %></span> del giorno <span><%=pren.getData() %></span></h4>
 		
 		<%if(pren.getIDFCatPrenotazione()== 3) {%>
-			<h4>La tua prenotazione comprende <%=pren.getNumeroPersone() %> posti a sedere</h4>
+			<h4>La tua prenotazione comprende <span><%=pren.getNumeroPersone() %></span> posti a sedere</h4>
 		<%} %>
-		
+		<%if(!dettagli.isEmpty()){ %>
 		<div style="overflow-x: auto;">
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" style=" margin-left: auto; margin-right: auto;">
 		<thead>
@@ -119,13 +131,23 @@
 			</tr>
 		</tbody>
 		</table>
+		<%}else{%>
+		<p>Non hai specifato alcun piatto durante l'ordinazione, potrai ordinare una volta arrivato al ristorante</p>
+		<%} %>
 		<!-- Nel caso in cui il pagamento non sia stato già fatto -->
 		<%if (!pren.getStatoPagamento()){ %>
-			<a href="pagamento.jsp"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
-			<a href="modificaordine.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Modifica ordine"/></a>
+			<a href="pagamento.jsp?idpren=<%= idpren %>"><input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br>
+			
+		<form action="nuovaprenotazioneservlet" id="elimina" method="POST">	
+		
+			<input name="idpren" value="<%=idpren %>" type="hidden">
+			<input name="whatsend" value="elimina" type="hidden">
+			<input style="margin-top: 20px" type = "button" onclick="conferma()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Elimina ordine"/>
+			
+		</form>
 
 		<%}else{ %>
-			<input style="margin-top: 20px" type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Gli ordini già pagati non possono essere modificati"/>
+			<input style="margin-top: 20px" type = "button" onclick="conferma()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled value = "Gli ordini già pagati non possono essere eliminati"/>
 		<%} %>
 		</div>
 	</div>

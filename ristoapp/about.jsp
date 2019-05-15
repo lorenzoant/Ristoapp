@@ -36,7 +36,7 @@
     
     
     <div class="mdl-layout__header-row">
-   			 <td align="left"><a href="bacheca.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+   			 
 		     <td align="center" style="width:80%">
 			<h2 style="display: inline;vertical-align:middle">About</h2>
 			<img class="logo" style="vertical-align:middle"  src="MEDIA/logo.png"/>
@@ -72,6 +72,12 @@
       fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
       fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
       </div>
+      <form action="ContattiServlet" name="about" method="post">
+	      <input name = "whatsend" value = "dietro" type = "hidden"/>
+		  <input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
+		  <br><br><br>
+      </form>
+      
      
 	</center>
       
@@ -91,7 +97,11 @@
       <img class="team"  src="MEDIA/tazza.jpeg"/>
        <img class="team" src="MEDIA/xia.png"/>
       </div>
-     
+          <form action="ContattiServlet" name="about" method="post">
+	      <input name = "whatsend" value = "dietro" type = "hidden"/>
+		  <input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
+		  <br><br><br>
+      </form>
 	</center></div>
     </section>
     <section class="mdl-layout__tab-panel" id="fixed-tab-3">
@@ -113,6 +123,11 @@
       fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
       fuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffafuffa
       </div>
+           <form action="ContattiServlet" name="about" method="post">
+	      <input name = "whatsend" value = "dietro" type = "hidden"/>
+		  <input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
+		  <br><br><br>
+      </form>
      
 	</center></div>
     </section>

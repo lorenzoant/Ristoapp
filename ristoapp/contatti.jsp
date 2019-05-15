@@ -12,11 +12,11 @@
 			
 <% // Controllo se chi accede a questa pagina ha l'autorizzazione o non si è loggato
 
-	String nomeLoggato = "";
+	String mail = "";
 	if(request.getSession() != null && request.getSession().getAttribute("CREDENZIALI") != null){	
 		ClientiBean cli = (ClientiBean)request.getSession().getAttribute("CREDENZIALI");
-		nomeLoggato = cli.getNome(); //nome del profilo
-		
+		mail = cli.getEmail(); //nome del profilo
+		cli.setEmail(mail);
   		if(cli.getLivAutorizzazioni() != 0){// L'utente non è un cliente
   			response.sendRedirect("login.jsp");
   		}%>
@@ -36,7 +36,7 @@
     
     
     <div class="mdl-layout__header-row">
-   			 <td align="left"><a href="bacheca.jsp"><img class="indietro" src="MEDIA/indietro.png"/></a></td>
+   			 
 		     <td align="center" style="width:80%">
 			<h2 style="display: inline;vertical-align:middle">Contatti</h2>
 			<img class="logo" style="vertical-align:middle"  src="MEDIA/logo.png"/>
@@ -56,28 +56,29 @@
       <div class="page-content">
       <center>
       
-      <form action="recuperopasswordservlet" name="recuperopassword" method="post">
+      <form action="ContattiServlet" name="contattiservlet" method="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    <input class="mdl-textfield__input" type="email" id="email" name="email" required>
-			    <label class="mdl-textfield__label" for="email">Email</label>
-	  		</div><br>
-	  		<div class = "text-align">
-				<div style = "text-align:center;" class="g-recaptcha" data-sitekey="6LccHZUUAAAAACfyKqv91exddQdqzJfeoAxOY9IB"></div><br>
-			</div>
-			<%
-			//System.out.println(request.getAttribute("errorMessage"));
-			String avviso = (String)request.getAttribute("errorMessage");
-			if(avviso == "errore2"){%>
-				<div style="color:red;">Completa il reCaptcha!</div>
-			<%}
-			else if(avviso == "errore1"){%>
-				<div style="color:red;">Utente non registrato!</div>
-			<%} %>
-			<input name = "whatsend" value = "recupera" type = "hidden"/>
-			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "recupera"/><br>
+			    <input class="mdl-textfield__input" type="email" id="email" name="email" value="<%=mail%>">
+			    <label class="mdl-textfield__label" for="email">La tua email</label>
+			    <br><br>
+	  		</div>
+	  		<center>			
+	  		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+	  			<label class="mdl-textfield__label" for="AreaDescrizione">Testo</label>
+	  			<textarea class="mdl-textfield__input" type="text" rows= "2" id="AreaDescrizione" name="descrizione"></textarea>
+	  		</div>
+	  	</center>
+	  	
+	  		<input name = "whatsend" value = "dietro" type = "hidden"/>
+			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "indietro"/>
+		</form>
+		<br>
+		<form action="ContattiServlet" name="contattiservlet" method="post">
+			<input name = "whatsend" value = "contattaci" type = "hidden"/>
+			<input class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type = "submit" value = "contattaci"/>
+			
 		</form>
 
-     
 	</center>
       
 	</div>

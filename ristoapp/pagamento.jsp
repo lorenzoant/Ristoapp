@@ -25,7 +25,7 @@
 	</div>
 	
 	<div class="page">
-<form action="aggiungicartaservlet" name="pagamento" method="post">
+<form action="pagamentoservlet" name="pagamento" method="post">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    <select class="mdl-textfield__input" id="categoria" name="categoria" required>
 			<% 
@@ -60,7 +60,7 @@
 	  		
 		
 		<input name="whatsend" value="paga" type="hidden"/>
-			
+		<input type="hidden" name="idpren" value="<%=request.getParameter("idpren")%>"></input>	
 		<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Procedi al pagamento</button>
 </form>
 </div>	

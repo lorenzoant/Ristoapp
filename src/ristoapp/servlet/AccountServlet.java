@@ -57,8 +57,6 @@ public class AccountServlet extends HttpServlet {
 			}
 			
 			
-			
-			
 			Boolean NotificaEmail = true; 
 			if(request.getParameter("NotificaEmail") == null) NotificaEmail = false;
 			
@@ -79,6 +77,7 @@ public class AccountServlet extends HttpServlet {
 				GeneraCodice codice = new GeneraCodice();
 			
 				cliente.setEmail(Email);
+				//cliente.setPassHash(PassHash);
 				cliente.setPassHash(encrypt.sha1(PassHash));
 				cliente.setCognome(Cognome);
 				cliente.setNome(Nome);
@@ -102,8 +101,14 @@ public class AccountServlet extends HttpServlet {
 				
 				SaveMySQL saveOnDb = new SaveMySQL();
 				try {
-					saveOnDb.inserisciCliente(cliente);
-					response.sendRedirect("login.jsp");
+					int esito = saveOnDb.inserisciCliente(cliente);
+					System.out.println(esito);
+					if(esito == 0) response.sendRedirect("login.jsp");
+					else {
+						request.setAttribute("errorMessage1", "errore1");
+						rd = request.getRequestDispatcher("account.jsp");
+						rd.forward(request, response);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					sc = request.getSession().getServletContext();																								
