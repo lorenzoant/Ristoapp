@@ -27,7 +27,7 @@ import ristoapp.bean.QueryStatisticheBean;
 public class SaveMySQL {
 
 	// Parametri di accesso al database
-	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final String DB_CONNECTION = "jdbc:mysql://lorenzoantoniazzi.ddns.net/theristoapp";
 	private static final String DB_USER = "ristoapp";
 	private static final String DB_PASSWORD = "$@x9Wq7XTjN#-J^v";
@@ -1902,5 +1902,74 @@ public class SaveMySQL {
 			}
 		}
 	}
+	
+	public ArrayList<RistorantiBean> RicercaRistorante(String nome, int catcucina) throws Exception{
+
+		Statement stmt = null;
+		Connection conn = null;
+
+		try {
+			// Creo la connessione al database
+			conn = getDBConnection();
+			stmt = conn.createStatement();
+			
+			String sql = "";
+			ResultSet resultList;
+			
+			// Creo stringa sql
+			if(catcucina == 0) {
+				 sql = "SELECT * FROM Ristoranti WHERE Ristoranti.Nome LIKE [%"+nome+"%]";
+				 resultList = stmt.executeQuery(sql);
+			}
+			else {
+				 sql = "SELECT * FROM Ristoranti WHERE Ristoranti.Nome LIKE [%"+nome+"%] AND Ristoranti.IDFCatCucina ="+catcucina;
+				 resultList = stmt.executeQuery(sql);
+			}
+			// Estraggo dati
+			ArrayList<RistorantiBean> ristorante = new ArrayList<RistorantiBean>();
+
+			while(resultList.next()){
+				// Scorro tutte le righe del risultato
+
+				RistorantiBean ristoset = new RistorantiBean();
+
+				ristoset.setIDRistorante(resultList.getInt("IDRistorante"));
+				ristoset.setNomeCatCucina(resultList.getString("CategoriaCucina.Nome"));
+				//System.out.println(ristoset.getNomeCatCucina());
+				ristoset.setIDFCliente(resultList.getInt("IDFCliente"));
+				ristoset.setNome(resultList.getString("Ristoranti.Nome"));
+				ristoset.setCoordinataLat(resultList.getDouble("CoordinataLat"));
+				ristoset.setCoordinataLon(resultList.getDouble("CoordinataLon"));
+				ristoset.setIndirizzo(resultList.getString("Indirizzo"));
+				ristoset.setTelefono(resultList.getString("Telefono"));
+				ristoset.setEmail(resultList.getString("Email"));
+				ristoset.setComune(resultList.getString("Comune"));
+				ristoset.setDescrizione(resultList.getString("Descrizione"));
+				ristoset.setSerClimatizzazione(resultList.getBoolean("SerClimatizzazione"));
+				ristoset.setSerAnimali(resultList.getBoolean("serAnimali"));
+				ristoset.setSerWifi(resultList.getBoolean("serWifi"));
+				ristoset.setSerDisabili(resultList.getBoolean("SerDisabili"));
+				ristoset.setSerParcheggio(resultList.getBoolean("SerParcheggio"));
+				ristoset.setNumeroPosti(resultList.getInt("NumeroPosti"));
+				ristoset.setUrl(resultList.getString("URL"));
+
+				ristorante.add(ristoset);// Aggiungo al vettore
+			}
+
+			return (ArrayList<RistorantiBean>) ristorante;
+		}catch (SQLException e) {
+			System.out.println("MySQL InformazioneRistorante() failed");
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			// Chiudo la connessione
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}// END Ricerca()
 
 }

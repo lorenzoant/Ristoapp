@@ -45,12 +45,11 @@ public class BachecaServlet extends HttpServlet {
 		String whatsend = request.getParameter("whatsend");
 		int ID = Integer.parseInt(request.getParameter("IDRisto"));
 		
-	
-		
+		SaveMySQL db = new SaveMySQL();
 		if(whatsend.equalsIgnoreCase("scheda")) { // Scarico le informazioni sulla prenotazione
 			
 			
-			SaveMySQL db = new SaveMySQL();
+			
 			
 			try {
 				ArrayList<RistorantiBean> p = db.getInfoRistoID(ID);
@@ -71,6 +70,33 @@ public class BachecaServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 				rd.forward(request, response);
 			}	
+			
+		}
+		else if(whatsend.equalsIgnoreCase("ricerca")) {
+			
+			String nome = request.getParameter("cosacerco");
+			int catcucina = 0;
+			
+		
+			try {
+				
+				ArrayList<RistorantiBean> p = db.RicercaRistorante(nome, catcucina);
+				
+				// Salvo in sessione per aprire nella JSP
+				request.getSession().removeAttribute("DETRISTO");
+				request.getSession().setAttribute("DETRISTO", p);
+				
+				// Reindirizzo alla pagina di visualizzazione
+				response.sendRedirect("bacheca.jsp");
+				return;
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
+				rd.forward(request, response);
+			}
 			
 		}
 

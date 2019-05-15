@@ -139,11 +139,6 @@
 				  width: 320px;
 				  height: 320px;
 				}
-				.demo-card-square > .mdl-card__title {
-				  color: #fff;
-				  background:
-				    url('../assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
-				}
 				</style>
 				
 				

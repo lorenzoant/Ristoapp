@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="ristoapp.bean.RistorantiBean" %>
 <%@page import="ristoapp.db.SaveMySQL" %>
+<%@page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%//riprendo la session da Login per avere i dati del cliente
@@ -64,59 +65,27 @@
 				    <a class="mdl-navigation__link" href="logoutservlet">Logout</a>
 			  	</nav>
 		</div>
+	
 		
 	  	<div class="mdl-layout__content page">
 
 	  		<div style="overflow-x: auto;">
 	  	
-				<form action="BachecaServlet">
+				<form action="BachecaServlet" name="ricerca" method="post">
+		
 				  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
 						<label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
 						<i class="material-icons">search</i>
 			   			</label>
 			  		  <div class="mdl-textfield__expandable-holder">
-			     		 <input class="mdl-textfield__input" type="text" id="sample6">
+			     		 <input class="mdl-textfield__input" type="text" id="sample6" name="cosacerco">
 			    		 <input type="hidden" name="ricerca" value="ricerca">
 			    	  	 <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
 			  		  </div>
 			 	 </div>
 				</form>
-	
-			  <button type="button" class="mdl-button show-modal">Cerca per</button>
-			 	 <form action="" name="">
-			 	 <dialog class="mdl-dialog">
-			  		  <div class="mdl-dialog__content">
-			     	 <p>Per migliorare la tua esperienza, filtra la ricerca.</p>
-			   		  </div>
-			    <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-			      <input type="submit" class="mdl-button">prea</input>
-			      <button type="button" class="mdl-button">Nome</button>
-			      <button type="button" class="mdl-button ">Categoria</button>
-			      <button type="button" class="mdl-button ">Comune</button>
-			      <button type="button" class="mdl-button ">Climatizzazione</button>
-			      <button type="button" class="mdl-button ">Animali</button>
-			      <button type="button" class="mdl-button ">Parcheggio</button>
-			      <button type="button" class="mdl-button ">Disabili</button>
-			       <button type="button" class="mdl-button close">Esci</button>
-			      
-			    </div>
-			  </dialog>
-			  </form>
-			  
-			  <script>
-			    var dialog = document.querySelector('dialog');
-			    var showModalButton = document.querySelector('.show-modal');
-			    if (! dialog.showModal) {
-			      dialogPolyfill.registerDialog(dialog);
-			    }
-			    showModalButton.addEventListener('click', function() {
-			      dialog.showModal();
-			    });
-			    dialog.querySelector('.close').addEventListener('click', function() {
-			      dialog.close();
-			    });
-			  </script>
-
+				
+			</div>
 	  	<center>
 		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<thead>
