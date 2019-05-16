@@ -28,7 +28,7 @@
 <body>
 <center><br><br><br>	<h3>Grazie per aver prenotato con RistoApp, il tuo ordine è stato inviato al ristorante.</h3>
 <br><br>
-<a href="pagamento.jsp"><input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br><br>
+<a href="pagamento.jsp?idpren=<%= request.getSession().getAttribute("IDPREN") %>"><input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br><br>
 <a href="bacheca.jsp"><input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Torna alla bacheca"/></a>
 </body>
 </html>
