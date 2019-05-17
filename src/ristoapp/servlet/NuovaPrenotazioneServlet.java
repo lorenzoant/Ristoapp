@@ -63,19 +63,32 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			int postilib = 0;
 			SaveMySQL db = new SaveMySQL();
 			
+			if(prenotazione.getIDFCatPrenotazione()==3) {
 			try {
 				RistorantiBean risto = db.getInfoRistoranteDaID(ID);
+				
+				ArrayList<PrenotazioniBean> prenotazioni = db.prelevaPrenotazioniRistoranteTraDueOre(risto, prenotazione);
+				postilib = risto.getNumeroPosti();
+				
+				for (int i = 0; i < prenotazioni.size(); i++) {
+					postilib = postilib - Integer.parseInt(prenotazioni.get(i).getNumeroPersone());
+				}
+				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				ServletContext sc = request.getSession().getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/erroregenerico.jsp");
 				rd.forward(request, response);
-			}//TODO: controlli per verificare i posti rimanenti
+			}
+			}
+				
+			if(prenotazione.getNumeroPersone()==null) {
+				prenotazione.setNumeroPersone("0");
+			}
 			
-			
-			
-			if(postilib >= Integer.parseInt(prenotazione.getNumeroPersone())) {
+			if( prenotazione.getIDFCatPrenotazione()!=3  || postilib >= Integer.parseInt(prenotazione.getNumeroPersone())) {
 			try {
+				//Se è possibile prenotare
 				IDPren=db.nuovaPrenotazione(prenotazione);
 			} 
 			catch (Exception e) {
@@ -92,6 +105,12 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			request.getSession().setAttribute("TipoPren", categoria);
 			
 			response.sendRedirect("inseriscidettaglipren.jsp");
+			
+			}else{
+				//Se il ristorante è pieno
+				ServletContext sc = request.getSession().getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/ristorantepieno.jsp");
+				rd.forward(request, response);
 			}
 		}
 		
@@ -100,8 +119,7 @@ public class NuovaPrenotazioneServlet extends HttpServlet {
 			ArrayList<PiattiBean> rs;
 			ArrayList<PrenotazioniDettagliBean> piatti = new ArrayList<PrenotazioniDettagliBean>();
 			SaveMySQL db= new SaveMySQL();
-			//int risto= Integer.parseInt(request.getSession().getAttribute("idristorante").toString());
-			int risto=1;
+			int risto= Integer.parseInt(request.getSession().getAttribute("IDRISTO").toString());
 			try {
 				rs=  db.prelevaPiattRistorante(risto);
 				for(int i=0; i<rs.size(); i++){

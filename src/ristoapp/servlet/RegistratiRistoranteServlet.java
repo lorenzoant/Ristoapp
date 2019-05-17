@@ -133,7 +133,7 @@ public class RegistratiRistoranteServlet extends HttpServlet {
 			try {
 				// Provo ad aggiungere il ristorante nel database
 				saveOnDb.inserisciRistorante(ristorante);
-				response.sendRedirect("ilmioristorante.jsp");
+				response.sendRedirect("ilmioristorantecaricamento.jsp");
 			} 
 			catch (Exception e) {
 				// Problema nel database, reindirizzo alla pagine di errore generico

@@ -144,7 +144,7 @@ public class SaveMySQL {
 			String ora_str = sdf.format(ora);
 
 			// Creo stringa sql per prenotazioni tra le date
-			String sql = "SELECT * FROM Prenotazioni WHERE `Data` = '"+ data_str +"' AND '"+ ora_str +"' BETWEEN `Ora` - 3600 * 1000 AND `Ora` + 3600 * 1000 ORDER BY Data DESC;";
+			String sql = "SELECT * FROM Prenotazioni WHERE IDFRistorante = "+ risto.getIDRistorante() +" AND `Data` = '"+ data_str +"' AND '"+ ora_str +"' BETWEEN `Ora` - 3600 * 1000 AND `Ora` + 3600 * 1000 ORDER BY Data DESC;";
 
 			// Eseguo query
 			ResultSet resultList = stmt.executeQuery(sql);

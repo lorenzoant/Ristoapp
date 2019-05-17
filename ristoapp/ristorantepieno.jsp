@@ -6,7 +6,7 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width">
 
-<title>Prenotazione completata</title>
+<title>Ristorante pieno</title>
 
 <%@include file="graphicspuntoacca.jsp"%>
 
@@ -15,7 +15,7 @@
 						<table>
 							<tr>
 								<td>
-									<h2>RistoApp - Prenotazione completata</h2>
+									<h2>RistoApp - Ristorante pieno</h2>
 								</td>
 								<td>
 									<img class="logo" src="MEDIA/logo.png"/>
@@ -26,9 +26,8 @@
 			</div>
 </head>
 <body>
-<center><br><br><br>	<h3>Grazie per aver prenotato con RistoApp, il tuo ordine è stato inviato al ristorante.</h3>
+<center><br><br><br>	<h3>Ops, il ristorante da cui stai cercando di prenotare è pieno, riprova con un nuovo orario o scegli un altro ristorante :(</h3>
 <br><br>
-<a href="pagamento.jsp?idpren=<%= request.getSession().getAttribute("IDPREN") %>"><input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Procedi al pagamento"/></a><br><br>
 <a href="bacheca.jsp"><input type = "submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value = "Torna alla bacheca"/></a>
 </body>
 </html>

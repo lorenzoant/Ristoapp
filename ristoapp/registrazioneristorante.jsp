@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"pageEncoding="ISO-8859-1" import="java.sql.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="java.sql.*"%>
 <%@page import="ristoapp.db.SaveMySQL"%>
 <%@page import="ristoapp.bean.ClientiBean"%>
     
@@ -7,6 +8,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Registrazione ristoratore</title>
+	<!-- By Albertini -->
 	<%@include file="graphicspuntoacca.jsp"%>
 	<% 
 	// Controllo se chi accede a questa pagina ha l'autorizzazione
@@ -148,7 +150,7 @@
 		<form action = "registratiristoranteservlet" name = "account" method ="post">
 			
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" required/>
+				<input class="mdl-textfield__input" type = "text" name = "nome_ristorante" id="NomeRisto" maxlength="30" required/>
 				<label class="mdl-textfield__label" for="NomeRisto">Nome Ristorante*</label>
 			</div>
 		
@@ -185,13 +187,13 @@
 			
 			<br>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" required>
+				<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="telefono" id="Telefono" maxlength="10" required>
 				<label class="mdl-textfield__label" for="Telefono">Telefono*</label>
 				<span class="mdl-textfield__error">Input is not a number!</span>
 			</div>
 		
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label id="Email">	 
-				<input class="mdl-textfield__input" type = "text" name = "email" required/>	
+				<input class="mdl-textfield__input" type = "text" name = "email" maxlength="45" required/>	
 				<label class="mdl-textfield__label" for="Email">Email*</label>
 			</div>
 			<br><br>
@@ -311,7 +313,7 @@
 			e di aver preso visione dell'informativa su trattamento dei dati personali.</p>
 			<br>
 			<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-			  <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" required>
+			  <input type="radio" id="option-1" class="mdl-radio__button" name="option1" required>
 			  <span class="mdl-radio__label">Acconsento</span>
 			</label>
 			</div>
@@ -332,6 +334,6 @@
 	</div>
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JYM6YP2B7egPqgDN7t7RvaK4QMTyS9w&callback=myMap"></script>
-														    
+
 </body>
 </html>

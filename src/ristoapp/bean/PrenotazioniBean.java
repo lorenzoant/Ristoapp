@@ -90,4 +90,5 @@ public class PrenotazioniBean implements java.io.Serializable {
 	public void setOra(String ora2) {
 		Ora = ora2;
 	}
+
 }

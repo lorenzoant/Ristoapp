@@ -5,6 +5,8 @@
  <%@page import="ristoapp.bean.PrenotazioniBean"%>
  <%@page import="ristoapp.bean.ClientiBean"%>
  <%@page import="java.util.ArrayList"%>
+ <%@page import="ristoapp.bean.QueryPiattiPrenotatiBean"%>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,8 +106,19 @@
 							
 						</td>
 						<td>
-							<!-- se la prenotazione non è stata pagata permetto al cliente di essere rimandato alla schermata di pagamento -->
-							<a href="pagamento.jsp?idpren=<%= p.getIDPrenotazione() %>"><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Paga ora"/></a>
+							<% 
+							ArrayList<QueryPiattiPrenotatiBean> dettagli = new ArrayList<QueryPiattiPrenotatiBean>();
+							dettagli = db.prelevaDettagliPrenotazioneConPiatti(p.getIDPrenotazione());
+							if(dettagli.isEmpty() || p.getStatoPagamento()){
+							%>
+								<!-- se l'ordine non ha piatti o ha già pagato disattivo il pulsante -->
+								<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" disabled="disabled" value="Paga ora"/>
+								
+							<%}else{ %>
+								<!-- se la prenotazione non è stata pagata permetto al cliente di essere rimandato alla schermata di pagamento -->
+								<a href="pagamento.jsp?idpren=<%= p.getIDPrenotazione() %>"><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="Paga ora"/></a>
+								
+							<%} %>
 						</tr>
 					<%}%>
 		</tbody>
