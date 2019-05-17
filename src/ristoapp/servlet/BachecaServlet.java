@@ -46,6 +46,7 @@ public class BachecaServlet extends HttpServlet {
 		int ID = Integer.parseInt(request.getParameter("IDRisto"));
 		
 		SaveMySQL db = new SaveMySQL();
+		System.out.println(whatsend);
 		if(whatsend.equalsIgnoreCase("scheda")) { // Scarico le informazioni sulla prenotazione
 			
 			
